@@ -12,5 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+// SCOOTERS
+Route::get('/scooters', 'scooterController@index');
+
+Route::get('/scooters/{scooter_id}', 'scooterController@show');
+
+// BOOKINGS
+
+Route::post('/bookings', 'bookingController@index');
+Route::post('/bookings/confirmation', 'bookingController@store');
