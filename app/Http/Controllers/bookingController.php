@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use App\Booking;
 use App\Scooter;
 use DateTime;
@@ -77,6 +78,8 @@ class bookingController extends Controller
 
         $scooter = Scooter::find($scooter_id);
 
+        //Sending the confirmation email to admins
+        /*
         $mail_info = ['pick_up_date'=>$pick_up_date,'drop_off_date'=>$drop_off_date, 'scooter'=>$scooter];
 
         Mail::send('emails.new-booking',$mail_info, function($mail) use ($scooter){
@@ -84,7 +87,8 @@ class bookingController extends Controller
 
             $mail->to('jb.malandain@gmail.com')->cc('delapierre.t@orange.fr')->cc('thomasleclercq90010@gmail.com');
         });
+        */
 
-        return view('bookings.confirmation')->with(compact('pick_up_date','drop_off_date'));
+        return view('bookings.confirmation')->with(compact('pick_up_date','drop_off_date','scooter'));
     }
 }
