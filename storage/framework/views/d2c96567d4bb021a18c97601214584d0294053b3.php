@@ -1,5 +1,5 @@
 <?php $__env->startSection('content'); ?>
-	<div class="container">
+	<div class="container" style="max-height: 670px">
 		<h1>Scooters available </h1>
 		<h2>From <?php echo e(date_format(date_create($pick_up_date),'l d F Y')); ?> 
 		to <?php echo e(date_format(date_create($drop_off_date),'l d F Y')); ?> - $<?php echo e($price); ?>/day</h2>

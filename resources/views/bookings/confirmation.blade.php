@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-	<div class="container">
+	<div class="container" style="min-height: 670px;">
 		<div class="row">
 			<div class="alert alert-success" role="alert">
 				<b>Well done !</b> You have successfully rent you scooter with Tweelz.com !

@@ -24,3 +24,6 @@ Route::get('/scooters/{scooter_id}', 'scooterController@show');
 
 Route::post('/bookings', 'bookingController@index');
 Route::post('/bookings/confirmation', 'bookingController@store');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

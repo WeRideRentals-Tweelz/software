@@ -1,5 +1,5 @@
 <?php $__env->startSection('content'); ?>
-	<div class="container">
+	<div class="container" style="min-height: 670px;">
 		<div class="row">
 			<div class="alert alert-success" role="alert">
 				<b>Well done !</b> You have successfully rent you scooter with Tweelz.com !
@@ -20,4 +20,4 @@
 		</div>
 	</div>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.main', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

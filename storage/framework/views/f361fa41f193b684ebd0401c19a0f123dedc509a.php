@@ -1,5 +1,5 @@
 <?php $__env->startSection('content'); ?>
-	<div class="container">
+	<div class="container" style="min-height: 670px;">
 		<h1 style="text-align: center;">Our Scooters</h1>
 		<div class="row">
 			<?php $__currentLoopData = $scooters; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $scooter): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>

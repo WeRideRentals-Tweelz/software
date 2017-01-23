@@ -19,10 +19,13 @@ class bookingController extends Controller
         $package = $drop_off_date - $pick_up_date;
 
     	$scooters = DB::table('scooters')->get();
+
         $bookings = DB::table('bookings')
-                        ->where('pick_up_date', '>=', $pick_up_date)
-                        ->where('drop_off_date', '<=', $drop_off_date)
+                        ->join('scooters','scooters.id','=','bookings.scooter_id')
+                        ->where('pick_up_date', '<=', $drop_off_date)
+                        ->where('drop_off_date', '>=', $pick_up_date)
                         ->get();
+        
         $available = [];
 
         if(count($bookings) >= 1)
@@ -31,7 +34,7 @@ class bookingController extends Controller
             {
                 foreach ($scooters as $scooter) 
                 {
-                    if($scooter->id != $booking->scooter_id)
+                    if($scooter->id != $booking->scooter_id && $scooter->plate != $booking->plate)
                     {
                         $available[] = DB::table('scooters')->find($scooter->id);
                     }
@@ -78,8 +81,8 @@ class bookingController extends Controller
 
         $scooter = Scooter::find($scooter_id);
 
-        //Sending the confirmation email to admins
-        /*
+        //Sending a mail to inform a new booking to admins
+        
         $mail_info = ['pick_up_date'=>$pick_up_date,'drop_off_date'=>$drop_off_date, 'scooter'=>$scooter];
 
         Mail::send('emails.new-booking',$mail_info, function($mail) use ($scooter){
@@ -87,7 +90,6 @@ class bookingController extends Controller
 
             $mail->to('jb.malandain@gmail.com')->cc('delapierre.t@orange.fr')->cc('thomasleclercq90010@gmail.com');
         });
-        */
 
         return view('bookings.confirmation')->with(compact('pick_up_date','drop_off_date','scooter'));
     }

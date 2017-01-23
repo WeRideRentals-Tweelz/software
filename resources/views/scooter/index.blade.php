@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-	<div class="container">
+	<div class="container" style="min-height: 670px;">
 		<h1 style="text-align: center;">Our Scooters</h1>
 		<div class="row">
 			@foreach($scooters as $scooter)
