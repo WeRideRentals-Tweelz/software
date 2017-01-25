@@ -4,6 +4,7 @@
 		<h2>From <?php echo e(date_format(date_create($pick_up_date),'l d F Y')); ?> 
 		to <?php echo e(date_format(date_create($drop_off_date),'l d F Y')); ?> - $<?php echo e($price); ?>/day</h2>
 		<div class="row">
+		<?php if(count($available) >= 1): ?>
 			<?php $__currentLoopData = $available; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $scooter): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
 			<div class="col-md-3">
 				<div class="thumbnail">
@@ -24,6 +25,11 @@
 				</div>				
 			</div>
 			<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
+		<?php else: ?>
+			<h3 style="text-align: center">There is no scooter available for the requested dates</h3>
+			<h4 style="text-align: center; margin-top: 50px;margin-bottom: -25px;">Change the dates</h4>
+			<?php echo $__env->make('home.date_picker', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+		<?php endif; ?>
 		</div>
 	</div>
 <?php $__env->stopSection(); ?>

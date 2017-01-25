@@ -1,38 +1,23 @@
 @extends('layouts.main')
 @section('content')
 	<div class="container" style="min-height: 670px">
+		<div class="row" style="margin-bottom:50px;padding-left: 15px;padding-right: 15px;">
+			<a href="">
+				<div class="col-sm-6" style="box-shadow: 2px 2px 2px 2px gray;text-align: center; padding: 20px 0px;">
+					<h3>Bookings</h3>
+					<span class="fa fa-book fa-5x"></span>
+				</div>
+			</a>
+			<a href="">
+				<div class="col-sm-6" style="box-shadow: 2px 2px 2px 2px gray;text-align: center;padding: 20px 0px;">
+					<h3>Drivers</h3>
+					<span class="fa fa-user fa-5x"></span>
+				</div>
+			</a>
+		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h2>Bookings</h2>
-			</div>
-			<div class="panel-body">
-				<table class="col-xs-12 table table-striped">
-					<tr>
-						<th>Booking number</th>
-						<th>Pick-up date</th>
-						<th>Drop-off date</th>
-						<th>Scooter</th>
-						<th>Plate</th>
-						<th>Color</th>
-						<th>Confirmed ?</th>
-					</tr>
-					@foreach($bookings as $booking)
-					<tr>
-						<td>{{ $booking->id }}</td>
-						<td>{{ date_format(date_create($booking->pick_up_date),'F d M Y') }}</td>
-						<td>{{ date_format(date_create($booking->drop_off_date),'F d M Y') }}</td>
-						<td>{{ $booking->model }}</td>
-						<td>{{ $booking->plate }}</td>
-						<td>{{ $booking->color }}</td>
-						<td></td>
-					</tr>
-					@endforeach
-				</table>
-			</div>
-		</div>
-		<div class="panel-default">
-			<div class="panel-heading">
-				<h2>Scooters</h2>
+				<h2>Scooters Today Status</h2>
 			</div>
 			<div class="panel-body">
 				<table class="col-xs-12 table table-hover">
@@ -40,37 +25,36 @@
 						<th>Image</th>
 						<th>Model</th>
 						<th>Plate</th>
-						<th>Year</th>
-						<th>Color</th>
 						<th>Km</th>
-						<th>Last Check</th>
-						<th>Available</th>
-						<th>Details</th>
-						<th colspan="2">Action</th>
+						<th>Status</th>
+						<th>Action</th>
 					</tr>
 					@foreach($scooters as $scooter)
 					<tr>
-						<td><img style="height: 40px; widtd: 60px;" src="{{ asset('images/'.$scooter->plate.'-'.str_replace(' ','',$scooter->model).'.jpg') }}" alt="{{ 'scooter '.$scooter->model.' of '.$scooter->year }}"></td>
+						<td><img style="height: 40px; width: 60px;" src="{{ asset('images/'.$scooter->plate.'-'.str_replace(' ','',$scooter->model).'.jpg') }}" alt="{{ 'scooter '.$scooter->model.' of '.$scooter->year }}"></td>
 						<td>{{ $scooter->model }}</td>
 						<td>{{ $scooter->state }} - {{ $scooter->plate }}</td>
-						<td>{{ $scooter->year }}</td>
-						<td>{{ $scooter->color }}</td>
 						<td>{{ $scooter->kilometers }} km</td>
-						<td>{{ date_format(date_create($scooter->last_check),'l d F Y') }}</td>
 						<td>
-							<a href="" class="btn btn-success btn-sm" role="button">Rent</a>
+						@foreach($available as $scooter_available)
+							@if($scooter->id != $scooter_available->id)
+								<a href="" class="btn btn-info btn-sm" role="button">Rented</a>
+							@else
+								@if($scooter->availability == 1)
+									<a href="/scooter/{{ $scooter->id }}/garage" class="btn btn-success btn-sm" role="button">In Store</a>	
+								@elseif($scooter->availability == 2)
+									<a href="/scooter/{{ $scooter->id }}/in-store" class="btn btn-danger btn-sm" role="button">Garage</a>
+								@endif
+							@endif
+						@endforeach
 						</td>
-						<td style="width: 200px; text-align: justify;">{{ $scooter->info }}</td>
 						<td>
-							<a style="margin-left: 20px" href="" class="btn btn-info btn-sm" role="button">Update</a>
-						</td>
-						<td>
-							<a href="" class="btn btn-danger btn-sm" role="button">Delete</a>
+							<a style="margin-left: 20px" href="/scooters/{{ $scooter->id }}/update" class="btn btn-info btn-sm" role="button">More Details</a>
+							<a href="/scooters/{{ $scooter->id }}/delete" class="btn btn-danger btn-sm" role="button">Delete</a>
 						</td>
 					</tr>				
 					@endforeach
 				</table>
-				<a style="margin-top: 100px" href="" class="btn btn-primary" role="button"><span class="fa fa-plus"> Add a scooter</span></a>
 			</div>
 		</div>
 	</div>

@@ -17,7 +17,7 @@ class MustBeAdministrator
     public function handle($request, Closure $next)
     {
 
-        if(Auth::user()->name == 't.leclercq')
+        if(Auth::user()->role_id == 1)
         {
             return $next($request);            
         }

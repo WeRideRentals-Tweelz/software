@@ -5,6 +5,7 @@
 		<h2>From {{ date_format(date_create($pick_up_date),'l d F Y') }} 
 		to {{ date_format(date_create($drop_off_date),'l d F Y') }} - ${{$price}}/day</h2>
 		<div class="row">
+		@if(count($available) >= 1)
 			@foreach($available as $scooter)
 			<div class="col-md-3">
 				<div class="thumbnail">
@@ -24,6 +25,11 @@
 				</div>				
 			</div>
 			@endforeach
+		@else
+			<h3 style="text-align: center">There is no scooter available for the requested dates</h3>
+			<h4 style="text-align: center; margin-top: 50px;margin-bottom: -25px;">Change the dates</h4>
+			@include('home.date_picker')
+		@endif
 		</div>
 	</div>
 @stop

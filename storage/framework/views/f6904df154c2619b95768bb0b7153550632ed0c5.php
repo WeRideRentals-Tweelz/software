@@ -9,7 +9,11 @@
 				</label>
 				<div class="input-group">
 					<span class="input-group-addon glyphicon glyphicon-calendar"></span>
+					<?php if(isset($pick_up_date)): ?>
+					<input type="date" class="form-control" name="pick_up_date" id="pick_up_date" value="<?php echo e($pick_up_date); ?>">
+					<?php else: ?>
 					<input type="date" class="form-control" name="pick_up_date" id="pick_up_date">
+					<?php endif; ?>
 				</div>
 			</div>
 			<div class="form-group col-xs-6">
@@ -18,7 +22,11 @@
 				</label>
 				<div class="input-group">
 					<span class="input-group-addon glyphicon glyphicon-calendar"></span>
+					<?php if(isset($drop_off_date)): ?>
+					<input type="date" name="drop_off_date" id="drop_off_date" class="form-control" value="<?php echo e($drop_off_date); ?>">
+					<?php else: ?>
 					<input type="date" name="drop_off_date" id="drop_off_date" class="form-control">
+					<?php endif; ?>
 				</div>
 			</div>
 			<div class="form-group col-md-4 col-md-offset-4" style="margin-top: 50px">

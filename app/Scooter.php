@@ -8,7 +8,7 @@ class Scooter extends Model
 {
     protected $table = 'scooters';
 
-    protected $fillable = ['state','plate','model','year','color','kilometers','last_check'];
+    protected $fillable = ['state','plate','model','year','color','kilometers','category','last_check','availability'];
 
     protected $hidden= [];
 
@@ -19,5 +19,10 @@ class Scooter extends Model
     public function booking()
     {
     	return $this->belongsTo('App\Booking');
+    }
+
+    public function accessories()
+    {
+        return $this->belongsTo('App\Accessories');
     }
 }

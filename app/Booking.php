@@ -20,4 +20,14 @@ class Booking extends Model
     {
     	return $this->hasMany('App\Scooter');
     }
+
+    public function drivers()
+    {
+        return $this->hasMany('App\Drivers');
+    }
+
+    public function accessories()
+    {
+        return $this->hasMany('App\Accessories');
+    }
 }
