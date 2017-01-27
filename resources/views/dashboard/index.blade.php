@@ -2,13 +2,13 @@
 @section('content')
 	<div class="container" style="min-height: 670px">
 		<div class="row" style="margin-bottom:50px;padding-left: 15px;padding-right: 15px;">
-			<a href="">
+			<a href="{{ url('/home/bookings') }}">
 				<div class="col-sm-6" style="box-shadow: 2px 2px 2px 2px gray;text-align: center; padding: 20px 0px;">
 					<h3>Bookings</h3>
 					<span class="fa fa-book fa-5x"></span>
 				</div>
 			</a>
-			<a href="">
+			<a href="{{ url('/home/drivers') }}">
 				<div class="col-sm-6" style="box-shadow: 2px 2px 2px 2px gray;text-align: center;padding: 20px 0px;">
 					<h3>Drivers</h3>
 					<span class="fa fa-user fa-5x"></span>
@@ -36,6 +36,7 @@
 						<td>{{ $scooter->state }} - {{ $scooter->plate }}</td>
 						<td>{{ $scooter->kilometers }} km</td>
 						<td>
+						@if(count($available) != count($scooters))
 						@foreach($available as $scooter_available)
 							@if($scooter->id != $scooter_available->id)
 								<a href="" class="btn btn-info btn-sm" role="button">Rented</a>
@@ -47,6 +48,13 @@
 								@endif
 							@endif
 						@endforeach
+						@else
+							@if($scooter->availability == 1)
+								<a href="/scooter/{{ $scooter->id }}/garage" class="btn btn-success btn-sm" role="button">In Store</a>	
+							@elseif($scooter->availability == 2)
+								<a href="/scooter/{{ $scooter->id }}/in-store" class="btn btn-danger btn-sm" role="button">Garage</a>
+							@endif							
+						@endif
 						</td>
 						<td>
 							<a style="margin-left: 20px" href="/scooters/{{ $scooter->id }}/update" class="btn btn-info btn-sm" role="button">More Details</a>

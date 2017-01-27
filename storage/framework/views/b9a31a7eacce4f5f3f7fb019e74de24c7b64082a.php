@@ -1,13 +1,13 @@
 <?php $__env->startSection('content'); ?>
 	<div class="container" style="min-height: 670px">
 		<div class="row" style="margin-bottom:50px;padding-left: 15px;padding-right: 15px;">
-			<a href="">
+			<a href="<?php echo e(url('/home/bookings')); ?>">
 				<div class="col-sm-6" style="box-shadow: 2px 2px 2px 2px gray;text-align: center; padding: 20px 0px;">
 					<h3>Bookings</h3>
 					<span class="fa fa-book fa-5x"></span>
 				</div>
 			</a>
-			<a href="">
+			<a href="<?php echo e(url('/home/drivers')); ?>">
 				<div class="col-sm-6" style="box-shadow: 2px 2px 2px 2px gray;text-align: center;padding: 20px 0px;">
 					<h3>Drivers</h3>
 					<span class="fa fa-user fa-5x"></span>
@@ -35,6 +35,7 @@
 						<td><?php echo e($scooter->state); ?> - <?php echo e($scooter->plate); ?></td>
 						<td><?php echo e($scooter->kilometers); ?> km</td>
 						<td>
+						<?php if(count($available) != count($scooters)): ?>
 						<?php $__currentLoopData = $available; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $scooter_available): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
 							<?php if($scooter->id != $scooter_available->id): ?>
 								<a href="" class="btn btn-info btn-sm" role="button">Rented</a>
@@ -46,6 +47,13 @@
 								<?php endif; ?>
 							<?php endif; ?>
 						<?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
+						<?php else: ?>
+							<?php if($scooter->availability == 1): ?>
+								<a href="/scooter/<?php echo e($scooter->id); ?>/garage" class="btn btn-success btn-sm" role="button">In Store</a>	
+							<?php elseif($scooter->availability == 2): ?>
+								<a href="/scooter/<?php echo e($scooter->id); ?>/in-store" class="btn btn-danger btn-sm" role="button">Garage</a>
+							<?php endif; ?>							
+						<?php endif; ?>
 						</td>
 						<td>
 							<a style="margin-left: 20px" href="/scooters/<?php echo e($scooter->id); ?>/update" class="btn btn-info btn-sm" role="button">More Details</a>

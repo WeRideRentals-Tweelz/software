@@ -28,20 +28,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $bookings = DB::table('bookings')
-                        ->select('scooters.id as scooter_id','pick_up_date','drop_off_date','bookings.id as id','scooters.model','scooters.color','scooters.plate','bookings.status','accessories.name as accessory_name','drivers.firstname','drivers.surname','drivers.phone')
-                        ->join('scooters', 'scooters.id','=','bookings.scooter_id')
-                        ->join('drivers', 'drivers.id', '=', 'bookings.driver_id')
-                        ->join('accessories', 'accessories.id', "=", "bookings.accessories_id")
-                        ->orderBy('bookings.pick_up_date','DESC')
-                        ->get();
 
         $scooters = Scooter::all();
-        $accessories = Accessories::all();
-
-        $drivers = DB::table('drivers')
-                        ->where('confirmed','=',0)
-                        ->get();
 
         $bookings_from_today = DB::table('bookings')
                         ->join('scooters','scooters.id','=','bookings.scooter_id')
@@ -50,7 +38,7 @@ class HomeController extends Controller
                         ->get();
         $available = [];
 
-        if(count($bookings) >= 1)
+        if(count($bookings_from_today) >= 1)
         {
             foreach ($bookings_from_today as $booking) 
             {

@@ -43,6 +43,12 @@
                                 <a href="<?php echo e(url('/home')); ?>">Dashboard</a>
                             </li>
                             <li>
+                                <a href="<?php echo e(url('/home/bookings')); ?>">Bookings</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo e(url('/home/drivers')); ?>">Drivers</a>
+                            </li>
+                            <li>
                                 <a href="<?php echo e(url('/logout')); ?>"
                                     onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
