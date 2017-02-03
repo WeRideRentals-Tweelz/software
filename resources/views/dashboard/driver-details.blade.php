@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
 	<div class="col-sm-5 col-sm-offset-1">
-		<h1>{{ $driver->firstname }} {{ $driver->surname }}</h1>
+		<h1>Tweelz Driver's Profile</h1>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h2>Details</h2>
@@ -46,7 +46,7 @@
 							</div>
 						</div>
 						<div class="row col-sm-2" style="margin-top: 70px">
-							<button role="submit" class="btn btn-primary btn-sm">Update Driver</button>
+							<button role="submit" class="btn btn-primary btn-sm">Update</button>
 						</div>	
 					</div>			
 				</form>

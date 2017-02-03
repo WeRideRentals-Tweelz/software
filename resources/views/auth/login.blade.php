@@ -17,7 +17,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ isset($message) ? url('/login/shop') : url('/login') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -57,12 +57,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        @if(isset($message))
-                        <input type="hidden" name="pick_up_date" value="{{$pick_up_date}}">
-                        <input type="hidden" name="drop_off_date" value="{{$drop_off_date}}">
-                        <input type="hidden" name="scooter_id" value="{{$scooter_id}}">
-                        @endif
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">

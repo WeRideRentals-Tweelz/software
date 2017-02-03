@@ -10,17 +10,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-
-//LOGIN
-Route::post('/login/shop', 'Auth\LoginController@shop');
+Route::get('/', 'scooterController@last4');
 
 // SCOOTERS
 Route::get('/scooters', 'scooterController@index');
-
 Route::get('/scooters/{scooter_id}', 'scooterController@show');
+Route::get('/home/scooters/{scooter_id}', 'scooterController@adminInfo');
+Route::post('/home/scooters/{scooter_id}/update', 'scooterController@update');
+
 
 // BOOKINGS
 
@@ -38,3 +35,7 @@ Route::post('/home/drivers/{driver_id}/update', 'DriversController@update');
 // ADMIN
 
 Route::get('/home', 'HomeController@index');
+
+// USERS
+
+Route::get('/profile', 'HomeController@profile');

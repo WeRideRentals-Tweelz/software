@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Booking;
+use App\Drivers;
 use App\Scooter;
 use DateTime;
 
@@ -17,13 +18,11 @@ class bookingController extends Controller
     public function index()
     {
         $bookings = DB::table('bookings')
-                        ->select('scooters.id as scooter_id','pick_up_date','drop_off_date','bookings.id as id','scooters.model','scooters.color','scooters.plate','bookings.status','accessories.name as accessory_name','drivers.id as driver_id','drivers.firstname','drivers.surname','drivers.phone')
+                        ->select('scooters.id as scooter_id','pick_up_date','drop_off_date','bookings.id as id','scooters.model','scooters.color','scooters.plate','bookings.status','drivers.id as driver_id','drivers.firstname','drivers.surname','drivers.phone')
                         ->join('scooters', 'scooters.id','=','bookings.scooter_id')
                         ->join('drivers', 'drivers.id', '=', 'bookings.driver_id')
-                        ->join('accessories', 'accessories.id', "=", "bookings.accessories_id")
                         ->orderBy('bookings.pick_up_date','DESC')
                         ->get();
-                        
         return view('dashboard.bookings')->with(compact('bookings'));
     }
 
@@ -33,31 +32,31 @@ class bookingController extends Controller
     	$drop_off_date = $request->input('drop_off_date');
         $package = $drop_off_date - $pick_up_date;
 
-    	$scooters = DB::table('scooters')
-                    ->where('availability', '<>', 2)
+    	$scooters = Scooter::where('availability', '<>', 2)
                     ->where('availability', '<>', 3)
+                    ->orderBy('id', 'ASC')
                     ->get();
 
-        $bookings = DB::table('bookings')
-                        ->join('scooters','scooters.id','=','bookings.scooter_id')
-                        ->where('pick_up_date', '<=', $drop_off_date)
+        $bookings = Booking::where('pick_up_date', '<=', $drop_off_date)
                         ->where('drop_off_date', '>=', $pick_up_date)
                         ->get();
 
-        $available = [];
+        $booking_checker = [];
+        $scooter_checker = [];
+
+        foreach ($bookings as $booking) 
+        {
+            $booking_checker[] = $booking->scooter_id;  
+        }
+
+        foreach ($scooters as $scooter) 
+        {
+            $scooter_checker[] = $scooter->id;
+        }
 
         if(count($bookings) >= 1)
         {
-            foreach ($bookings as $booking) 
-            {
-                foreach ($scooters as $scooter) 
-                {
-                    if($scooter->id != $booking->scooter_id && $scooter->plate != $booking->plate)
-                    {
-                        $available[] = DB::table('scooters')->find($scooter->id);
-                    }
-                }
-            }
+           $available = array_diff($booking_checker, $scooter_checker);
         }
         else
         {
@@ -86,50 +85,40 @@ class bookingController extends Controller
         $pick_up_date =     $request->input('pick_up_date');
         $drop_off_date =    $request->input('drop_off_date');
         $scooter_id =       $request->input('scooter_id');
-        $accessory_id = [];
+        $accessory_id = 0;
+        $driver = Drivers::where('user_id',Auth::user()->id)->first();
 
         if(null !== $request->input('accessory'))
         {
             $accessory_id = $request->input('accessory');
         }
+
+        $booking = new Booking([
+            'pick_up_date'      =>$pick_up_date,
+            'drop_off_date'     =>$drop_off_date,
+            'scooter_id'        =>$scooter_id,
+            'driver_id'         =>$driver->id,
+            'status'            =>'waiting for confirmation',
+            'confirmation'      =>0,
+            'created_at'        =>new DateTime, 
+            'updated_at'        =>new DateTime,
+            'accessories_id'    =>$accessory_id
+        ]);
+
+        $booking->save();
+
+        $scooter = Scooter::find($scooter_id);
+
+        //Sending a mail to inform a new booking to admins
         
-        if(null !== User::find(Auth::user()))
-        {
-            $driver = Driver::find(Auth::user()->driver_id);
+        $mail_info = ['pick_up_date'=>$pick_up_date,'drop_off_date'=>$drop_off_date, 'scooter'=>$scooter];
 
-            $booking = new Booking([
-                'pick_up_date'      =>$pick_up_date,
-                'drop_off_date'     =>$drop_off_date,
-                'scooter_id'        =>$scooter_id,
-                'driver_id'         =>$driver_id,
-                'accessory_id'      =>$accessory_id,
-                'status'            =>'waiting for confirmation',
-                'confirmation'      =>0,
-                'created_at'        => new DateTime, 
-                'updated_at'        => new DateTime
-            ]);
+        Mail::send('emails.new-booking',$mail_info, function($mail) use ($scooter){
+            $mail->from('contact@tweelz.com', 'New scooter booking');
 
-            $booking->save();
+            $mail->to('jb.malandain@gmail.com')->cc('delapierre.t@orange.fr')->cc('thomasleclercq90010@gmail.com');
+        });
 
-            $scooter = Scooter::find($scooter_id);
-
-            //Sending a mail to inform a new booking to admins
-            
-            $mail_info = ['pick_up_date'=>$pick_up_date,'drop_off_date'=>$drop_off_date, 'scooter'=>$scooter];
-
-            Mail::send('emails.new-booking',$mail_info, function($mail) use ($scooter){
-                $mail->from('contact@tweelz.com', 'New scooter booking');
-
-                $mail->to('jb.malandain@gmail.com')->cc('delapierre.t@orange.fr')->cc('thomasleclercq90010@gmail.com');
-            });
-
-            return view('bookings.confirmation')->with(compact('pick_up_date','drop_off_date','scooter'));
-
-        }
-        else
-        {
-            $message = "Please login or create an account before renting a scooter";
-            return view('auth.login')->with(compact('message','pick_up_date','drop_off_date','scooter_id','accessory_id'));
-        }
+        return view('bookings.confirmation')->with(compact('pick_up_date','drop_off_date','scooter'));
     }
 }

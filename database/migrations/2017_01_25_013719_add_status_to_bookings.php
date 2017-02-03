@@ -14,7 +14,7 @@ class AddStatusToBookings extends Migration
     public function up()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->string('status')->after('scooter_id');
+            $table->string('status')->after('scooter_id')->default('Wait for confirmation');
         });
     }
 

@@ -19,7 +19,11 @@
 							<input type="hidden" name="pick_up_date" value="<?php echo e($pick_up_date); ?>">
 							<input type="hidden" name="drop_off_date" value="<?php echo e($drop_off_date); ?>">
 							<input type="hidden" name="scooter_id" value="<?php echo e($scooter->id); ?>">
+							<?php if(null !== Auth::user()): ?>
 							<button type="submit" class="btn btn-success" style="margin-left: 75px;">Rent now</button>
+							<?php else: ?>
+							<a href="<?php echo e(url('/login')); ?>" class="btn btn-warning" role="button" style="margin-left:65px">Login to rent</a>
+							<?php endif; ?>
 						</form>
 					</div>
 				</div>				

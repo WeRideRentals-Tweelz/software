@@ -14,7 +14,7 @@ class AddConfirmationToBookings extends Migration
     public function up()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->integer('confirmation')->after('status');
+            $table->integer('confirmation')->after('status')->default(0);
         });
     }
 

@@ -56,7 +56,7 @@
 						<?php endif; ?>
 						</td>
 						<td>
-							<a style="margin-left: 20px" href="/scooters/<?php echo e($scooter->id); ?>/update" class="btn btn-info btn-sm" role="button">More Details</a>
+							<a style="margin-left: 20px" href="/home/scooters/<?php echo e($scooter->id); ?>" class="btn btn-info btn-sm" role="button">More Details</a>
 							<a href="/scooters/<?php echo e($scooter->id); ?>/delete" class="btn btn-danger btn-sm" role="button">Delete</a>
 						</td>
 					</tr>				

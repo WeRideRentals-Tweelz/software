@@ -16,7 +16,6 @@
 					<th>Scooter</th>
 					<th>Plate</th>
 					<th>Color</th>
-					<th>Accessories</th>
 					<th>Status</th>
 				</tr>
 				@foreach($bookings as $booking)
@@ -29,7 +28,6 @@
 					<td>{{ $booking->model }}</td>
 					<td>{{ $booking->plate }}</td>
 					<td>{{ $booking->color }}</td>
-					<td>{{ $booking->accessory_name }}</td>
 					<td>{{ $booking->status }}</td>
 					<td></td>
 				</tr>

@@ -15,7 +15,6 @@
 					<th>Scooter</th>
 					<th>Plate</th>
 					<th>Color</th>
-					<th>Accessories</th>
 					<th>Status</th>
 				</tr>
 				<?php $__currentLoopData = $bookings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $booking): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
@@ -28,7 +27,6 @@
 					<td><?php echo e($booking->model); ?></td>
 					<td><?php echo e($booking->plate); ?></td>
 					<td><?php echo e($booking->color); ?></td>
-					<td><?php echo e($booking->accessory_name); ?></td>
 					<td><?php echo e($booking->status); ?></td>
 					<td></td>
 				</tr>

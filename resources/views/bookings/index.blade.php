@@ -19,7 +19,11 @@
 							<input type="hidden" name="pick_up_date" value="{{ $pick_up_date }}">
 							<input type="hidden" name="drop_off_date" value="{{ $drop_off_date }}">
 							<input type="hidden" name="scooter_id" value="{{ $scooter->id }}">
+							@if(null !== Auth::user())
 							<button type="submit" class="btn btn-success" style="margin-left: 75px;">Rent now</button>
+							@else
+							<a href="{{ url('/login') }}" class="btn btn-warning" role="button" style="margin-left:65px">Login to rent</a>
+							@endif
 						</form>
 					</div>
 				</div>				

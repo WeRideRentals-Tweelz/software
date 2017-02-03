@@ -15,7 +15,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="<?php echo e(isset($message) ? url('/login/shop') : url('/login')); ?>">
+                    <form class="form-horizontal" role="form" method="POST" action="<?php echo e(url('/login')); ?>">
                         <?php echo e(csrf_field()); ?>
 
 
@@ -56,12 +56,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <?php if(isset($message)): ?>
-                        <input type="hidden" name="pick_up_date" value="<?php echo e($pick_up_date); ?>">
-                        <input type="hidden" name="drop_off_date" value="<?php echo e($drop_off_date); ?>">
-                        <input type="hidden" name="scooter_id" value="<?php echo e($scooter_id); ?>">
-                        <?php endif; ?>
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">

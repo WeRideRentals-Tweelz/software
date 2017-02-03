@@ -14,7 +14,7 @@ class AddAccessoriesIdToBookings extends Migration
     public function up()
     {
         Schema::table('bookings', function (Blueprint $table) {
-            $table->integer('accessories_id')->after('scooter_id');
+            $table->integer('accessories_id')->after('scooter_id')->default(0);
         });
     }
 

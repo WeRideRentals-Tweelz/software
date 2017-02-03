@@ -8,7 +8,7 @@ class Booking extends Model
 {
     protected $table = 'bookings';
 
-    protected $fillable = ['pick_up_date','drop_off_date','scooter_id','year','availability'];
+    protected $fillable = ['pick_up_date','drop_off_date','scooter_id','driver_id','accessories_id','status','confirmation','created_at','updated_at'];
 
     protected $hidden= [];
 

@@ -58,4 +58,12 @@ class HomeController extends Controller
 
         return view('dashboard.index')->with(compact('bookings','scooters','available','drivers'));
     }
+
+    public function profile()
+    {
+        $user = Auth::user();
+        $driver = $user->drivers();
+
+        return $drivers;
+    }
 }
