@@ -12,7 +12,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Tweelz') }}
+                {{ config('app.name', 'WeRide') }}
             </a>
         </div>
 
@@ -21,15 +21,17 @@
             <ul class="nav navbar-nav">
                 &nbsp;
             </ul>
-
+            
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right" style="margin-right: 50px;">
 					<li><a href="{{ url('/') }}">Home</a></li>
-					<li><a href="{{ url('/scooters') }}">Our scooters</a></li>          
+                    <li><a href="{{ url('/scooters') }}">Our scooters</a></li>          
                 <!-- Authentication Links -->
                 @if (Auth::guest())
+                <!--
                     <li><a href="{{ url('/login') }}">Login</a></li>
                     <li><a href="{{ url('/register') }}">Register</a></li>
+                -->
                 @elseif(Auth::user()->role_id == 1)
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

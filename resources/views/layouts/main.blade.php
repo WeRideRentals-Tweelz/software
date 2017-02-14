@@ -10,7 +10,7 @@
         <meta name="author" content="">
         <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
-        <title>Tweelz</title>
+        <title>We Ride - Rent a scooter and start earning money</title>
 
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
@@ -19,11 +19,12 @@
         @yield('styles')
     </head>
     <body>
+
        @section('header')
            @include('partials.header')
        @show
 
-    @yield('content')
+        @yield('content')
 
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/app.js') }}"></script>

@@ -1,6 +1,6 @@
-<footer class="container-fluid" style="background-color: #eee; padding-top: 30px;">
+<footer class="container-fluid" style="background-color: #424242;color:#fff; padding-top: 30px;">
 	<div class="container">
-		<div class="col-xs-4">
+		<div class="col-sm-4">
 			<h5>Site assets</h5>
 			<ul class="list-unstyled">
 				<li><a href="#">Site map</a></li>
@@ -9,7 +9,7 @@
 				<li><a href="#">General Terms & Conditions of Sale</a></li>
 			</ul>
 		</div>
-		<div class="col-xs-4">
+		<div class="col-sm-4">
 			<h5 style="text-align: center">Join us on</h5>
 			<div class="row" style="margin-top: 30px;">
 				<div class="col-xs-6" style="text-align: center">
@@ -20,7 +20,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-4" style="text-align: center">
+		<div class="col-sm-4" style="text-align: center">
 			<div class="row">
 				<h5>Contact us</h5>
 				<ul class="list-unstyled">

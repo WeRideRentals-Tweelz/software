@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>New Scooter Booking</title>
+	<title>WeRide : New Scooter Booking</title>
 </head>
 <body>
-	<h1>You received a new booking from Tweelz.com</h1>
+	<h1><?php echo e($lastname); ?> <?php echo e($surname); ?> wish to book a scooter</h1>
+	<h2>Booking Info</h2>
 	<ul>
-		<li>Scooter desired : <?php echo e($scooter->model - $scooter->plaque - $scooter->year); ?></li>
 		<li>Pick-up date : <?php echo e($pick_up_date); ?></li>
 		<li>Drop-off date : <?php echo e($drop_off_date); ?></li>
+	</ul>
+	<h2>Personnal Info</h2>
+	<ul>
+		<li>Phone : <?php echo e($phone); ?></li>
+		<li>Email : <?php echo e($email); ?></li>
 	</ul>
 </body>
 </html>

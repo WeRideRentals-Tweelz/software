@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>New Scooter Booking</title>
+	<title>WeRide : New Scooter Booking</title>
 </head>
 <body>
-	<h1>You received a new booking from Tweelz.com</h1>
+	<h1>{{ $lastname }} {{ $surname }} wish to book a scooter</h1>
+	<h2>Booking Info</h2>
 	<ul>
-		<li>Scooter desired : {{ $scooter->model - $scooter->plaque - $scooter->year }}</li>
 		<li>Pick-up date : {{ $pick_up_date }}</li>
 		<li>Drop-off date : {{ $drop_off_date }}</li>
+	</ul>
+	<h2>Personnal Info</h2>
+	<ul>
+		<li>Phone : {{ $phone }}</li>
+		<li>Email : {{ $email }}</li>
 	</ul>
 </body>
 </html>

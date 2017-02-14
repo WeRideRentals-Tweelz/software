@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\User;
 use App\Booking;
 use App\Drivers;
@@ -119,6 +120,35 @@ class bookingController extends Controller
             $mail->to('jb.malandain@gmail.com')->cc('delapierre.t@orange.fr')->cc('thomasleclercq90010@gmail.com');
         });
 
+        //Please create a new email for this when the website will be ready
         return view('bookings.confirmation')->with(compact('pick_up_date','drop_off_date','scooter'));
+    }
+
+    public function quote(Request $request)
+    {
+        $lastname       =   $request->input('firstname');
+        $surname        =   $request->input('surname');
+        $phone          =   $request->input('phone');
+        $email          =   $request->input('email');
+        $pick_up_date   =   $request->input('pick_up_date');
+        $drop_off_date  =   $request->input('drop_off_date');     
+
+        Mail::send('emails.new-booking',['lastname'=>$lastname,'surname'=>$surname,'phone'=>$phone,'email'=>$email,'pick_up_date'=>$pick_up_date,'drop_off_date'=>$drop_off_date], function($mail){
+            $mail->to('jb.malandain@gmail.com');
+            $mail->cc('delapierre.t@orange.fr');
+            $mail->cc('thomasleclercq90010@gmail.com');
+            $mail->from('contact@weride.com');
+            $mail->subject('WeRide : New scooter booking');
+        });
+
+        Mail::send('emails.confirmation',['lastname'=>$lastname,'surname'=>$surname,'phone'=>$phone,'email'=>$email,'pick_up_date'=>$pick_up_date,'drop_off_date'=>$drop_off_date], function($mail) use ($email) {
+            $mail->to($email);
+            $mail->from('contact@weride.com');
+            $mail->subject('We Ride - Your rendez-vous confirmation');
+        });
+
+        Session::flash('success', 'We well received your demand, you will receive a confirmation email soon.');
+
+        return redirect()->back();
     }
 }

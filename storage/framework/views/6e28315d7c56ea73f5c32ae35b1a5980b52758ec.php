@@ -1,9 +1,8 @@
-<div class="row" style="border-bottom: 1px silver solid; padding: 50px 0px">
+<div class="container-fluid" style="border-bottom: 1px silver solid">
 	<h2 style="text-align: center">Our prices</h2>
-	<div class="container">
-		<div class="row">
-			<div class="panel panel-default col-md-4" style="text-align: center; padding: 0">
-				<div class="panel-heading">
+
+			<div class="panel panel-default col-md-4" style="text-align: center; padding: 0;">
+				<div class="panel-heading" style="background-color: #424242;color:#fff">
 					<h3>Short Time</h3>
 				</div>
 				<div class="panel-body">
@@ -12,7 +11,7 @@
 				</div>
 			</div>
 			<div class="panel panel-default col-md-4" style="text-align: center; padding: 0">
-				<div class="panel-heading">
+				<div class="panel-heading" style="background-color: #424242;color:#fff">
 					<h3>Long Time</h3>
 				</div>
 				<div class="panel-body">
@@ -21,7 +20,7 @@
 				</div>
 			</div>
 			<div class="panel panel-default col-md-4" style="text-align: center; padding: 0">
-				<div class="panel-heading">
+				<div class="panel-heading" style="background-color: #424242;color:#fff">
 					<h3>Very long Time</h3>
 				</div>
 				<div class="panel-body">
@@ -29,6 +28,5 @@
 					<p>$20 per days</p>
 				</div>
 			</div>
-		</div>
-	</div>
+
 </div>

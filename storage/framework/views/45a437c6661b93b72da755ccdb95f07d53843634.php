@@ -12,7 +12,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="<?php echo e(url('/')); ?>">
-                <?php echo e(config('app.name', 'Tweelz')); ?>
+                <?php echo e(config('app.name', 'WeRide')); ?>
 
             </a>
         </div>
@@ -22,15 +22,17 @@
             <ul class="nav navbar-nav">
                 &nbsp;
             </ul>
-
+            
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right" style="margin-right: 50px;">
 					<li><a href="<?php echo e(url('/')); ?>">Home</a></li>
-					<li><a href="<?php echo e(url('/scooters')); ?>">Our scooters</a></li>          
+                    <li><a href="<?php echo e(url('/scooters')); ?>">Our scooters</a></li>          
                 <!-- Authentication Links -->
                 <?php if(Auth::guest()): ?>
+                <!--
                     <li><a href="<?php echo e(url('/login')); ?>">Login</a></li>
                     <li><a href="<?php echo e(url('/register')); ?>">Register</a></li>
+                -->
                 <?php elseif(Auth::user()->role_id == 1): ?>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

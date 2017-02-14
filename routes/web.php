@@ -12,6 +12,7 @@
 
 Route::get('/', 'scooterController@last4');
 
+
 // SCOOTERS
 Route::get('/scooters', 'scooterController@index');
 Route::get('/scooters/{scooter_id}', 'scooterController@show');
@@ -20,6 +21,10 @@ Route::post('/home/scooters/{scooter_id}/update', 'scooterController@update');
 
 
 // BOOKINGS
+
+//LANDING PAGE
+
+Route::post('/rent-a-scooter', 'bookingController@quote');
 
 Route::post('/bookings', 'bookingController@availability');
 Route::get('/home/bookings', 'bookingController@index');
