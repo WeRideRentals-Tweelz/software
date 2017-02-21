@@ -12,10 +12,10 @@
 
         <title>We Ride - Rent a scooter and start earning money</title>
 
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
-
+        <link async rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+        <link async rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+        <link async href="{{ asset('css/app.css') }}" rel="stylesheet">
+        
         @yield('styles')
     </head>
     <body>

@@ -3,7 +3,7 @@
 		<div class="row hidden-xs" style="height: 1900px">
 			<img src="{{ asset('images/scooter.jpeg') }}" style="max-height: 1200px;height:100vh;min-height:900px;width: 100%;margin-top: -200px">
 		</div>
-		<div style="position: absolute;bottom: 0px; left:0;background-color: #424242; width: 100%;padding: 30px 0px;box-shadow: 0px -2px 20px 0px black"> 
+		<div id="rent-it" style="position: absolute;bottom: 0px; left:0;background-color: #424242; width: 100%;padding: 30px 0px;box-shadow: 0px -2px 20px 0px black"> 
 			<div class="container">
 				<form class="form-inline" action="/rent-a-scooter" method="POST">
 					<div class="row">

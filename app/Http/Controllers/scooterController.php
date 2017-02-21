@@ -17,7 +17,10 @@ class scooterController extends Controller
     public function show($scooter_id)
     {
     	$scooter = Scooter::find($scooter_id);
-    	return view('scooter.show')->with(compact('scooter'));
+        $next = $scooter_id + 1;
+        $previous = $scooter_id -1;
+        $last = Scooter::orderBy('id','DESC')->first();
+    	return view('scooter.show')->with(compact('scooter','previous','next','last'));
     }
 
     public function last4()

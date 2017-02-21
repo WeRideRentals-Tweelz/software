@@ -1,6 +1,24 @@
 @extends('layouts.main')
 @section('content')
-	<div class="container">
+	
+	<!-- Arrow for switching from a scooter model to another -->
+	<div>
+		<nav aria-label="...">
+		  <ul class="pager">
+		  	
+		  	@if($scooter->id != 1)
+		    	<li class="previous" style="position: absolute;left: 25px; top: 300px;"><a style="padding:20px" href="{{ url('/scooters/'.$previous)  }}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+		    @endif
+
+		    @if($scooter->id != $last->id)
+		    	<li class="next" style="position: absolute;right: 25px;top: 300px;"><a style="padding:20px" href="{{ url('/scooters/'.$next)  }}">Next <span aria-hidden="true">&rarr;</span></a></li>
+		  	@endif
+
+		  </ul>
+		</nav>
+	</div>
+
+	<div class="container" style="height: 645px">
 		<div class="row" style="padding: 30px 0px">
 		@if(isset($scooter))
 			<div class="media">
@@ -17,12 +35,12 @@
 					</ul>
 					<h2>Details</h2>
 					<p>{{ $scooter->info }}</p>
-					<p><a href="" class="btn btn-success" role="button">Rent Now</a></p>
+					<p><a href="{{ url('/#rent-it') }}" class="btn btn-success" role="button">Rent it</a></p>
 				</div>
 			</div>	
 		@else
 			<h1>The requested product doesn't exist...</h1>
-			<p><a href="">Back to home page</a></p>
+			<p><a href="{{ url('/') }}">Back to home page</a></p>
 		@endif
 		</div>
 	</div>

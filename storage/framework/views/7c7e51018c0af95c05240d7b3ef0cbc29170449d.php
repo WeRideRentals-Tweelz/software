@@ -1,6 +1,9 @@
 <?php $__env->startSection('content'); ?>
 	<div class="container-fluid">
-		<div class="hidden-xs" style="background-color:rgba(0,0,0, 0.6);width:100%;text-align: center;color: white;position: absolute;left: 0;top: 50px">
+		<div id="beta-version">
+			<p>Beta Version</p>
+		</div>
+		<div class="hidden-xs" style="width:100%;text-align: center;color: white;position: absolute;left: 0;bottom: 210px">
 			<div class="col-sm-6 col-sm-offset-3">
 				<h1>We ride</h1>
 				<h2>Start riding today, earn money tomorow</h2>
@@ -25,7 +28,13 @@
 						<h2 style="text-align:center;">Rent your scooter with WeRide</h2>
 						<p style="text-align: center;">
 							WeRide is proposing you an alternative and low cost way to ride a motorcycle without buying it.
+							<br>
+							Why renting a scooter? We offer low cost, keys in hand rental solution: the scooter, equipment and insurance for a price lower than a backpacker room in Sydney.
+							<br>
 							It is an all-inclusive rental solution; we take care of the insurance, service and repairs.
+							You just have to choose your model, the accessories you want with. We drop it to your address or come have a chat in store and you are good to go.
+							<br>
+							No hidden fees, you exactly know how much it is going to cost you for the week, starting from $20/day<span style="font-style: italic; font-size: 0.8em">*including GST.</span>
 						</p>
 						<div class="row" style="padding: 50px">
 							<div class="col-sm-4 col-sm-offset-5">
@@ -45,7 +54,7 @@
 							<div class='thumbnail'>
 								<img src="<?php echo e(asset('images/asset2.jpeg')); ?>" style="width: 100%;height: 220px">
 								<div class="caption">
-									<h3 style="text-align: center">Save in fuel</h3>
+									<h3 style="text-align: center">Save money</h3>
 									<p></p>
 								</div>
 							</div>
@@ -59,6 +68,13 @@
 								</div>
 							</div>
 						</div>
+						<h3 style="text-align: center">What are your benefits from renting a scooter ?</h3>
+						<h4 style="text-align: center"><span style="font-style: italic">Beat the traffic, save on money, and stay independent</span></h4>
+						<p style="text-align: center">
+							Motorbike’s owners spend an average of $1500 per year for the general maintenance of their ride. By renting, you don’t have worry about it.
+							<br>
+							Also, motorbike parking is free in the city of SYDNEY !!<span style="font-style: italic; font-size: 0.8em">*Conditions Apply.</span>
+						</p>
 					</div>
 				</div>
 
@@ -68,17 +84,17 @@
 					<h2 style="text-align:center;">Book with us</h2>
 					<div class="col-xs-12">
 						<p style="text-align: center">
-							You just have to choose your model, the accessories you want with. We drop it to your address or come have a chat in store and you are good to go.
+							After completing the form we will contact you shortly. So make sure you leave us a way to reach you.
 							<br>
-							No hidden fees, you exactly know how much it is going to cost you for the week, starting from $20/day <span style="font-style: italic; font-size: 0.8em">*including GST.</span>
+							While in store, you will just have to choose your model and the accessories you want with. We drop it to your address or come have a chat in store and you are good to go.
 							<br>
-							Park for free <span style="font-style: italic; font-size: 0.8em">*Conditions apply</span>
+							Too busy or new in the city ? Rather than coming to the shop, we can deliver the scooter to your location within a 20km radius from the CBD. Just tick the delivery option when you are filling the form.
 						</p>
 					</div>
 					<h2 style="text-align:center;">What do you need to rent ?</h2>
 					<div class="col-sm-4">
 						<h3 style="text-align:center;">1</h3> 
-						<h4 style="text-align:center;">A valid international driver's licence</h4>
+						<h4 style="text-align:center;">A valid ID</h4>
 					</div>
 					<div class="col-sm-4">
 						<h3 style="text-align:center;">2</h3>
@@ -88,6 +104,15 @@
 						<h3 style="text-align:center;">3</h3>
 						<h4 style="text-align:center;">Get covered !</h4>
 					</div>
+					<p style="text-align: center; margin-top: 150px">
+							Having a motorbike license is compulsory to ride a motorcycle in NSW (and Victoria as well). 
+							<br>
+							Then you will have to provide either a NSW riding license; learner stage allow you to ride a vehicle up to 125cc.
+							<br>
+							Or your overseas license clearly stating your right to ride the desired category, coming with its international translation (International license).
+							<br>
+							<a href="#">More information</a>
+						</p>
 				</div>
 
 				<div class="container-fluid">

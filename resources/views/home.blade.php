@@ -1,7 +1,10 @@
 @extends('layouts.main')
 @section('content')
 	<div class="container-fluid">
-		<div class="hidden-xs" style="background-color:rgba(0,0,0, 0.6);width:100%;text-align: center;color: white;position: absolute;left: 0;top: 50px">
+		<div id="beta-version">
+			<p>Beta Version</p>
+		</div>
+		<div class="hidden-xs" style="width:100%;text-align: center;color: white;position: absolute;left: 0;bottom: 210px">
 			<div class="col-sm-6 col-sm-offset-3">
 				<h1>We ride</h1>
 				<h2>Start riding today, earn money tomorow</h2>
@@ -66,9 +69,9 @@
 								</div>
 							</div>
 						</div>
-						<h3>What are your benefits from renting a scooter ?</h3>
-						<h4><span style="font-style: italic">Beat the traffic, save on money, and stay independent</span></h4>
-						<p>
+						<h3 style="text-align: center">What are your benefits from renting a scooter ?</h3>
+						<h4 style="text-align: center"><span style="font-style: italic">Beat the traffic, save on money, and stay independent</span></h4>
+						<p style="text-align: center">
 							Motorbike’s owners spend an average of $1500 per year for the general maintenance of their ride. By renting, you don’t have worry about it.
 							<br>
 							Also, motorbike parking is free in the city of SYDNEY !!<span style="font-style: italic; font-size: 0.8em">*Conditions Apply.</span>
@@ -97,20 +100,20 @@
 					<div class="col-sm-4">
 						<h3 style="text-align:center;">2</h3>
 						<h4 style="text-align:center;">An Australian 125cc scooter licence</h4>
-						<p>
+					</div>
+					<div class="col-sm-4">
+						<h3 style="text-align:center;">3</h3>
+						<h4 style="text-align:center;">Get covered !</h4>
+					</div>
+					<p style="text-align: center; margin-top: 150px">
 							Having a motorbike license is compulsory to ride a motorcycle in NSW (and Victoria as well). 
 							<br>
 							Then you will have to provide either a NSW riding license; learner stage allow you to ride a vehicle up to 125cc.
 							<br>
 							Or your overseas license clearly stating your right to ride the desired category, coming with its international translation (International license).
 							<br>
-							<a href="#">More information about the the 125cc scooter licence in NSW</a>
+							<a href="#">More information</a>
 						</p>
-					</div>
-					<div class="col-sm-4">
-						<h3 style="text-align:center;">3</h3>
-						<h4 style="text-align:center;">Get covered !</h4>
-					</div>
 				</div>
 
 				<div class="container-fluid">

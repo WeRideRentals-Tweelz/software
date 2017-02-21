@@ -12,10 +12,10 @@
 
         <title>We Ride - Rent a scooter and start earning money</title>
 
-        <link href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/bootstrap.min.css')); ?>">
-        <link rel="stylesheet" type="text/css" href="<?php echo e(asset('css/font-awesome.min.css')); ?>">
-
+        <link async rel="stylesheet" type="text/css" href="<?php echo e(asset('css/bootstrap.min.css')); ?>">
+        <link async rel="stylesheet" type="text/css" href="<?php echo e(asset('css/font-awesome.min.css')); ?>">
+        <link async href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">
+        
         <?php echo $__env->yieldContent('styles'); ?>
     </head>
     <body>
