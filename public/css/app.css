@@ -1,11 +1,3 @@
- @media screen and (max-width:320px)
- {
- 	.second-screen
- 	{
- 		margin-top: -200px;
- 	}
- }
-
  body
  {
  	background-color: initial;
@@ -20,6 +12,10 @@
  {
  	border-color: initial;
  }
+ .navbar-brand
+ {
+ 	color: white;
+ }
  #beta-version
  {
  	background-color: rgba(40,40,40,.9);
@@ -30,6 +26,12 @@
     left: -85px;
     padding: 5px 90px;
  }
+ .google-maps
+ {
+ 	width: 400px;
+ 	height: 450px;
+ 	border:0;
+ }
  footer a
  {
  	color: white;
@@ -37,4 +39,49 @@
  footer h5
  {
  	font-size: 1.2em;
+ }
+ .scooter-img
+ {
+ 	width: 550px;
+ 	height: 400px;
+ }
+ .scooter-show
+ {
+ 	height: 645px;
+ }
+ .next,
+ .previous
+ {
+ 	top: 300px;
+ }
+
+
+  @media screen and (max-width:320px)
+ {
+ 	.headerXS
+ 	{
+ 		height: 250px;
+ 	}
+ 	.rent-scooter
+ 	{
+ 		margin-left: -35px;
+ 	}
+ 	.second-screen
+ 	{
+ 		margin-top: -200px;
+ 	}
+ 	.scooter-img
+ 	{
+ 		width: 290px;
+ 		height: 180px;
+ 	}
+ 	.scooter-show
+ 	{
+ 		height: initial;
+ 	}
+ 	 .next,
+ 	 .previous
+	 {
+	 	top: 80px;
+	 }
  }

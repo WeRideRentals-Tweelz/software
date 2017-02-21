@@ -10,12 +10,12 @@
         <meta name="author" content="">
         <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
-        <title>We Ride - Rent a scooter and start earning money</title>
+        <title>We Ride - Rent a scooter in Sydney and start earning money</title>
 
-        <link async rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
-        <link async rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
-        <link async href="{{ asset('css/app.css') }}" rel="stylesheet">
-        
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
         @yield('styles')
     </head>
     <body>
