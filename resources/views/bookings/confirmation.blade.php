@@ -3,10 +3,10 @@
 	<div class="container" style="min-height: 670px;">
 		<div class="row">
 			<div class="alert alert-success" role="alert">
-				<b>Well done !</b> You have successfully rent you scooter with Tweelz.com !
+				<strong>Well done !</strong> You have successfully rent you scooter with Tweelz.com !
 			</div>
 			<h1>Thank you for renting with Tweelz.com !</h1>
-			<p>We confirm you're reservation of a <B>{{ ucfirst($scooter->model) }}</B> for the <B>{{ date_format(date_create($pick_up_date),'d/m/Y') }}</B> to the <b>{{ date_format(date_create($drop_off_date),'d/m/Y') }}</b>.</p>
+			<p>We confirm you're reservation of a {{ ucfirst($scooter->model) }} for the {{ date_format(date_create($pick_up_date),'d/m/Y') }} to the {{ date_format(date_create($drop_off_date),'d/m/Y') }}.</p>
 			<p>Please be sure to bring your ID and your driver's licence the day you come to pick-up with us.</p>
 			<p>
 				You will need to pick-up the scooter at this address : 

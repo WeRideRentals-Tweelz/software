@@ -46,7 +46,7 @@
 						</p>
 						<div class="row" style="padding: 50px">
 							<div class="col-sm-4 col-sm-offset-5">
-								<a href="{{ url('/scooters') }}" class="btn btn-primary">Look at the scooters</a>
+								<a href="{{ url('/scooters') }}" ga(‘send’,’event’,’Button’,’Click’,’CheckScooters’, opt_value) class="btn btn-primary">Look at the scooters</a>
 							</div>
 						</div>
 						<div class="col-sm-4">
@@ -76,7 +76,7 @@
 								</div>
 							</div>
 						</div>
-						<h3 style="text-align: center">What are your benefits from renting a scooter ?</h3>
+						<h3 style="text-align: center">What are the benefits from renting a scooter ?</h3>
 						<h4 style="text-align: center"><span style="font-style: italic">Beat the traffic, save on money, and stay independent</span></h4>
 						<p style="text-align: center">
 							Motorbike’s owners spend an average of $1500 per year for the general maintenance of their ride. By renting, you don’t have to worry about it.
@@ -110,7 +110,7 @@
 					</div>
 					<div class="col-sm-4">
 						<h3 style="text-align:center;">3</h3>
-						<h4 style="text-align:center;">Get covered !</h4>
+						<h4 style="text-align:center;">A $280 bond</h4>
 					</div>
 					<p style="text-align: center; margin-top: 150px">
 							Having a motorbike license is compulsory to ride a motorcycle in NSW (and Victoria as well). 
@@ -119,7 +119,7 @@
 							<br>
 							Or your overseas license clearly stating your right to ride the desired category, coming with its international translation (International license).
 							<br>
-							<a href="#">More information</a>
+							<a href="http://www.rms.nsw.gov.au/geared/your_licence/getting_a_licence/on_your_bike.html" ga(‘send’,’event’,’Button’,’Click’,’MoreInformationOn125Licence’, opt_value) target="_blank">More information</a>
 						</p>
 				</div>
 
@@ -129,7 +129,7 @@
 					<div style="padding: 50px">
 						<div class="col-sm-6">
 							<h3>Address</h3>
-							<p><span class="fa fa-map-marker" aria-hidden="true"></span> <a href="https://www.google.com.au/maps/place/406+Botany+Rd,+Beaconsfield+NSW+2015/@-33.9103811,151.1998189,17z/data=!3m1!4b1!4m5!3m4!1s0x6b12b1b8fd8629c5:0x7f7a8970806031a3!8m2!3d-33.9103811!4d151.2020076?hl=fr">406 Botany Rd, Beaconsfield NSW 2015</a></p>
+							<p><span class="fa fa-map-marker" aria-hidden="true"></span> <a href="https://www.google.com.au/maps/place/406+Botany+Rd,+Beaconsfield+NSW+2015/@-33.9103811,151.1998189,17z/data=!3m1!4b1!4m5!3m4!1s0x6b12b1b8fd8629c5:0x7f7a8970806031a3!8m2!3d-33.9103811!4d151.2020076?hl=fr" ga(‘send’,’event’,’Button’,’Click’,’GetAdressInGoogleMaps’, opt_value)>406 Botany Rd, Beaconsfield NSW 2015</a></p>
 							<h3>Phone Number</h3>
 							<p><span class="fa fa-phone" aria-hidden="true"></span> 0410 125 994</p>
 							<h3>Email Address</h3>
@@ -138,7 +138,7 @@
 							<p><span class="fa fa-clock-o" aria-hidden="true"></span> 9am to 1pm</p>
 							<h3>Transports</h3>
 							<h4>Train</h4>
-							<p><span class="fa fa-train"></span> <a href="http://www.sydneytrains.info/timetables/timetables_by_line.htm?line=eh&dir=2#landingPoint"><span class="label label-warning" style="border-radius: 50px; padding: 5px">T2</span></a> Station Green Square</p>
+							<p><span class="fa fa-train"></span> <a href="http://www.sydneytrains.info/timetables/timetables_by_line.htm?line=eh&dir=2#landingPoint"><span class="label label-warning" target="_blank" style="border-radius: 50px; padding: 5px">T2</span></a> Station Green Square</p>
 							<h4>Bus</h4>
 							<p><span class="fa fa-bus"></span> <a href="http://www.sydneybuses.info/routes/309_20151004_tt.pdf"><span class="label label-info">309</span></a> <a href="http://www.sydneybuses.info/routes/309_20151004_tt.pdf"><span class="label label-info">310</span></a></p>
 						</div>

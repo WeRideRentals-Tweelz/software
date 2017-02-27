@@ -12,7 +12,7 @@
 			</div>
 			<div class="panel panel-default col-md-4" style="text-align: center; padding: 0">
 				<div class="panel-heading" style="background-color: #424242;color:#fff">
-					<h3>Long Time</h3>
+					<h3>Mid Time</h3>
 				</div>
 				<div class="panel-body">
 					<h4>From 7 to 19 days rent</h4>
@@ -21,7 +21,7 @@
 			</div>
 			<div class="panel panel-default col-md-4" style="text-align: center; padding: 0">
 				<div class="panel-heading" style="background-color: #424242;color:#fff">
-					<h3>Very long Time</h3>
+					<h3>Long Time</h3>
 				</div>
 				<div class="panel-body">
 					<h4>From 20 days rent</h4>

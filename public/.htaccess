@@ -3,8 +3,14 @@
         Options -MultiViews
     </IfModule>
 
+    Options +FollowSymlinks
     RewriteEngine On
 
+    #Redirect the www to 
+    RewriteBase /
+    RewriteCond %{HTTP_HOST} ^www\.weriderentals\.com [NC]
+    RewriteRule ^(.*)$ http://weriderentals.com/$1 [L,R=301,NC]
+    
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]

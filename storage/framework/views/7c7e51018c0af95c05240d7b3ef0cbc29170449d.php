@@ -16,7 +16,7 @@
 		</div>
 		<div class="row">
 			<div class="hidden-sm hidden-md hidden-lg">
-				<img src="<?php echo e(asset('images/scooter.jpeg')); ?>" style="width: 100%; margin-top: -125px">
+				<img class="headerXS" src="<?php echo e(asset('images/scooter.jpeg')); ?>" alt="rent a scooter in Sydney" style="width: 100%; margin-top: -125px">
 			</div>
 		</div>
 		<?php echo $__env->make('home.landing_page_form', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
@@ -28,11 +28,18 @@
 						<h2 style="text-align:center;">Rent your scooter with WeRide</h2>
 						<p style="text-align: center;">
 							WeRide is proposing you an alternative and low cost way to ride a motorcycle without buying it.
+							It is an all-inclusive rental solution; we take care of the insurance, the service and repairs.
+							You just have to choose your model and the accessories you want with.
 							<br>
-							Why renting a scooter? We offer low cost, keys in hand rental solution: the scooter, equipment and insurance for a price lower than a backpacker room in Sydney.
 							<br>
-							It is an all-inclusive rental solution; we take care of the insurance, service and repairs.
-							You just have to choose your model, the accessories you want with. We drop it to your address or come have a chat in store and you are good to go.
+							Why renting a scooter? 
+							<br>
+							We offer low cost and keys in hand rental solution: scooter, equipment and insurance for a price lower than a backpacker room in Sydney.
+							<br>
+							<br>
+							You have the choice :
+							<br>
+							We drop it to your address or you come have a chat with us in store and you are good to go.
 							<br>
 							No hidden fees, you exactly know how much it is going to cost you for the week, starting from $20/day<span style="font-style: italic; font-size: 0.8em">*including GST.</span>
 						</p>
@@ -43,7 +50,7 @@
 						</div>
 						<div class="col-sm-4">
 							<div class='thumbnail'>
-								<img src="<?php echo e(asset('images/asset1.jpeg')); ?>" style="width: 100%;height: 220px">
+								<img src="<?php echo e(asset('images/asset1.jpeg')); ?>" style="width: 100%;height: 220px" alt="beat the traffic">
 								<div class="caption">
 									<h3 style="text-align: center">Beat the traffic</h3>
 									<p></p>
@@ -52,7 +59,7 @@
 						</div>
 						<div class="col-sm-4">
 							<div class='thumbnail'>
-								<img src="<?php echo e(asset('images/asset2.jpeg')); ?>" style="width: 100%;height: 220px">
+								<img src="<?php echo e(asset('images/asset2.jpeg')); ?>" alt="save money" style="width: 100%;height: 220px">
 								<div class="caption">
 									<h3 style="text-align: center">Save money</h3>
 									<p></p>
@@ -61,7 +68,7 @@
 						</div>
 						<div class="col-sm-4">
 							<div class='thumbnail'>
-								<img src="<?php echo e(asset('images/asset3.jpeg')); ?>" style="width: 100%; height: 220px">
+								<img src="<?php echo e(asset('images/asset3.jpeg')); ?>" alt="stay independant" style="width: 100%; height: 220px">
 								<div class="caption">
 									<h3 style="text-align: center">Stay independant</h3>
 									<p></p>
@@ -71,7 +78,7 @@
 						<h3 style="text-align: center">What are your benefits from renting a scooter ?</h3>
 						<h4 style="text-align: center"><span style="font-style: italic">Beat the traffic, save on money, and stay independent</span></h4>
 						<p style="text-align: center">
-							Motorbike’s owners spend an average of $1500 per year for the general maintenance of their ride. By renting, you don’t have worry about it.
+							Motorbike’s owners spend an average of $1500 per year for the general maintenance of their ride. By renting, you don’t have to worry about it.
 							<br>
 							Also, motorbike parking is free in the city of SYDNEY !!<span style="font-style: italic; font-size: 0.8em">*Conditions Apply.</span>
 						</p>
@@ -86,7 +93,7 @@
 						<p style="text-align: center">
 							After completing the form we will contact you shortly. So make sure you leave us a way to reach you.
 							<br>
-							While in store, you will just have to choose your model and the accessories you want with. We drop it to your address or come have a chat in store and you are good to go.
+							While in store, you will just have to choose your model and the accessories you want with.
 							<br>
 							Too busy or new in the city ? Rather than coming to the shop, we can deliver the scooter to your location within a 20km radius from the CBD. Just tick the delivery option when you are filling the form.
 						</p>
@@ -117,6 +124,7 @@
 
 				<div class="container-fluid">
 					<h2 style="text-align:center;">Contact Us</h2>
+					<h3 style="text-align: center;">Still have a question in mind ? Contact us or come chat with us in store !</h3>
 					<div style="padding: 50px">
 						<div class="col-sm-6">
 							<h3>Address</h3>
@@ -134,7 +142,7 @@
 							<p><span class="fa fa-bus"></span> <a href="http://www.sydneybuses.info/routes/309_20151004_tt.pdf"><span class="label label-info">309</span></a> <a href="http://www.sydneybuses.info/routes/309_20151004_tt.pdf"><span class="label label-info">310</span></a></p>
 						</div>
 						<div class="col-sm-6">
-							<iframe class="hidden-xs" width="400" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJxSmG_bixEmsRozFggHCJen8&key=AIzaSyA8cF6MhPz1UZPyBe9hiGr7zPdthmAe4E4" allowfullscreen></iframe>
+							<iframe class="hidden-xs google-maps" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJxSmG_bixEmsRozFggHCJen8&key=AIzaSyA8cF6MhPz1UZPyBe9hiGr7zPdthmAe4E4" allowfullscreen></iframe>
 						</div>
 					</div>
 				</div>

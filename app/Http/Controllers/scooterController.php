@@ -10,17 +10,25 @@ class scooterController extends Controller
 {
     public function index()
     {
-    	$scooters = Scooter::all();
+    	$scooters = Scooter::select('state','plate','model','year','color','kilometers','last_check','info')->groupBy('scooters.model')->get();
     	return view('scooter.index')->with(compact('scooters'));
     }
 
-    public function show($scooter_id)
+    public function show($scooter_model)
     {
-    	$scooter = Scooter::find($scooter_id);
-        $next = $scooter_id + 1;
-        $previous = $scooter_id -1;
-        $last = Scooter::orderBy('id','DESC')->first();
-    	return view('scooter.show')->with(compact('scooter','previous','next','last'));
+        $scooter_model = str_replace('-',' ',$scooter_model);
+    	$scooter = Scooter::where('model',$scooter_model)->first();
+        $scooter_color = Scooter::distinct()->select('color')->where('model',$scooter_model)->get();
+        $color='';
+    	return view('scooter.show')->with(compact('scooter','scooter_color'));
+    }
+
+    public function showcolor($scooter_model,$color)
+    {
+        $scooter_model = str_replace('-',' ',$scooter_model);
+        $scooter = Scooter::where('model',$scooter_model)->first();
+        $scooter_color = Scooter::distinct()->select('color')->where('model',$scooter_model)->get();
+        return view('scooter.show')->with(compact('scooter','scooter_color','color'));
     }
 
     public function last4()
