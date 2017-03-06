@@ -13,12 +13,12 @@
         <!-- Facebook opengraphs -->
         <meta property="og:url"                content="http://weriderentals.com" />
         <meta property="og:type"               content="website" />
-        <meta property="og:title"              content="We Ride" />
+        <meta property="og:title"              content="WeRide" />
         <meta property="og:description"        content="Rent a scooter in Sydney and start earning money" />
         <meta property="og:image"              content="http://weriderentals.com/images/scooter.jpeg" />
         <!-- end of facebook opengraph -->
 
-        <title>We Ride - Rent a scooter in Sydney and start earning money</title>
+        <title>WeRide - Rent a scooter in Sydney and start earning money</title>
 
         <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">

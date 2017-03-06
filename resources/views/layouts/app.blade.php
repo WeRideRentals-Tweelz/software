@@ -26,6 +26,8 @@
             'csrfToken' => csrf_token(),
         ]); ?>
     </script>
+    <!-- End Scripts -->
+
 </head>
 <body>
     @include('partials.header')
