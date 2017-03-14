@@ -1,37 +1,35 @@
 @extends('layouts.main')
 @section('content')
-	
-	<!-- Arrow for switching from a scooter model to another -->
-	<div>
-		<nav aria-label="...">
-		  <ul class="pager">
-		  	
-		  	@if($scooter->id != 1)
-		    	<li class="previous" style="position: absolute;left: 25px;"><a style="padding:20px" href="{{ url('/scooters/'.$previous)  }}" title='Previous scooter'><span aria-hidden="true">&larr;</span> Previous</a></li>
-		    @endif
-
-		    @if($scooter->id != $last->id)
-		    	<li class="next" style="position: absolute;right: 25px;"><a style="padding:20px" href="{{ url('/scooters/'.$next)  }}" title='Next scooter'>Next <span aria-hidden="true">&rarr;</span></a></li>
-		  	@endif
-
-		  </ul>
-		</nav>
-	</div>
-
 	<div class="container scooter-show">
 		<div class="row" style="padding: 30px 0px">
 		@if(isset($scooter))
 			<div class="media">
 				<div class="media-left media-middle col-xs-12 col-sm-6">
-					<img class="scooter-img" src="{{ asset('images/'.$scooter->plate.'-'.str_replace(' ','',$scooter->model).'.jpg') }}" alt="{{ 'scooter '.$scooter->model.' of '.$scooter->year }}">
+					@if(!empty($color))
+						<img class="scooter-img" src="{{ asset('images/'.$scooter->plate.'-'.str_replace(' ','',$scooter->model).'-'.lcfirst($color).'.jpg') }}" alt="{{ 'scooter '.$scooter->model.' of '.$scooter->year }}">
+					@else
+						<img class="scooter-img" src="{{ asset('images/'.$scooter->plate.'-'.str_replace(' ','',$scooter->model).'-'.lcfirst($scooter->color).'.jpg') }}" alt="{{ 'scooter '.$scooter->model.' of '.$scooter->year }}">
+					@endif
 				</div>
 				<div class="col-xs-12 col-sm-6">
 					<h2>Informations</h2>
 					<ul class="list-unstyled">
-						<li><b>Model</b> : {{ ucfirst($scooter->model) }}</li>
-						<li><b>Year</b> : {{ $scooter->year }}</li>
-						<li><b>Kilometers</b> : {{ $scooter->kilometers }}km</li>
-						<li><b>Colors</b> : {{ $scooter->color }}</li>
+						<li>Model : {{ ucfirst($scooter->model) }}</li>
+						<li>Year : {{ $scooter->year }}</li>
+						<li>Kilometers : {{ $scooter->kilometers }}km</li>
+						<li>
+							<div class="col-xs-2" style="padding: 0">
+								Colors : 
+							</div>
+							@foreach($scooter_color as $color)
+							<div class="col-xs-1" style="padding: 0">
+								<a href="{{ url('/scooters/'.str_replace(' ','-',$scooter->model).'/'.lcfirst($color->color)) }}" title="{{ $color->color }}">
+									<div style="width: 20px; height: 20px; background-color: {{$color->color}}; border: 2px solid black">
+									</div>
+								</a>
+							</div>
+							@endforeach
+						</li>	
 					</ul>
 					<h2>Details</h2>
 					<p>{{ $scooter->info }}</p>

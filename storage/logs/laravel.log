@@ -22442,6 +22442,7 @@ Stack trace:
 #43 /home/dawolf923/Dev/Tweelz/public/index.php(53): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
 #44 /home/dawolf923/Dev/Tweelz/server.php(21): require_once('/home/dawolf923...')
 #45 {main}  
+<<<<<<< HEAD
 [2017-02-27 04:20:28] production.ERROR: exception 'RuntimeException' with message 'The only supported ciphers are AES-128-CBC and AES-256-CBC with the correct key lengths.' in /Users/EMFS_2/Dev/tweelz/Tweelz/vendor/laravel/framework/src/Illuminate/Encryption/Encrypter.php:43
 Stack trace:
 #0 /Users/EMFS_2/Dev/tweelz/Tweelz/vendor/laravel/framework/src/Illuminate/Encryption/EncryptionServiceProvider.php(27): Illuminate\Encryption\Encrypter->__construct(NULL, 'AES-256-CBC')

@@ -137,13 +137,13 @@ class bookingController extends Controller
             $mail->to('jb.malandain@gmail.com');
             $mail->cc('delapierre.t@orange.fr');
             $mail->cc('thomasleclercq90010@gmail.com');
-            $mail->from('contact@weride.com');
+            $mail->from('contact@weriderentals.com');
             $mail->subject('WeRide : New scooter booking');
         });
 
         Mail::send('emails.confirmation',['lastname'=>$lastname,'surname'=>$surname,'phone'=>$phone,'email'=>$email,'pick_up_date'=>$pick_up_date,'drop_off_date'=>$drop_off_date], function($mail) use ($email) {
             $mail->to($email);
-            $mail->from('contact@weride.com');
+            $mail->from('contact@weriderentals.com');
             $mail->subject('We Ride - Your rendez-vous confirmation');
         });
 

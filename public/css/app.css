@@ -1,8 +1,161 @@
- body
- {
- 	background-color: initial;
- 	background-color: white;
- }
+/***
+* Generals
+***/
+body
+{
+    background-color: initial;
+    background-color: white;
+}
+h1,h2,h3,h4,h5,h6
+{
+    text-align: center;
+}
+p
+{
+    text-align: center;
+    font-size: 1.5em;
+}
+.italic-little
+{
+    font-style: italic; 
+    font-size: 0.8em;
+}
+.bold
+{
+    font-weight: bold;
+}
+.not-aligned h1,
+.not-aligned h2,
+.not-aligned h3,
+.not-aligned h4,
+.not-aligned h5,
+.not-aligned h6,
+.not-aligned p
+{
+    text-align: left;
+}
+.gold
+{
+    color: gold;
+}
+.oldGold
+{
+    color: goldenrod;
+}
+a:hover
+{
+    color: gold;
+    text-decoration: none;
+}
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover
+{
+    color: gold;
+}
+.navbar-default .navbar-nav>li>a:hover
+{
+    color: gold;
+}
+
+/***
+* Header 
+***/
+#titles 
+{
+    width:100%;
+    text-align: center;
+    color: white;
+    position: absolute;
+    left: 0;
+    bottom: 210px;
+}
+#desktop-image-cover img
+{
+    max-height: 1200px;
+    height:100vh;
+    width: 100%;
+    margin-top: -200px;
+}
+#facebook-logo
+{
+    color:white;
+}
+#rent-it
+{
+    position: absolute;
+    bottom: 0px; 
+    left:0;
+    background-color: #424242; 
+    width: 100%;
+    padding: 30px 0px;
+    box-shadow: 0px -2px 20px 0px black;
+}
+#desktop-form
+{
+    margin-left: 20%;
+}
+#desktop-form input
+{
+    width: 12%;
+}
+#form-button-container
+{
+    margin-top: ; 
+    margin-left: 33%;
+}
+#form-button-container
+{
+    margin-top: 20px;
+}
+/***
+* End Header
+***/
+
+/***
+* Home Page
+***/
+.section
+{
+    border-bottom: 1px silver solid; 
+    padding: 50px 0px;
+}
+.cta-container
+{
+    padding: 50px 0;
+}
+#marketing-figures
+{
+    margin-bottom: 100px;
+}
+#marketing-figures h2
+{
+    margin-bottom: 50px;
+}
+#marketing-figures p
+{
+    font-size: 2em;
+}
+.earnings
+{
+    color: gold; 
+    font-weight: bold;
+}
+.benefits img
+{
+    width: 100%;
+    height: 220px;
+}
+.prices
+{
+    border-bottom: 1px silver solid;
+}
+.bubble
+{
+    text-align:center;
+    border-radius: 50px;
+    width: 68px;
+    padding: 20px;
+    margin-left: 40%;
+}
  .second-screen 
  {
  	background-color: white;
@@ -54,18 +207,99 @@
  {
  	top: 300px;
  }
+ 
+@-webkit-keyframes shaker {
+    0%  { -webkit-transform: translate(0,0); transform: scale(1);}
+    50% { -webkit-transform: translate(0,0px); transform: scale(1);}
+    52% { -webkit-transform: translate(0,2px); transform: scale(0.9);}
+    54% { -webkit-transform: translate(0,-2px); transform: scale(1.1);}
+    56% { -webkit-transform: translate(0, 0); transform: scale(1);}
+    100%{ -webkit-transform: translate(0, 0); transform: scale(1);}
+}
 
+.button-bounce {
+    animation-name: shaker;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    transform-origin:50% 50%;
+    animation-timing-function: linear;
+}
 
-  @media screen and (max-width:320px)
+#facebook-buttons
+{
+    position: absolute;
+    top: 50px;
+    background-color: #424242;
+    right: 0px;
+    padding: 20px;
+    border-radius: 0px 0px 0px 10px;
+}
+#facebook-logo
+{
+    margin-right: 20px;
+}
+#like-share
+{
+    top: -5px;
+}
+
+  @media screen and (max-width:767px)
  {
- 	.headerXS
- 	{
- 		height: 250px;
- 	}
+    /***
+    * Generals
+    ***/
+    p
+    {
+        font-size: 1em;
+    }
+    /***
+    * Mobile Header
+    ***/
+    #mobile-image-cover img
+    {
+        width: 100%; 
+        margin-top: -70px;
+    }
+    #facebook-logo
+    {
+        margin-right: 10px;
+    }
+    #like-share
+    {
+        right: -6px;
+    }
+    .input-container-right
+    {
+        padding-right: 0;
+    }
+    .input-container-left
+    {
+        padding-left: 0;
+    }
+    .input-container
+    {
+        padding: 0;
+    }
+    .input-container label
+    {
+        color: white;
+    }
+    .date-input
+    {
+        margin-top: 10px;
+    }
  	.rent-scooter
  	{
  		margin-left: -35px;
+        margin-top: 25px;
  	}
+    /***
+    *  End Mobile Header
+    ***/
+    .cta-container a
+    {
+        font-size: 0.8em;
+    }
  	.second-screen
  	{
  		margin-top: -200px;
@@ -84,4 +318,9 @@
 	 {
 	 	top: 80px;
 	 }
+
+     .fb-like
+     {
+        right: -368px;
+     }
  }

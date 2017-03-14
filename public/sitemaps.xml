@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" >
+	<url>
+		<loc>http://weriderentals.com</loc>
+		<image:image>
+			<image:loc>http://weriderentals/images/scooter.jpeg</image:loc>
+			<image:caption>Picture of a scooter in Australia</image:caption>
+		</image:image>
+		<image:image>
+			<image:loc>http://weriderentals.com/images/asset1.jpeg</image:loc>
+			<image:caption>Beat the traffic</image:caption>
+		</image:image>
+		<image:image>
+			<image:loc>http://weriderentals.com/images/asset2.jpeg</image:loc>
+			<image:caption>Save Money</image:caption>
+		</image:image>
+		<image:image>
+			<image:loc>http://weriderentals.com/images/asset3.jpeg</image:loc>
+			<image:caption>Stay independant</image:caption>
+		</image:image>
+		<lastmod>2017-02-24</lastmod>
+		<changefreq>weekly</changefreq>
+		<priority>1.0</priority>
+	</url>
+	<url>
+		<loc>http://weriderentals.com/scooters</loc>
+		<image:image>
+			<image:loc>http://weriderentals.com/images/NPW36-KYMCOAgility-yellow.jpg</image:loc>
+			<image:caption>Scooter KYMCO Agility of 2006</image:caption>
+		</image:image>
+		<image:image>
+			<image:loc>http://weriderentals.com/images/MAB44-SYMOrbitII-white.jpg</image:loc>
+			<image:caption>Scooter SYM Orbit II of 2016</image:caption>
+		</image:image>	
+		<lastmod>2017-02-24</lastmod>
+		<changefreq>monthly</changefreq>
+		<priority>1.0</priority>	
+	</url>
+	<url>
+		<loc>http://weriderentals.com/scooters/KYMCO-Agility</loc>
+		<image:image>
+			<image:loc>http://weriderentals.com/images/NPW36-KYMCOAgility-yellow.jpg</image:loc>
+			<image:caption>Scooter KYMCO Agility of 2006</image:caption>
+		</image:image>
+		<lastmod>2017-02-24</lastmod>
+		<changefreq>monthly</changefreq>
+		<priority>1.0</priority>	
+	</url>
+	<url>
+		<loc>http://weriderentals.com/scooters/SYM-Orbit-II</loc>
+		<image:image>
+			<image:loc>http://weriderentals.com/images/MAB44-SYMOrbitII-white.jpg</image:loc>
+			<image:caption>Scooter SYM Orbit II of 2016</image:caption>
+		</image:image>	
+		<lastmod>2017-02-24</lastmod>
+		<changefreq>monthly</changefreq>
+		<priority>1.0</priority>	
+	</url>	
+</urlset>

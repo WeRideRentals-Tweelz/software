@@ -15,7 +15,8 @@ Route::get('/', 'scooterController@last4');
 
 // SCOOTERS
 Route::get('/scooters', 'scooterController@index');
-Route::get('/scooters/{scooter_id}', 'scooterController@show');
+Route::get('/scooters/{scooter_model}', 'scooterController@show');
+Route::get('/scooters/{scooter_model}/{color}', 'scooterController@showcolor');
 Route::get('/home/scooters/{scooter_id}', 'scooterController@adminInfo');
 Route::post('/home/scooters/{scooter_id}/update', 'scooterController@update');
 
