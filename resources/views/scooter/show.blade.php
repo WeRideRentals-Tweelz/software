@@ -7,11 +7,11 @@
 		  <ul class="pager">
 		  	
 		  	@if($scooter->id != 1)
-		    	<li class="previous" style="position: absolute;left: 25px;"><a style="padding:20px" href="{{ url('/scooters/'.$previous)  }}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+		    	<li class="previous" style="position: absolute;left: 25px;"><a style="padding:20px" href="{{ url('/scooters/'.$previous)  }}" title='Previous scooter'><span aria-hidden="true">&larr;</span> Previous</a></li>
 		    @endif
 
 		    @if($scooter->id != $last->id)
-		    	<li class="next" style="position: absolute;right: 25px;"><a style="padding:20px" href="{{ url('/scooters/'.$next)  }}">Next <span aria-hidden="true">&rarr;</span></a></li>
+		    	<li class="next" style="position: absolute;right: 25px;"><a style="padding:20px" href="{{ url('/scooters/'.$next)  }}" title='Next scooter'>Next <span aria-hidden="true">&rarr;</span></a></li>
 		  	@endif
 
 		  </ul>
@@ -35,7 +35,7 @@
 					</ul>
 					<h2>Details</h2>
 					<p>{{ $scooter->info }}</p>
-					<p><a href="{{ url('/#rent-it') }}" class="btn btn-success" role="button">Rent it</a></p>
+					<p><a href="{{ url('/#rent-it') }}" class="btn btn-success" role="button" title="Go to rent form">Rent it</a></p>
 				</div>
 			</div>	
 		@else

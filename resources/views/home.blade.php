@@ -46,7 +46,7 @@
 						</p>
 						<div class="row" style="padding: 50px">
 							<div class="col-sm-4 col-sm-offset-5">
-								<a href="{{ url('/scooters') }}" class="btn btn-primary">Look at the scooters</a>
+								<a href="{{ url('/scooters') }}" class="btn btn-primary" title="Check all the scooters available">Look at the scooters</a>
 							</div>
 						</div>
 						<div class="col-sm-4">

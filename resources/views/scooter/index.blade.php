@@ -9,7 +9,7 @@
 					<img src="{{ asset('images/'.$scooter->plate.'-'.str_replace(' ','',$scooter->model).'.jpg') }}" alt="{{ 'scooter '.$scooter->model.' of '.$scooter->year }}" style="max-height: 150px;">
 					<div class="caption">
 						<h3 style="text-align: center">{{ ucfirst($scooter->model) }}</h3>
-						<p style="text-align: center"><a href="{{ url('scooters/'.$scooter->id) }}" class="btn btn-info" role="button">More Information</a></p>
+						<p style="text-align: center"><a href="{{ url('scooters/'.$scooter->id) }}" class="btn btn-info" role="button" title="Scooter Details">More Information</a></p>
 					</div>
 				</div>				
 			</div>
