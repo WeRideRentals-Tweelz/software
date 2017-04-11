@@ -4,8 +4,8 @@
 	<title>We Ride - Your rendez-vous confirmation</title>
 </head>
 <body>
-	<h1>Thank you for renting with We Ride !</h1>
-	<p>We receive your demand of having a scooter from {{ date('l d F Y', strtotime($pick_up_date)) }} to {{ date('l d F Y', strtotime($drop_off_date)) }}.</p>
+	<h1>Thank you {{ $name }} for renting with We Ride !</h1>
+	<p>We receive your demand of having a scooter for {{ $formule }}.</p>
 	<p>
 		Meet us at this address : 
 		<ul>

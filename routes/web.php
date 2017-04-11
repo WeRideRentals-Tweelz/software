@@ -25,7 +25,7 @@ Route::post('/home/scooters/{scooter_id}/update', 'scooterController@update');
 
 //LANDING PAGE
 
-Route::post('/rent-a-scooter', 'bookingController@quote');
+Route::post('/booking/quote', 'bookingController@quote');
 
 Route::post('/bookings', 'bookingController@availability');
 Route::get('/home/bookings', 'bookingController@index');

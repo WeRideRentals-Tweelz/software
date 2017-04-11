@@ -117,7 +117,7 @@ class bookingController extends Controller
         Mail::send('emails.new-booking',$mail_info, function($mail) use ($scooter){
             $mail->from('contact@tweelz.com', 'New scooter booking');
 
-            $mail->to('jb.malandain@gmail.com')->cc('delapierre.t@orange.fr')->cc('thomasleclercq90010@gmail.com');
+            $mail->to('contact@weriderentals.com')->cc('thomasleclercq90010@gmail.com');
         });
 
         //Please create a new email for this when the website will be ready
@@ -126,22 +126,19 @@ class bookingController extends Controller
 
     public function quote(Request $request)
     {
-        $lastname       =   $request->input('firstname');
-        $surname        =   $request->input('surname');
+        $name           =   $request->input('name');
         $phone          =   $request->input('phone');
         $email          =   $request->input('email');
-        $pick_up_date   =   $request->input('pick_up_date');
-        $drop_off_date  =   $request->input('drop_off_date');     
+        $formule        =   $request->input('formule');   
 
-        Mail::send('emails.new-booking',['lastname'=>$lastname,'surname'=>$surname,'phone'=>$phone,'email'=>$email,'pick_up_date'=>$pick_up_date,'drop_off_date'=>$drop_off_date], function($mail){
-            $mail->to('jb.malandain@gmail.com');
-            $mail->cc('delapierre.t@orange.fr');
+        Mail::send('emails.new-booking',['name'=>$name,'phone'=>$phone,'email'=>$email,'formule'=>$formule], function($mail){
+            $mail->to('contact@weriderentals.com');
             $mail->cc('thomasleclercq90010@gmail.com');
             $mail->from('contact@weriderentals.com');
             $mail->subject('WeRide : New scooter booking');
         });
 
-        Mail::send('emails.confirmation',['lastname'=>$lastname,'surname'=>$surname,'phone'=>$phone,'email'=>$email,'pick_up_date'=>$pick_up_date,'drop_off_date'=>$drop_off_date], function($mail) use ($email) {
+        Mail::send('emails.confirmation',['name'=>$name,'phone'=>$phone,'email'=>$email,'formule'=>$formule], function($mail) use ($email) {
             $mail->to($email);
             $mail->from('contact@weriderentals.com');
             $mail->subject('We Ride - Your rendez-vous confirmation');

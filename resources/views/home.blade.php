@@ -2,28 +2,49 @@
 @section('content')
 
 	<!-- Header Start -->
-	<div id="header" class="container-fluid">
-		<div id="beta-version">
-			<p><span class="gold">B</span>eta Version</p>
-		</div>
-		<div id="titles" class="hidden-xs">
-			<div class="col-sm-6 col-sm-offset-3">
-				<h1 class="bold"><span class="gold">We</span>Ride</h1>
-				<h2>Start riding today, earn money tomorow</h2>
+		<div id="header" class="container-fluid">
+			<div id="beta-version">
+				<p>Beta Version</p>
 			</div>
-			@if(Session::has('success'))
-				<div class="col-sm-6 col-sm-offset-3 alert alert-success">
-					<p>{{ Session::get('success') }}</p>
+
+			<div id="desktop-image" class="row">
+				<img src="{{ asset('images/scooter.jpeg') }}">
+			</div>
+
+			<div id="titles">
+				
+				<div id="title" class="col-xs-12 col-sm-4 col-sm-offset-2">
+					<h1 class="bold"><span class="gold">We</span>Ride</h1>
+					<span class="line"></span>
+					<h2>Start riding today, save money tomorow</h2>
+					@if(Session::has('success'))
+					<div class="col-xs-12 alert alert-success">
+						<p>{{ Session::get('success') }}</p>
+					</div>
+				@endif
 				</div>
-			@endif
-		</div>
-		<div id="mobile-image-cover" class="row">
-			<div class="hidden-sm hidden-md hidden-lg">
-				<img src="{{ asset('images/scooter.jpeg') }}" alt="rent a scooter in Sydney">
+
+				<div id="desktop-form" class="col-xs-12 col-sm-4 col-sm-offset-2">
+					<form class="form" action="/booking/quote" method="POST">
+						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						<div id="form-input-group">
+							<input type="text" name="firstname" placeholder="Name" class="form-control" required>
+							<input type="text" name="phone" placeholder="Phone" class="form-control" required>
+							<input type="email" name="email" placeholder="Email" class="form-control" required>
+							<select name="formule" class="form-control" required>
+								<option value="" disabled selected>Select your booking option</option>
+								<option value="1 to 6 days">1 to 6 days</option>
+								<option value="7 to 20 days">7 to 20 days</option>
+								<option value="more than 21 days">more than 21 days</option>
+							</select>
+							<div id="form-button-container">
+								<button type="submit" onclick=ga(‘send’,’event’,’Button’,’Click’,’NewClient’, '0') class="button-bounce btn btn-primary rent-scooter">Book Now</button>
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
-		@include('home.landing_page_form')
-	</div> 
 	<!-- End Header -->
 
 		<div class="container second-screen">
@@ -87,8 +108,6 @@
 						</p>
 					</div>
 				</div>
-
-				@include('home.price_display')
 
 				<div class="section">
 					<div class="container-fluid">

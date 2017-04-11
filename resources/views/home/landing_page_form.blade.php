@@ -12,53 +12,25 @@
 		<!-- End of Facebook buttons -->
 
 		<div id="rent-it"> 
-				<form id="mobile-form" class="form-inline hidden-sm hidden-md hidden-lg" action="/rent-a-scooter" method="POST">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-						<div class="input-container-right col-xs-6">
-							<div class="input-container col-xs-12">
-								<input type="text" name="firstname" placeholder="Firstame" class="form-control" required>
-							</div>
-							<div class="input-container col-xs-12">
-								<input type="text" name="surname" placeholder="Lastname" class="form-control" required>
-							</div>
-						</div>
-						<div class="input-container-left col-xs-6">
-							<div class="input-container col-xs-12">
-								<input type="text" name="phone" placeholder="Phone" class="form-control" required>
-							</div>
-							<div class="input-container col-xs-12">
-								<input type="email" name="email" placeholder="Email" class="form-control" required>
-							</div>
-						</div>
-						<div class="date-input col-xs-6 form-group">
-							<div class="input-container col-xs-12">
-								<label for="pick_up_date">Pick Up Date</label>
-								<input id="pick_up_date" type="date" name="pick_up_date" class="form-control" required>
-							</div>
-						</div>
-						<div class="date-input col-xs-6 form-group">
-							<div class="input-container col-xs-12">
-								<label for="drop_off_date">Drop Off Date</label>
-								<input id="drop_off_date" type="date" name="drop_off_date" class="form-control" required>
-							</div>
-						</div>
-
-					<div class="mobile-button-container col-xs-4 col-xs-offset-5 col-sm-offset-5">
-						<button type="submit" class="btn btn-primary rent-scooter">Book Now</button>
-					</div>
-				</form>
-				<form id="desktop-form" class="hidden-xs form-inline" action="/rent-a-scooter" method="POST">
+			<div id="desktop-form" class="col-xs-12 col-sm-4 col-sm-offset-2">
+				<form class="form" action="/booking/quote" method="POST">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<input type="text" name="firstname" placeholder="Firstame" class="form-control" required>
-					<input type="text" name="surname" placeholder="Lastname" class="form-control" required>
-					<input type="text" name="phone" placeholder="Phone" class="form-control" required>
-					<input type="email" name="email" placeholder="Email" class="form-control" required>
-					<input type="date" name="pick_up_date" class="form-control" required>
-					<input type="date" name="drop_off_date" class="form-control" required>
-					<div id="form-button-container">
-						<button type="submit" onclick=ga(‘send’,’event’,’Button’,’Click’,’NewClient’, '0') class="button-bounce btn btn-primary rent-scooter">Book Now</button>
+					<div id="form-input-group">
+						<input type="text" name="firstname" placeholder="Name" class="form-control" required>
+						<input type="text" name="phone" placeholder="Phone" class="form-control" required>
+						<input type="email" name="email" placeholder="Email" class="form-control" required>
+						<select name="formule" class="form-control" required>
+							<option value="" disabled selected>Select your booking option</option>
+							<option value="1 to 6 days">1 to 6 days</option>
+							<option value="7 to 20 days">7 to 20 days</option>
+							<option value="more than 21 days">more than 21 days</option>
+						</select>
+						<div id="form-button-container">
+							<button type="submit" onclick=ga(‘send’,’event’,’Button’,’Click’,’NewClient’, '0') class="button-bounce btn btn-primary rent-scooter">Book Now</button>
+						</div>
 					</div>
 				</form>
+			</div>
 		</div>
 	</div>
 </div>	
