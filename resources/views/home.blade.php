@@ -11,11 +11,13 @@
 				<img src="{{ asset('images/scooter.jpeg') }}">
 			</div>
 
+			<div id="logo-large">
+				<img src="{{ asset('images/logo-large.png') }}" alt="logo">
+			</div>
+
 			<div id="titles">
-				
-				<div id="title" class="col-xs-12 col-sm-4 col-sm-offset-2">
-					<h1 class="bold"><span class="gold">We</span>Ride</h1>
-					<span class="line"></span>
+				<div id="title" class="col-xs-12 col-sm-4 col-sm-offset-1">
+					<h1 class="bold hidden"><span class="gold">We</span>Ride</h1>
 					<h2>Start riding today, save money tomorow</h2>
 					@if(Session::has('success'))
 					<div class="col-xs-12 alert alert-success">
@@ -24,7 +26,7 @@
 				@endif
 				</div>
 
-				<div id="desktop-form" class="col-xs-12 col-sm-4 col-sm-offset-2">
+				<div id="desktop-form" class="col-xs-12 col-sm-3 col-sm-offset-3">
 					<form class="form" action="/booking/quote" method="POST">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div id="form-input-group">
