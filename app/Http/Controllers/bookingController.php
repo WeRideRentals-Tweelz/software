@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\QuoteRequest;
 use App\User;
 use App\Booking;
 use App\Drivers;
@@ -124,13 +125,13 @@ class bookingController extends Controller
         return view('bookings.confirmation')->with(compact('pick_up_date','drop_off_date','scooter'));
     }
 
-    public function quote(Request $request)
+    public function quote(QuoteRequest $request)
     {
         $name           =   $request->input('name');
         $phone          =   $request->input('phone');
         $email          =   $request->input('email');
-        $formule        =   $request->input('formule');   
-
+        $formule        =   $request->input('formule'); 
+        /*
         Mail::send('emails.new-booking',['name'=>$name,'phone'=>$phone,'email'=>$email,'formule'=>$formule], function($mail){
             $mail->to('contact@weriderentals.com');
             $mail->cc('thomasleclercq90010@gmail.com');
@@ -143,7 +144,7 @@ class bookingController extends Controller
             $mail->from('contact@weriderentals.com');
             $mail->subject('We Ride - Your rendez-vous confirmation');
         });
-
+        */
         Session::flash('success', 'We well received your demand, you will receive a confirmation email soon.');
 
         return redirect()->back();

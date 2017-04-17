@@ -12,7 +12,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                <img style="height:35px" src="{{ asset('images/logo-small.png')}}" alt="We Ride Rentals logo">
+                <img src="{{ asset('images/logo-small.png')}}" alt="We Ride Rentals logo">
             </a>
         </div>
 

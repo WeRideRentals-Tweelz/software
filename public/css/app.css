@@ -75,23 +75,18 @@ h1
 }
 #logo-large img
 {
-    position: absolute;
-    top: 12%;
-    left: 15%;
     height: 200px;
+}
+.navbar-brand img
+{
+    height: 35px;
 }
 #titles 
 {
-    width: 100%;
     text-align: center;
-    color: white;
     position: absolute;
-    left: 0px;
-    bottom: 150px;
-}
-#title
-{
-    margin-top: 400px;
+    left: 50px;
+    top: 120px;
 }
 #desktop-image 
 {
@@ -129,8 +124,15 @@ h1
 }
 #desktop-form
 {
+    position: absolute;
+    top: 150px;
     background-color: rgba(50,50,50,0.5);
     border-radius: 10px 10px 10px 10px;
+}
+#form-contact
+{
+    color: white;
+    padding: 10px;
 }
 #form-input-group
 {
@@ -149,6 +151,41 @@ h1
 #form-button-container
 {
     margin-top: 20px;
+    margin-bottom: 20px;
+}
+@media screen and (max-width: 767px)
+{
+    .navbar-brand img
+    {
+        height: 25px;
+    }
+    #logo-large img
+    {
+        height: 80px;
+    }
+    #titles
+    {
+        left: initial;
+        top: 35px;
+    }
+    #titles h2
+    {
+        font-size: 16px;
+        color: white;
+    }
+    #desktop-form
+    {
+        top: 270px;
+    }
+    .rent-scooter
+    {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .second-screen
+    {
+        margin-top: 200px;
+    }
 }
 /***
 * End Header
@@ -334,11 +371,6 @@ h1
     .date-input
     {
         margin-top: 10px;
-    }
-    .rent-scooter
-    {
-        margin-left: -35px;
-        margin-top: 25px;
     }
     /***
     *  End Mobile Header
