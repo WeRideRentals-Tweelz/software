@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\QuoteRequest;
 use App\User;
 use App\Booking;
 use App\Drivers;
@@ -117,36 +118,33 @@ class bookingController extends Controller
         Mail::send('emails.new-booking',$mail_info, function($mail) use ($scooter){
             $mail->from('contact@tweelz.com', 'New scooter booking');
 
-            $mail->to('jb.malandain@gmail.com')->cc('delapierre.t@orange.fr')->cc('thomasleclercq90010@gmail.com');
+            $mail->to('contact@weriderentals.com')->cc('thomasleclercq90010@gmail.com');
         });
 
         //Please create a new email for this when the website will be ready
         return view('bookings.confirmation')->with(compact('pick_up_date','drop_off_date','scooter'));
     }
 
-    public function quote(Request $request)
+    public function quote(QuoteRequest $request)
     {
-        $lastname       =   $request->input('firstname');
-        $surname        =   $request->input('surname');
+        $name           =   $request->input('name');
         $phone          =   $request->input('phone');
         $email          =   $request->input('email');
-        $pick_up_date   =   $request->input('pick_up_date');
-        $drop_off_date  =   $request->input('drop_off_date');     
-
-        Mail::send('emails.new-booking',['lastname'=>$lastname,'surname'=>$surname,'phone'=>$phone,'email'=>$email,'pick_up_date'=>$pick_up_date,'drop_off_date'=>$drop_off_date], function($mail){
-            $mail->to('jb.malandain@gmail.com');
-            $mail->cc('delapierre.t@orange.fr');
+        $formule        =   $request->input('formule'); 
+        /*
+        Mail::send('emails.new-booking',['name'=>$name,'phone'=>$phone,'email'=>$email,'formule'=>$formule], function($mail){
+            $mail->to('contact@weriderentals.com');
             $mail->cc('thomasleclercq90010@gmail.com');
             $mail->from('contact@weriderentals.com');
             $mail->subject('WeRide : New scooter booking');
         });
 
-        Mail::send('emails.confirmation',['lastname'=>$lastname,'surname'=>$surname,'phone'=>$phone,'email'=>$email,'pick_up_date'=>$pick_up_date,'drop_off_date'=>$drop_off_date], function($mail) use ($email) {
+        Mail::send('emails.confirmation',['name'=>$name,'phone'=>$phone,'email'=>$email,'formule'=>$formule], function($mail) use ($email) {
             $mail->to($email);
             $mail->from('contact@weriderentals.com');
             $mail->subject('We Ride - Your rendez-vous confirmation');
         });
-
+        */
         Session::flash('success', 'We well received your demand, you will receive a confirmation email soon.');
 
         return redirect()->back();

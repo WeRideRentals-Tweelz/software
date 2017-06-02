@@ -2,28 +2,60 @@
 @section('content')
 
 	<!-- Header Start -->
-	<div id="header" class="container-fluid">
-		<div id="beta-version">
-			<p><span class="gold">B</span>eta Version</p>
-		</div>
-		<div id="titles" class="hidden-xs">
-			<div class="col-sm-6 col-sm-offset-3">
-				<h1 class="bold"><span class="gold">We</span>Ride</h1>
-				<h2>Start riding today, earn money tomorow</h2>
+		<div id="header" class="container-fluid">
+			<div id="beta-version">
+				<p>Beta Version</p>
 			</div>
-			@if(Session::has('success'))
-				<div class="col-sm-6 col-sm-offset-3 alert alert-success">
-					<p>{{ Session::get('success') }}</p>
+
+			<div id="desktop-image" class="row">
+				<img src="{{ asset('images/scooter.jpeg') }}">
+			</div>
+
+			<div id="titles" class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-1">
+				<div id="title" class="">
+					<h1 class="bold hidden">WeRide</h1>
+					<div id="logo-large">
+						<img src="{{ asset('images/logo-large.png') }}" alt="logo">
+					</div>
+					<h2><i>Work, Leisure, Lifestyle</i></h2>
 				</div>
-			@endif
-		</div>
-		<div id="mobile-image-cover" class="row">
-			<div class="hidden-sm hidden-md hidden-lg">
-				<img src="{{ asset('images/scooter.jpeg') }}" alt="rent a scooter in Sydney">
+			</div>
+
+			<div id="desktop-form" class="col-lg-3 col-lg-offset-8">
+				<div id="form-contact" class="col-xs-12">
+					<p>Contact us at : 0412 140 826</p>
+					@if(Session::has('success'))
+						<div class="col-xs-12 alert alert-success">
+							<p>{{ Session::get('success') }}</p>
+						</div>
+					@endif
+					@if($errors->any())
+						<ul class="alert alert-danger">
+							@foreach($errors->all() as $error)
+								<li>{{ $error }}</li>
+							@endforeach
+						</ul>
+					@endif
+				</div>
+				<form class="form" action="/booking/quote" method="POST">
+					<input type="hidden" name="_token" value="{{ csrf_token() }}">
+					<div id="form-input-group">
+						<input type="text" name="name" placeholder="Name" class="form-control" required>
+						<input type="text" name="phone" placeholder="Phone" class="form-control" required>
+						<input type="email" name="email" placeholder="Email" class="form-control" required>
+						<select name="formule" class="form-control" required>
+							<option value="" disabled selected>Select your booking option</option>
+							<option value="1 to 6 days">1 to 6 days</option>
+							<option value="7 to 20 days">7 to 20 days</option>
+							<option value="more than 21 days">more than 21 days</option>
+						</select>
+						<div id="form-button-container" class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3">
+							<button type="submit" onclick=ga(‘send’,’event’,’Button’,’Click’,’NewClient’, '0') class="button-bounce btn btn-primary form-control rent-scooter">Book Now</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
-		@include('home.landing_page_form')
-	</div> 
 	<!-- End Header -->
 
 		<div class="container second-screen">
@@ -52,7 +84,6 @@
 							<a href="{{ url('/scooters') }}" onclick=ga(‘send’,’event’,’Button’,’Click’,’CheckScooters’,'0') class="button-bounce col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 btn btn-primary btn-lg btn-responsive">Look at the scooters</a>
 						</div>
 
-						@include('home.marketing_figures')
 						<h2><span class="gold">W</span>hat are the benefits from renting a scooter ?</h2>
 						<div class="col-sm-4 benefits">
 							<div class='thumbnail'>
@@ -87,8 +118,6 @@
 						</p>
 					</div>
 				</div>
-
-				@include('home.price_display')
 
 				<div class="section">
 					<div class="container-fluid">
@@ -148,7 +177,7 @@
 							<h3><span class="bold">Address</span></h3>
 							<p><span class="fa fa-map-marker" aria-hidden="true"></span> <a href="https://www.google.com.au/maps/place/406+Botany+Rd,+Beaconsfield+NSW+2015/@-33.9103811,151.1998189,17z/data=!3m1!4b1!4m5!3m4!1s0x6b12b1b8fd8629c5:0x7f7a8970806031a3!8m2!3d-33.9103811!4d151.2020076?hl=fr" onclick=ga(‘send’,’event’,’Button’,’Click’,’GetAdressInGoogleMaps’,'0')>406 Botany Rd, Beaconsfield NSW 2015</a></p>
 							<h3><span class="bold">Phone Number</span></h3>
-							<p><span class="fa fa-phone" aria-hidden="true"></span> 0410 125 994</p>
+							<p><span class="fa fa-phone" aria-hidden="true"></span> 0412 140 826</p>
 							<h3><span class="bold">Email Address</span></h3>
 							<p><span class="fa fa-envelope" aria-hidden="true"></span> contact@weriderentals.com</p>
 							<h3><span class="bold">Open Hours</span></h3>

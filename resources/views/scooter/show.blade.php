@@ -1,6 +1,5 @@
 @extends('layouts.main')
 @section('content')
-
 	<div class="container scooter-show">
 		<div class="row" style="padding: 30px 0px">
 		@if(isset($scooter))
@@ -34,7 +33,7 @@
 					</ul>
 					<h2>Details</h2>
 					<p>{{ $scooter->info }}</p>
-					<p><a href="{{ url('/#rent-it') }}" class="btn btn-success" role="button">Rent it</a></p>
+					<p><a href="{{ url('/#rent-it') }}" class="btn btn-success" role="button" title="Go to rent form">Rent it</a></p>
 				</div>
 			</div>	
 		@else

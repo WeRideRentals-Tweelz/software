@@ -12,7 +12,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'WeRide') }}
+                <img src="{{ asset('images/logo-small.png')}}" alt="We Ride Rentals logo">
             </a>
         </div>
 

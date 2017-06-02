@@ -10,6 +10,15 @@
         <meta name="author" content="">
         <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
+        <!-- CSFR Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <script>
+            window.Laravel = <?php echo json_encode([
+                'csrfToken' => csrf_token(),
+            ]); ?>
+        </script>
+        <!-- End CSFR Token -->
+
         <!-- Facebook opengraphs -->
         <meta property="og:url"                content="http://weriderentals.com" />
         <meta property="og:type"               content="website" />
@@ -42,7 +51,7 @@
     </head>
     <body>
 
-      <!-- Yandex.Metrika counter -->
+      <!-- Yandex.Metrika counter 
       <script type="text/javascript">
           (function (d, w, c) {
               (w[c] = w[c] || []).push(function() {
@@ -70,18 +79,7 @@
               } else { f(); }
           })(document, window, "yandex_metrika_callbacks");
       </script>
-      <!-- /Yandex.Metrika counter -->
-
-      <!-- Facebook API for likes and shares -->    
-      <div id="fb-root"></div>
-      <script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_AU/sdk.js#xfbml=1&version=v2.8";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));</script>
-      <!-- End facebook API --> 
+       /Yandex.Metrika counter -->
 
        @section('header')
            @include('partials.header')

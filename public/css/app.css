@@ -55,31 +55,64 @@ a:hover
 {
     color: gold;
 }
-
+.left
+{
+    left: 0;
+}
 /***
 * Header 
 ***/
+h1
+{
+    border-bottom: 3px solid black;
+    padding-bottom: 20px;
+}
+#header
+{
+    height: 94vh;
+    margin-top: -70px;
+    position: relative;
+}
+#logo-large img
+{
+    height: 200px;
+}
+.navbar-brand img
+{
+    height: 35px;
+}
 #titles 
 {
-    width:100%;
     text-align: center;
-    color: white;
     position: absolute;
-    left: 0;
-    bottom: 210px;
+    left: 50px;
+    top: 120px;
 }
-#desktop-image-cover img
+#desktop-image 
+{
+    height: 100%;
+}
+#desktop-image img
 {
     max-height: 1200px;
-    height:100vh;
+    height:100%;
     width: 100%;
-    margin-top: -200px;
 }
 #facebook-logo
 {
     color:white;
 }
-#rent-it
+.rent-it-mobile
+{
+    position: absolute;
+    bottom: 0px; 
+    left:0;
+    background-color: #424242; 
+    width: 100%;
+    padding: 30px 0px;
+    box-shadow: 0px -2px 20px 0px black;
+}
+.rent-it
 {
     position: absolute;
     bottom: 0px; 
@@ -91,20 +124,68 @@ a:hover
 }
 #desktop-form
 {
-    margin-left: 20%;
+    position: absolute;
+    top: 150px;
+    background-color: rgba(50,50,50,0.5);
+    border-radius: 10px 10px 10px 10px;
 }
-#desktop-form input
+#form-contact
 {
-    width: 12%;
+    color: white;
+    padding: 10px;
 }
-#form-button-container
+#form-input-group
 {
-    margin-top: ; 
-    margin-left: 33%;
+    padding: 40px 25px;
+}
+#form-input-group input,
+#form-input-group select    
+{
+    height: 50px;
+    margin-bottom: 5px;
+}
+#form-input-group placeholder
+{
+    line-height: 50px;
 }
 #form-button-container
 {
     margin-top: 20px;
+    margin-bottom: 20px;
+}
+@media screen and (max-width: 767px)
+{
+    .navbar-brand img
+    {
+        height: 25px;
+    }
+    #logo-large img
+    {
+        height: 80px;
+    }
+    #titles
+    {
+        left: initial;
+        top: 35px;
+    }
+    #titles h2
+    {
+        font-size: 16px;
+        color: white;
+    }
+    #desktop-form
+    {
+        top: 270px;
+    }
+    .rent-scooter
+    {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .second-screen
+    {
+        margin-top: 200px;
+    }
 }
 /***
 * End Header
@@ -158,54 +239,53 @@ a:hover
 }
  .second-screen 
  {
- 	background-color: white;
- 	margin-top: -130px;
+    background-color: white;
  }
  .navbar-default
  {
- 	border-color: initial;
+    border-color: initial;
  }
  .navbar-brand
  {
- 	color: white;
+    color: white;
  }
  #beta-version
  {
- 	background-color: rgba(40,40,40,.9);
+    background-color: rgba(40,40,40,.9);
     color: white;
     transform: rotate(-38deg);
     position: absolute;
-    top: 70px;
+    top: 35px;
     left: -85px;
     padding: 5px 90px;
  }
  .google-maps
  {
- 	width: 400px;
- 	height: 450px;
- 	border:0;
+    width: 400px;
+    height: 450px;
+    border:0;
  }
  footer a
  {
- 	color: white;
+    color: white;
  }
  footer h5
  {
- 	font-size: 1.2em;
+    font-size: 1.2em;
  }
  .scooter-img
  {
- 	width: 550px;
- 	height: 400px;
+    width: 550px;
+    height: 400px;
  }
  .scooter-show
  {
- 	height: 645px;
+    height: 645px;
  }
  .next,
  .previous
  {
- 	top: 300px;
+    top: 300px;
  }
  
 @-webkit-keyframes shaker {
@@ -255,10 +335,14 @@ a:hover
     /***
     * Mobile Header
     ***/
-    #mobile-image-cover img
+    #desktop-image img
     {
-        width: 100%; 
-        margin-top: -70px;
+        width: 100%;
+        height: 60%;
+    }
+    #desktop-form
+    {
+        background-color: rgba(50,50,50,1);
     }
     #facebook-logo
     {
@@ -288,11 +372,6 @@ a:hover
     {
         margin-top: 10px;
     }
- 	.rent-scooter
- 	{
- 		margin-left: -35px;
-        margin-top: 25px;
- 	}
     /***
     *  End Mobile Header
     ***/
@@ -300,24 +379,20 @@ a:hover
     {
         font-size: 0.8em;
     }
- 	.second-screen
- 	{
- 		margin-top: -200px;
- 	}
- 	.scooter-img
- 	{
- 		width: 290px;
- 		height: 180px;
- 	}
- 	.scooter-show
- 	{
- 		height: initial;
- 	}
- 	 .next,
- 	 .previous
-	 {
-	 	top: 80px;
-	 }
+    .scooter-img
+    {
+        width: 290px;
+        height: 180px;
+    }
+    .scooter-show
+    {
+        height: initial;
+    }
+     .next,
+     .previous
+     {
+        top: 80px;
+     }
 
      .fb-like
      {
