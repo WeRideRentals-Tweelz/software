@@ -14,18 +14,15 @@ use App\Drivers;
 use App\Scooter;
 use DateTime;
 
+use App\Services\checkUser;
+
 
 class bookingController extends Controller
 {
     public function index()
     {
-        $bookings = DB::table('bookings')
-                        ->select('scooters.id as scooter_id','pick_up_date','drop_off_date','bookings.id as id','scooters.model','scooters.color','scooters.plate','bookings.status','drivers.id as driver_id','drivers.firstname','drivers.surname','drivers.phone')
-                        ->join('scooters', 'scooters.id','=','bookings.scooter_id')
-                        ->join('drivers', 'drivers.id', '=', 'bookings.driver_id')
-                        ->orderBy('bookings.pick_up_date','DESC')
-                        ->get();
-        return view('dashboard.bookings')->with(compact('bookings'));
+        $bookings = booking::all();
+        return view('admin.index')->with(compact('bookings'));
     }
 
     public function availability(Request $request)
@@ -83,70 +80,37 @@ class bookingController extends Controller
 
     public function store(Request $request)
     {
+            $name           =   $request->input('name');
+            $phone          =   $request->input('phone');
+            $email          =   $request->input('email');
+            $pickUp        =   date("Y-m-d",strtotime(str_replace('/','-',$request->input('pickUp'))));
+            $dropOff        =  date("Y-m-d",strtotime(str_replace('/','-',$request->input('dropOff'))));
 
-        $pick_up_date =     $request->input('pick_up_date');
-        $drop_off_date =    $request->input('drop_off_date');
-        $scooter_id =       $request->input('scooter_id');
-        $accessory_id = 0;
-        $driver = Drivers::where('user_id',Auth::user()->id)->first();
+            Booking::create([
+                "pick_up_date"      =>      $pickUp,
+                "drop_off_date"     =>      $dropOff,
+                "scooter_id"           =>       1,
+                "driver_id"              =>       1
+            ]); 
 
-        if(null !== $request->input('accessory'))
-        {
-            $accessory_id = $request->input('accessory');
-        }
-
-        $booking = new Booking([
-            'pick_up_date'      =>$pick_up_date,
-            'drop_off_date'     =>$drop_off_date,
-            'scooter_id'        =>$scooter_id,
-            'driver_id'         =>$driver->id,
-            'status'            =>'waiting for confirmation',
-            'confirmation'      =>0,
-            'created_at'        =>new DateTime, 
-            'updated_at'        =>new DateTime,
-            'accessories_id'    =>$accessory_id
-        ]);
-
-        $booking->save();
-
-        $scooter = Scooter::find($scooter_id);
-
-        //Sending a mail to inform a new booking to admins
-        
-        $mail_info = ['pick_up_date'=>$pick_up_date,'drop_off_date'=>$drop_off_date, 'scooter'=>$scooter];
-
-        Mail::send('emails.new-booking',$mail_info, function($mail) use ($scooter){
-            $mail->from('contact@tweelz.com', 'New scooter booking');
-
-            $mail->to('contact@weriderentals.com')->cc('thomasleclercq90010@gmail.com');
-        });
-
-        //Please create a new email for this when the website will be ready
-        return view('bookings.confirmation')->with(compact('pick_up_date','drop_off_date','scooter'));
+            // Use an event listener to send a confirmation email
+            Session::flash('success','You will receive a confirmation email soon');
+            return redirect("/"); 
     }
 
     public function quote(QuoteRequest $request)
     {
-        $name           =   $request->input('name');
-        $phone          =   $request->input('phone');
-        $email          =   $request->input('email');
-        $formule        =   $request->input('formule'); 
-        /*
-        Mail::send('emails.new-booking',['name'=>$name,'phone'=>$phone,'email'=>$email,'formule'=>$formule], function($mail){
-            $mail->to('contact@weriderentals.com');
-            $mail->cc('thomasleclercq90010@gmail.com');
-            $mail->from('contact@weriderentals.com');
-            $mail->subject('WeRide : New scooter booking');
-        });
+        // Check if dates are correct
+        $today = date("Y-m-d");
+        if($pickUp >= $dropOff || $pickUp < $today || $dropOff <= $today)
+        {
+            Session::flash("error","Please consider choosing dates after today's date");
+            return redirect()->back();
+        }
 
-        Mail::send('emails.confirmation',['name'=>$name,'phone'=>$phone,'email'=>$email,'formule'=>$formule], function($mail) use ($email) {
-            $mail->to($email);
-            $mail->from('contact@weriderentals.com');
-            $mail->subject('We Ride - Your rendez-vous confirmation');
-        });
-        */
-        Session::flash('success', 'We well received your demand, you will receive a confirmation email soon.');
+        // Then use a Service to check the status of the session (guest or existing user)
+        // and redirect him accordingly to conclude its booking
 
-        return redirect()->back();
-    }
+        $checkUser = new CheckUser($request);
+        $checkUser->check();
 }

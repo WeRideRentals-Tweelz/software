@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta name="robots" content="noindex, nofollow">
@@ -16,15 +16,21 @@
     <title>{{ config('app.name', 'Tweelz') }}</title>
 
     <!-- Styles -->
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-select.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/fullcalendar.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-stars.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
+
+    @yield('styles')
 
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
         ]); ?>
+        window.jQuery = window.$ = require('jquery');
     </script>
     <!-- End Scripts -->
 
@@ -37,8 +43,17 @@
     @include('partials.footer')
 
     <!-- Scripts -->
-    <script src="/js/app.js"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-    @yield('scripts')
+    
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/jquery.barrating.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.repeater.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/moment.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
+        <script src="{{ asset('js/fullcalendar.min.js') }}"></script>
+        
+
+        @yield('scripts')
 </body>
 </html>

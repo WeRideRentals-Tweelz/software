@@ -18,7 +18,7 @@ class Booking extends Model
 
     public function scooter()
     {
-    	return $this->hasMany('App\Scooter');
+    	return $this->belongsTo('App\Scooter');
     }
 
     public function drivers()

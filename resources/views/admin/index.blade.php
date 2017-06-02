@@ -2,16 +2,20 @@
 
 @section('content')
 <div class="container-fluid">
-	<h1>Bookings </h1>
-	<hr>
-		<div class="col-sm-4 col-sm-offset-1">
-			<div id="dayList"></div>
+	<div class="panel panel-default col-sm-8 col-sm-offset-2">
+		<div class="panel-heading row">
+			<h1><span class="gold">B</span>ookings </h1>
 		</div>
-		<div class="col-sm-6">
-			<div id="monthCalendar"></div>
+		<div class="panel-body row">
+			<div class="col-sm-4 col-sm-offset-1">
+				<div id="dayList"></div>
+			</div>
+			<div class="col-sm-6 col-sm-offset-1">
+				<div id="monthCalendar"></div>
+			</div>
 		</div>
+	</div>
 </div>
-<hr>
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">

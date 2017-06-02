@@ -30,11 +30,15 @@
 						</div>
 					@endif
 					@if($errors->any())
-						<ul class="alert alert-danger">
+						<ul class="alert alert-danger list-group">
 							@foreach($errors->all() as $error)
-								<li>{{ $error }}</li>
+								<li class="list-group-item">{{ $error }}</li>
 							@endforeach
 						</ul>
+					@elseif(Session::has('error'))
+						<div class="col-xs-12 alert alert-danger">
+							<p>{{ Session::get('error') }}</p>
+						</div>
 					@endif
 				</div>
 				<form class="form" action="/booking/quote" method="POST">
@@ -43,12 +47,25 @@
 						<input type="text" name="name" placeholder="Name" class="form-control" required>
 						<input type="text" name="phone" placeholder="Phone" class="form-control" required>
 						<input type="email" name="email" placeholder="Email" class="form-control" required>
-						<select name="formule" class="form-control" required>
-							<option value="" disabled selected>Select your booking option</option>
-							<option value="1 to 6 days">1 to 6 days</option>
-							<option value="7 to 20 days">7 to 20 days</option>
-							<option value="more than 21 days">more than 21 days</option>
-						</select>
+						
+						<div class="form-group col-xs-6">
+					            <div class='input-group date row' id='pickUpDate'>
+					                    <input type='text' name="pickUp" class="form-control" placeholder="Pick Up Date" required/>
+					                    <span class="input-group-addon">
+					                        <span class="glyphicon glyphicon-calendar"></span>
+					                    </span>
+					                </div>
+					            </div>
+
+					            <div class="form-group col-xs-6">
+					            <div class='input-group date row' id='dropOffDate'>
+					                    <input type='text' name="dropOff" class="form-control" placeholder="Drop Off Date" required/>
+					                    <span class="input-group-addon">
+					                        <span class="glyphicon glyphicon-calendar"></span>
+					                    </span>
+					                </div>
+					            </div>
+						
 						<div id="form-button-container" class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3">
 							<button type="submit" onclick=ga(‘send’,’event’,’Button’,’Click’,’NewClient’, '0') class="button-bounce btn btn-primary form-control rent-scooter">Book Now</button>
 						</div>
@@ -194,4 +211,17 @@
 					</div>
 				</div>
 			</div>
+@stop
+
+@section("scripts")
+<script type="text/javascript">
+            $(function () {
+                $('#pickUpDate').datetimepicker({
+                	format: "DD/MM/YYYY"
+                });
+                $('#dropOffDate').datetimepicker({
+                	format: "DD/MM/YYYY"
+                });
+            });
+</script>
 @stop

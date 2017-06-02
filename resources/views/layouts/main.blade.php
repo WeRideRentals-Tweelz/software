@@ -29,11 +29,17 @@
 
         <title>WeRide - Rent a scooter in Sydney and start earning money</title>
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <title>{{ config('app.name', 'Tweelz') }}</title>
 
-        @yield('styles')
+    <!-- Styles -->
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-select.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/fullcalendar.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap-stars.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @yield('styles')
 
         <!-- Google Analytics -->
         <script>
@@ -87,8 +93,18 @@
 
         @yield('content')
 
+            <!-- Scripts -->
+    
+        <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/moment.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-datetimepicker.js') }}"></script>
+        <script src="{{ asset('js/fullcalendar.min.js') }}"></script>
+        
 
         @yield('scripts')
 

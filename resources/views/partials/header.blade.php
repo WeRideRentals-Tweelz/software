@@ -28,10 +28,8 @@
                     <li><a href="{{ url('/scooters') }}">Our scooters</a></li>          
                 <!-- Authentication Links -->
                 @if (Auth::guest())
-                <!--
                     <li><a href="{{ url('/login') }}">Login</a></li>
                     <li><a href="{{ url('/register') }}">Register</a></li>
-                -->
                 @elseif(Auth::user()->role_id == 1)
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -42,12 +40,14 @@
                             <li>
                                 <a href="{{ url('/home') }}">Dashboard</a>
                             </li>
+                            <!-- 
                             <li>
                                 <a href="{{ url('/home/bookings') }}">Bookings</a>
                             </li>
                             <li>
                                 <a href="{{ url('/home/drivers') }}">Drivers</a>
                             </li>
+                            -->
                             <li>
                                 <a href="{{ url('/logout') }}"
                                     onclick="event.preventDefault();

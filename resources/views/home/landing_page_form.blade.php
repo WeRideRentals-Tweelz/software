@@ -19,12 +19,8 @@
 						<input type="text" name="firstname" placeholder="Name" class="form-control" required>
 						<input type="text" name="phone" placeholder="Phone" class="form-control" required>
 						<input type="email" name="email" placeholder="Email" class="form-control" required>
-						<select name="formule" class="form-control" required>
-							<option value="" disabled selected>Select your booking option</option>
-							<option value="1 to 6 days">1 to 6 days</option>
-							<option value="7 to 20 days">7 to 20 days</option>
-							<option value="more than 21 days">more than 21 days</option>
-						</select>
+						<input type="date" name="pickUp" class='form-control' required>
+						<input type="date" name="dropOff" class="form-control" required>
 						<div id="form-button-container">
 							<button type="submit" onclick=ga(‘send’,’event’,’Button’,’Click’,’NewClient’, '0') class="button-bounce btn btn-primary rent-scooter">Book Now</button>
 						</div>

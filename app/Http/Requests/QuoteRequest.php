@@ -27,11 +27,12 @@ class QuoteRequest extends FormRequest
             //Check if the name entered is not made by a robot
             'name'      =>      [
                 'required',
-                'regex:/^[a-zA-Z]{3,}\s?-?[a-zA-Z]{3,}\s?-?[a-zA-Z]*$/',
+                'regex:/^[a-zA-Z]{1,}\s?-?[a-zA-Z]{0,}\s?-?[a-zA-Z]*$/',
             ],
             'phone'     =>      'required|digits:10',
-            'email'     =>      'required|email',
-            'formule'   =>      'required'
+            'email'     =>      'required',
+            'pickUp'   =>      'required',
+            'dropOff'   =>  'required'
         ];
     }
 }

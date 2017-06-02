@@ -40,7 +40,7 @@ Route::post('/home/drivers/{driver_id}/update', 'DriversController@update');
 
 // ADMIN
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'BookingController@index');
 
 // USERS
 

@@ -139,10 +139,9 @@ h1
     padding: 40px 25px;
 }
 #form-input-group input,
-#form-input-group select    
+#form-input-group select
 {
     height: 50px;
-    margin-bottom: 5px;
 }
 #form-input-group placeholder
 {
