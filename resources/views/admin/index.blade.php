@@ -45,7 +45,7 @@
   @foreach($bookings as $booking)
   <div class="bookings hidden">
   	<span class="bookingId">{{ $booking->id }}</span>
-  	<span class="bookingScooter">{{ $booking->scooter->plate }}</span>
+  	<span class="bookingScooter">{{ $booking->user->name }}</span>
   	<span class="bookingPickUp">{{ $booking->pick_up_date }}</span>
   	<span class="bookingDropOff">{{ $booking->drop_off_date }}</span>
   </div>

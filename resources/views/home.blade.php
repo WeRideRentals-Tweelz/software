@@ -44,9 +44,9 @@
 				<form class="form" action="/booking/quote" method="POST">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<div id="form-input-group">
-						<input type="text" name="name" placeholder="Name" class="form-control" required>
-						<input type="text" name="phone" placeholder="Phone" class="form-control" required>
-						<input type="email" name="email" placeholder="Email" class="form-control" required>
+						<input type="{{ Auth::check() ? 'hidden' : 'text' }}" name="name" placeholder="Name" class="form-control" value="{{ Auth::check() ? Auth::user()->name : '' }}" required>
+						<input type="{{ Auth::check() ? 'hidden' : 'text' }}" name="phone" placeholder="Phone" class="form-control" value="{{ Auth::check() ? Auth::user()->phone : '' }}" required>
+						<input type="{{ Auth::check() ? 'hidden' : 'email' }}" name="email" placeholder="Email" class="form-control" value="{{ Auth::check() ? Auth::user()->email : '' }}" required>
 						
 						<div class="form-group col-xs-6">
 					            <div class='input-group date row' id='pickUpDate'>

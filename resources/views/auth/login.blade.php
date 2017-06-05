@@ -20,7 +20,7 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
                         @if(Session::has('loginMessage'))
-                        <div class="alert alert-default">
+                        <div class="alert alert-info">
                             <p>{{ Session::get('loginMessage') }}</p>
                         </div>
                         @endif
@@ -28,7 +28,7 @@
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ Session::has('loginEmail') ? Session::get('loginEmail') : old('email') }}" required autofocus>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -61,6 +61,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <input type="hidden" name="booked" value="{{ isset($bookingId) ? $bookingId : 0 }}">
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">

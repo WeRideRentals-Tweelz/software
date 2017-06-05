@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -27,15 +28,16 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = "/";
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
+        $this->redirectUser($request);
         $this->middleware('guest');
     }
 
@@ -50,6 +52,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
+            'phone' =>  'required|digits:10',
             'password' => 'required|min:6|confirmed',
         ]);
     }
@@ -65,7 +68,18 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    // If the user made a booking before login in, he will be redirected to confirm its booking
+    protected function redirectUser(Request $request)
+    {
+        // If the hidden input "booked" is different than 0 then the user is redirect to the next process
+        if($request->input('booked'))
+        {
+            $this->redirectTo = "/bookings/confirm/".$request->input('booked')."/".$request->input('email');;
+        }
     }
 }

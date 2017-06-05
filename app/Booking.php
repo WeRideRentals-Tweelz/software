@@ -21,13 +21,13 @@ class Booking extends Model
     	return $this->belongsTo('App\Scooter');
     }
 
-    public function drivers()
+    public function user()
     {
-        return $this->hasMany('App\Drivers');
+        return $this->belongsTo('App\User');
     }
 
     public function accessories()
     {
-        return $this->hasMany('App\Accessories');
+        return $this->belongsTo('App\Accessories');
     }
 }

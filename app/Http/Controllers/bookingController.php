@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
+
 use App\Http\Requests\QuoteRequest;
+
 use App\User;
 use App\Booking;
 use App\Drivers;
@@ -15,13 +18,14 @@ use App\Scooter;
 use DateTime;
 
 use App\Services\checkUser;
+use App\Services\EmailSender;
 
 
 class bookingController extends Controller
 {
     public function index()
     {
-        $bookings = booking::all();
+        $bookings = booking::where('confirmation','=',1)->get();
         return view('admin.index')->with(compact('bookings'));
     }
 
@@ -89,8 +93,8 @@ class bookingController extends Controller
             Booking::create([
                 "pick_up_date"      =>      $pickUp,
                 "drop_off_date"     =>      $dropOff,
-                "scooter_id"           =>       1,
-                "driver_id"              =>       1
+                "scooter_id"           =>       0,
+                "user_id"              =>       0
             ]); 
 
             // Use an event listener to send a confirmation email
@@ -100,17 +104,46 @@ class bookingController extends Controller
 
     public function quote(QuoteRequest $request)
     {
-        // Check if dates are correct
-        $today = date("Y-m-d");
-        if($pickUp >= $dropOff || $pickUp < $today || $dropOff <= $today)
-        {
-            Session::flash("error","Please consider choosing dates after today's date");
-            return redirect()->back();
-        }
+            $name           =   $request->input('name');
+            $phone          =   $request->input('phone');
+            $email          =   $request->input('email');
+            $pickUp        =   date("Y-m-d",strtotime(str_replace('/','-',$request->input('pickUp'))));
+            $dropOff        =  date("Y-m-d",strtotime(str_replace('/','-',$request->input('dropOff'))));
+
+            // Check if dates are correct
+            $today = date("Y-m-d");
+            if($pickUp >= $dropOff || $pickUp < $today || $dropOff <= $today)
+            {
+                Session::flash("error","Please consider choosing dates after today's date");
+                return redirect()->back();
+            }
+
+            $booking = Booking::create([
+                "pick_up_date"      =>      $pickUp,
+                "drop_off_date"     =>      $dropOff
+            ]); 
 
         // Then use a Service to check the status of the session (guest or existing user)
         // and redirect him accordingly to conclude its booking
 
-        $checkUser = new CheckUser($request);
-        $checkUser->check();
+        $checkUser = new CheckUser($request,$booking->id);
+        return $checkUser->check();
+    }
+
+    public function confirmBooking($bookingId,$email)
+    {
+        $user = User::where('email','=',$email)->first();
+
+        $booking = Booking::find($bookingId);
+        $booking->status = "confirmed";
+        $booking->confirmation = 1;
+        $booking->user_id = $user->id;
+        $booking->save();
+
+        $sendEmail = new EmailSender($email);
+        $sendEmail->confirmation($booking);
+
+        Session::flash('success','We well received your demand ! For a faster check-in, please login');
+        return redirect('/');
+    }
 }
