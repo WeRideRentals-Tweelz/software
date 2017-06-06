@@ -45,4 +45,7 @@ Route::get('/home', 'BookingController@index');
 
 // USERS
 
-Route::get('/profile', 'HomeController@profile');
+Route::get('/profile', 'UserController@show');
+Route::get('/profile/{userId}', 'UserController@showUser');
+Route::post('/user/update', 'UserController@smallUpdate');
+Route::post('/user/changePassword', 'UserController@changePassword');

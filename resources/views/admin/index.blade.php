@@ -45,7 +45,8 @@
   @foreach($bookings as $booking)
   <div class="bookings hidden">
   	<span class="bookingId">{{ $booking->id }}</span>
-  	<span class="bookingScooter">{{ $booking->user->name }}</span>
+  	<span class="bookingUserId">{{ $booking->user->id }}</span>
+  	<span class="bookingUser">{{ $booking->user->name }}</span>
   	<span class="bookingPickUp">{{ $booking->pick_up_date }}</span>
   	<span class="bookingDropOff">{{ $booking->drop_off_date }}</span>
   </div>
@@ -61,14 +62,15 @@
 		var dropoffs = [];
 		$(".bookings").each(function(booking){
 			var eventId = $(this).find('.bookingId').html();
-			var eventScooter = $(this).find('.bookingScooter').html();
+			var eventUserId = $(this).find('.bookingUserId').html();
+			var eventUser = $(this).find('.bookingUser').html();
 			var eventPickUp = $(this).find('.bookingPickUp').html();
 			var eventDropOff = $(this).find('.bookingDropOff').html();
-			
-			var pickup = {id: eventId, start: eventPickUp, in: eventPickUp, out: eventDropOff, title: "Out : "+eventScooter, allDay: true, color: "green"};
+
+			var pickup = {id: eventId, start: eventPickUp, in: eventPickUp, out: eventDropOff, title: eventUser, userId: eventUserId,allDay: true, color: "green"};
 			pickups.push(pickup);
 
-			var dropoff = {id: eventId, start: eventDropOff, in: eventPickUp, out: eventDropOff, title: "In : "+eventScooter, allDay: true, color: "orange"};
+			var dropoff = {id: eventId, start: eventDropOff, in: eventPickUp, out: eventDropOff, title: eventUser, userId: eventUserId, allDay: true, color: "orange"};
 			dropoffs.push(dropoff);
 		});
 
@@ -104,7 +106,9 @@
 			// Show booking details when click on event
 			eventClick: function(event,view){
 				var format = "D MMMM YYYY";
-				$("#modalTitle").text(event.title);
+				var url = '<a href="/profile/'+event.userId+'/">'+event.title+'</a>';
+
+				$("#modalTitle").html(url);
 				if(event.details === null){
 					$("#modalText").text("");
 				}else{

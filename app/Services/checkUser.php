@@ -50,7 +50,7 @@ class CheckUser {
 	        	}
 	        	else
 	        	{
-	        		Session::flash('registerMessage','Please create an account in before booking');
+	        		Session::flash('registerMessage','Please create an account before booking');
 	        		// Redirect to /register
 	        		return $path = view('auth.register')->with(compact('bookingId'));
 	        	}

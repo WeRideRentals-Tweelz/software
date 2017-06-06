@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password'
+        'name', 'email', 'password','phone'
     ];
 
     /**
@@ -37,13 +37,18 @@ class User extends Authenticatable
         'role_id' => 'integer'
     ];
     
-    public function drivers()
+    public function driver()
     {
-        return $this->belongsTo('App\Drivers');
+        return $this->hasOne('App\Drivers');
     }
 
     public function roles()
     {
         return $this->hasMany('App\Roles');
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany('App\Booking');
     }
 }
