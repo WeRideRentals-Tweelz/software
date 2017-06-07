@@ -31,6 +31,8 @@ trait RegistersUsers
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
+        //Create Driver when user is registered
+        event(new Registered($driver = $this->createDriver($user)));
 
         $this->guard()->login($user);
 

@@ -12,16 +12,28 @@
 						<p>{{ Session::get('personnalInfoSuccess') }}</p>
 					</div>
 					@endif
+					
+					@if($user->driver->confirmed && Auth::user()->role_id == 1)
+					<div class="alert alert-success">
+						<p>Driver confirmed</p>
+					</div>
+					@elseif(!$user->driver->confirmed)
+					<div class="alert alert-warning">
+						<p>Driver not confirmed</p>
+						<p>Save time at check in by filling all your information</p>
+					</div>
+					@endif
+					
 					<form class="form" action="{{ url('/user/update') }}" method="POST">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<input type="hidden" name="user" value="{{ $user->id }}">
+					<input id="userIdInput" type="hidden" name="user" value="{{ $user->id }}">
 						<div class="col-sm-6">
 						<h3>Personnal Informations</h3>
 
 							<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-					                            <label for="name" class="col-xs-12 control-label">Name</label>
+					                            <label for="name" class="col-xs-10 control-label">Name</label>
 					                            <div class="col-xs-12">
-					                                <input id="name" type="text" class="form-control" name="name" value="{{ $user->name or old('name') }}" required>
+					                                <input id="name" type="text" class="form-control infoInputs" name="name" value="{{ $user->name or old('name') }}" required>
 
 					                                @if ($errors->has('name'))
 					                                    <span class="help-block">
@@ -32,9 +44,9 @@
 					                        </div>
 
 							<div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-					                            <label for="phone" class="col-xs-12 control-label">Phone Number</label>
+					                            <label for="phone" class="col-xs-10 control-label">Phone Number</label>
 					                            <div class="col-xs-12">
-					                                <input id="phone" type="phone" class="form-control" name="phone" value="{{ $user->phone or old('phone') }}" required>
+					                                <input id="phone" type="phone" class="form-control infoInputs" name="phone" value="{{ $user->phone or old('phone') }}" required>
 
 					                                @if ($errors->has('phone'))
 					                                    <span class="help-block">
@@ -45,9 +57,9 @@
 					                        </div>
 
 							<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-					                            <label for="email" class="col-xs-12 control-label">E-Mail Address</label>
+					                            <label for="email" class="col-xs-10 control-label">E-Mail Address</label>
 					                            <div class="col-xs-12">
-					                                <input id="email" type="email" class="form-control" name="email" value="{{ $user->email or old('email') }}" required>
+					                                <input id="email" type="email" class="form-control infoInputs" name="email" value="{{ $user->email or old('email') }}" required>
 
 					                                @if ($errors->has('email'))
 					                                    <span class="help-block">
@@ -58,9 +70,9 @@
 					                        </div>
 
 					                        <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-					                            <label for="address" class="col-xs-12 control-label">Renter's Address</label>
+					                            <label for="address" class="col-xs-10 control-label">Renter's Address</label>
 					                            <div class="col-xs-12">
-					                                <input id="address" type="text" class="form-control" name="address" value="{{ $user->driver->address !== null ? $user->driver->address : old('address')}}" required>
+					                                <input id="address" type="text" class="form-control infoInputs" name="address" value="{{ $user->driver->address !== null ? $user->driver->address : old('address')}}" >
 
 					                                @if ($errors->has('address'))
 					                                    <span class="help-block">
@@ -75,9 +87,9 @@
 					                        <h3>Driver's Licence Information</h3>
 
 					                        <div class="form-group{{ $errors->has('drivers_licence') ? ' has-error' : '' }}">
-					                            <label for="drivers_licence" class="col-xs-12 control-label">Driver's Licence Number</label>
+					                            <label for="drivers_licence" class="col-xs-10 control-label">Driver's Licence Number</label>
 					                            <div class="col-xs-12">
-					                                <input id="drivers_licence" type="text" class="form-control" name="drivers_licence" value="{{  $user->driver->drivers_licence !== null ? $user->driver->drivers_licence : old('drivers_licence') }}" required>
+					                                <input id="drivers_licence" type="text" class="form-control infoInputs" name="drivers_licence" value="{{  $user->driver->drivers_licence !== null ? $user->driver->drivers_licence : old('drivers_licence') }}" >
 
 					                                @if ($errors->has('drivers_licence'))
 					                                    <span class="help-block">
@@ -88,9 +100,9 @@
 					                        </div>
 
 					                        <div class="form-group{{ $errors->has('licence_state') ? ' has-error' : '' }}">
-					                            <label for="licence_state" class="col-xs-12 control-label">Driver's Licence State of issue</label>
+					                            <label for="licence_state" class="col-xs-10 control-label">Driver's Licence State of issue</label>
 					                            <div class="col-xs-12">
-					                                <input id="licence_state" type="text" class="form-control" name="licence_state" value="{{ $user->driver->licence_state !== null ? $user->driver->licence_state : old('licence_state')}}" required>
+					                                <input id="licence_state" type="text" class="form-control infoInputs" name="licence_state" value="{{ $user->driver->licence_state !== null ? $user->driver->licence_state : old('licence_state')}}" >
 
 					                                @if ($errors->has('licence_state'))
 					                                    <span class="help-block">
@@ -101,18 +113,18 @@
 					                        </div>
 
 					                        <div class="form-group col-xs-12 ">
-					        			<label for="expiry_date" class="control-label">Expiry Date</label>
+					        			<label for="expiry_date" class="col-xs-10 control-label">Expiry Date</label>
 							            <div class='input-group date  col-xs-12' id='expiry_date'>
-							                    <input type='text' name="expiry_date" class="form-control" value="{{ $user->driver->expiry_date !== null ? date_format(date_create($user->driver->expiry_date),'d/m/Y') : old('expiry_date') }}" required/>
+							                    <input type='text' name="expiry_date" class="form-control infoInputs" value="{{ $user->driver->expiry_date !== null ? date_format(date_create($user->driver->expiry_date),'d/m/Y') : null }}" />
 							                    <span class="input-group-addon">
 							                        <span class="glyphicon glyphicon-calendar"></span>
 							                    </span>
 							            </div>
 							</div>
 							<div class="form-group col-xs-12 ">
-							            <label for="date_of_birth" class="control-label">Date of birth</label>
+							            <label for="date_of_birth" class="col-xs-10 control-label">Date of birth</label>
 							            <div class='input-group date  col-xs-12' id='date_of_birth'>
-							                    <input type='text' name="date_of_birth" class="form-control" value="{{ $user->driver->date_of_birth !== null ? date_format(date_create($user->driver->date_of_birth),'d/m/Y') : old('date_of_birth') }}" required/>
+							                    <input type='text' name="date_of_birth" class="form-control infoInputs" value="{{ $user->driver->date_of_birth !== null ? date_format(date_create($user->driver->date_of_birth),'d/m/Y') : null }}" />
 							                    <span class="input-group-addon">
 							                        <span class="glyphicon glyphicon-calendar"></span>
 							                    </span>
@@ -129,6 +141,14 @@
 							</div>
 						</div>
 					</form>
+
+					@if(Auth::user()->role_id == 1 && !$user->driver->confirmed)
+					<div class="form-group">
+			                            <div id="confirmUserPlace"class="col-xs-2 col-xs-offset-5">
+			                               <!-- Here goes the javascript button for confirming User -->
+					    </div>
+					</div>
+					@endif
 				</div>
 
 				@if(Auth::user()->id == $user->id)
@@ -280,5 +300,41 @@
                 	format: "DD/MM/YYYY"
                 });
             });
+
+            var inputs = document.getElementsByClassName('infoInputs');
+            showButton = true;
+        	var filled = false;
+        	for (var i = inputs.length - 1; i >= 0; i--) {
+        		var filled = false;
+        		if(inputs[i].value !== ''){
+        			var filled = true;
+        			var tick = document.createElement('span');
+        			tick.className = 'glyphicon glyphicon-ok';
+        			tick.style.color	= 'green';
+        			inputs[i].parentElement.parentElement.prepend(tick);
+        			console.log(inputs[i].value);
+        		}
+        		else{
+        			showButton = false;
+        		}
+        	}
+        	if(showButton){
+	            var confirmUserButton = document.createElement('button');
+	            confirmUserButton.id = "confirmUser";
+	            confirmUserButton.setAttribute('type','button');
+	            confirmUserButton.className = "btn btn-success btn-sm";
+	            confirmUserButton.style.marginTop = "10px";
+	            confirmUserButton.style.marginBottom = "10px";
+	            confirmUserButton.textContent = "Confirm User";
+
+	            var buttonPlace = document.getElementById('confirmUserPlace');
+	            buttonPlace.append(confirmUserButton);
+	            
+	            var userId = document.getElementById('userIdInput').value;
+	            confirmUserButton.addEventListener('click',function(e){
+	            	location.href = "/user/confirm/"+userId;
+	            });
+        	}
+
 </script>
 @stop

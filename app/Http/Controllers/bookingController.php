@@ -133,15 +133,9 @@ class bookingController extends Controller
     public function confirmBooking($bookingId,$email)
     {
         $user = User::where('email','=',$email)->first();
-        if(!$user->driver)
-        {
-            $driver = Drivers::create([
-                'user_id'       =>      $user->id,
-            ]);
-        }
             
         $booking = Booking::find($bookingId);
-        $booking->status = "waiting for documents";
+        $booking->status = "Regular Booking";
         $booking->confirmation = 1;
         $booking->user_id = $user->id;
         $booking->save();

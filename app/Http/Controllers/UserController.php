@@ -82,7 +82,6 @@ class UserController extends Controller
     public function smallUpdate(Request $request)
     {
         $user = User::find($request->input('user'));
-
         $user->name = $request->input('name');
         $user->phone = $request->input('phone');
         $user->email = $request->input('email');
@@ -91,8 +90,16 @@ class UserController extends Controller
         $driver->address = $request->input('address');
         $driver->drivers_licence = $request->input('drivers_licence');
         $driver->licence_state = $request->input('licence_state');
-        $driver->expiry_date = date("Y-m-d",strtotime(str_replace('/','-',$request->input('expiry_date'))));
-        $driver->date_of_birth = date("Y-m-d",strtotime(str_replace('/','-',$request->input('date_of_birth'))));
+
+        if($request->input('expiry_date') !== '')
+        {
+            $driver->expiry_date = date("Y-m-d",strtotime(str_replace('/','-',$request->input('expiry_date'))));
+        }
+
+        if($request->input('date_of_birth') !== '')
+        {
+            $driver->date_of_birth = date("Y-m-d",strtotime(str_replace('/','-',$request->input('date_of_birth'))));
+        }
 
         $driver->save();
         $user->save();
@@ -125,6 +132,27 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Confirm a User in the database
+     *
+     * @param  \App\User  $user->id
+     * @return \Illuminate\Http\Response
+     */
+    public function confirmUser($userId)
+    {
+        $user = User::find($userId);
+        $driver = $user->driver;
+        $driver->confirmed = 1;
+        $driver->save();
+
+        $bookings = $user->bookings;
+        foreach ($bookings as $booking) {
+            $booking->status = "Fast Check in";
+            $booking->save();
+        }
+
+        return redirect()->back();
+    }
 
     /**
      * Update the specified resource in storage.

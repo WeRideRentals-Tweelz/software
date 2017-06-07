@@ -50,7 +50,7 @@
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('email') }} <a href="{{ url('/login') }}" class="btn btn-primary btn-sm">login</a></strong>
                                     </span>
                                 @endif
                             </div>

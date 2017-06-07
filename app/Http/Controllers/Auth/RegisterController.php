@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Driver;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -73,6 +74,18 @@ class RegisterController extends Controller
         ]);
     }
 
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  User
+     * @return Driver
+     */
+    protected function createDriver($user)
+    {
+        return Drivers::create([
+            'user_id'   =>  $user->id,
+        ]);
+    }
     // If the user made a booking before login in, he will be redirected to confirm its booking
     protected function redirectUser(Request $request)
     {
