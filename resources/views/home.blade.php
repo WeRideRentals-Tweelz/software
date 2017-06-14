@@ -50,7 +50,7 @@
 						
 						<div class="form-group col-xs-6">
 					            <div class='input-group date row' id='pickUpDate'>
-					                    <input type='text' name="pickUp" class="form-control" placeholder="Pick Up Date" required/>
+					                    <input id="pickUp"  type='text' name="pickUp" class="form-control" placeholder="Pick Up Date" required/>
 					                    <span class="input-group-addon">
 					                        <span class="glyphicon glyphicon-calendar"></span>
 					                    </span>
@@ -59,13 +59,18 @@
 
 					            <div class="form-group col-xs-6">
 					            <div class='input-group date row' id='dropOffDate'>
-					                    <input type='text' name="dropOff" class="form-control" placeholder="Drop Off Date" required/>
+					                    <input id="dropOff" type='text' name="dropOff" class="form-control" placeholder="Drop Off Date" required/>
 					                    <span class="input-group-addon">
 					                        <span class="glyphicon glyphicon-calendar"></span>
 					                    </span>
 					                </div>
 					            </div>
-						
+
+						<div class='col-xs-12'>
+							<p id="price-helper"></p>
+							<p><a href="#prices" class="btn btn-info btn-xs">Check our price range</a></p>
+						</div>
+
 						<div id="form-button-container" class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3">
 							<button type="submit" onclick=ga(‘send’,’event’,’Button’,’Click’,’NewClient’, '0') class="button-bounce btn btn-primary form-control rent-scooter">Book Now</button>
 						</div>
@@ -100,6 +105,8 @@
 						<div class="row cta-container">
 							<a href="{{ url('/scooters') }}" onclick=ga(‘send’,’event’,’Button’,’Click’,’CheckScooters’,'0') class="button-bounce col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 btn btn-primary btn-lg btn-responsive">Look at the scooters</a>
 						</div>
+
+						@include('home.price_display')
 
 						<h2><span class="gold">W</span>hat are the benefits from renting a scooter ?</h2>
 						<div class="col-sm-4 benefits">

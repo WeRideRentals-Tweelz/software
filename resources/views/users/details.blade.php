@@ -12,14 +12,19 @@
 						<p>{{ Session::get('personnalInfoSuccess') }}</p>
 					</div>
 					@endif
-					
+
+					@if(Session::has('success'))
+					<div class="alert alert-success">
+						<p>{{ Session::get('success') }}</p>
+					</div>
+					@endif
+
 					@if($user->driver->confirmed && Auth::user()->role_id == 1)
 					<div class="alert alert-success">
 						<p>Driver confirmed</p>
 					</div>
 					@elseif(!$user->driver->confirmed)
 					<div class="alert alert-warning">
-						<p>Driver not confirmed</p>
 						<p>Save time at check in by filling all your information</p>
 					</div>
 					@endif

@@ -1,5 +1,5 @@
 <div id="prices" class="container-fluid">
-	<h2><span class="gold">O</span>ur prices</h2>
+	<h2><span class="gold">O</span>ur price range</h2>
 
 		<div style="padding: 0;" class="panel panel-default col-md-4">
 			<div style="background-color: #424242;color:#fff;" class="panel-heading">

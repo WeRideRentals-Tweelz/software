@@ -143,7 +143,7 @@ class bookingController extends Controller
         $sendEmail = new EmailSender($email);
         $sendEmail->confirmation($booking);
 
-        Session::flash('success','We well received your demand ! For a faster check-in, please login');
+        Session::flash('success','Thank you for booking with us ! For a faster check-in, consider filling your information in your profile.');
         return redirect('/');
     }
 }
