@@ -112,7 +112,7 @@ class bookingController extends Controller
 
             // Check if dates are correct
             $today = date("Y-m-d");
-            if($pickUp >= $dropOff || $pickUp < $today || $dropOff <= $today)
+            if($pickUp >= $dropOff ) // || Change that security to avoid people adding dates before today's date = > $pickUp < $today || $dropOff <= $today 
             {
                 Session::flash("error","Please consider choosing dates after today's date");
                 return redirect()->back();
@@ -132,15 +132,15 @@ class bookingController extends Controller
 
     public function confirmBooking($bookingId,$email)
     {
-        $user = User::where('email','=',$email)->first();
-            
+
+        $user = User::where('email','=',$email)->first();    
         $booking = Booking::find($bookingId);
         $booking->status = "Regular Booking";
         $booking->confirmation = 1;
         $booking->user_id = $user->id;
         $booking->save();
 
-        $sendEmail = new EmailSender($email);
+        $sendEmail = new EmailSender($user->email);
         $sendEmail->confirmation($booking);
 
         Session::flash('success','Thank you for booking with us ! For a faster check-in, consider filling your information in your profile.');

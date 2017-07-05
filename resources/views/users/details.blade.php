@@ -220,6 +220,7 @@
 					<h2>My Bookings</h2>
 				</div>
 				<div class="panel-body">
+				@if(isset($booking))
 					<table class="table table-hover">
 						<thead>
 							<tr>
@@ -230,21 +231,25 @@
 							</tr>
 						</thead>
 						<tbody>
-						@foreach($bookings as $booking)
-							<tr>
-								<td>{{ $booking->pick_up_date }}</td>
-								<td>{{ $booking->drop_off_date }}</td>
-								<td>{{ ucfirst($booking->status) }}</td>
-								<td><button class="btn btn-info btn-xs" data-toggle="modal" data-target="#datesChange"><span class="glyphicon glyphicon-pencil"> </span> Change dates</button></td>
-							</tr>
-						@endforeach	
+							@foreach($bookings as $booking)
+								<tr>
+									<td>{{ $booking->pick_up_date }}</td>
+									<td>{{ $booking->drop_off_date }}</td>
+									<td>{{ ucfirst($booking->status) }}</td>
+									<td><button class="btn btn-info btn-xs" data-toggle="modal" data-target="#datesChange"><span class="glyphicon glyphicon-pencil"> </span> Change dates</button></td>
+								</tr>
+							@endforeach
 						</tbody>
 					</table>
+				@else
+					<p>No bookings</p>
+				@endif
 				</div>
 			</div>
 		</div>
 	</div>
 
+	@if(isset($booking))
 	<!-- Modal -->
 	<div id="datesChange" class="modal fade" role="dialog">
 	  <div class="modal-dialog">
@@ -287,6 +292,8 @@
 
 	  </div>
 	</div>
+	@endif
+
 @stop
 
 @section("scripts")

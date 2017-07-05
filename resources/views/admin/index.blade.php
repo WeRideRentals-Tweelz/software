@@ -42,15 +42,16 @@
   </div>
 
   <!-- Bookings -->
-  @foreach($bookings as $booking)
-  <div class="bookings hidden">
-  	<span class="bookingId">{{ $booking->id }}</span>
-  	<span class="bookingUserId">{{ $booking->user->id }}</span>
-  	<span class="bookingUser">{{ $booking->user->name }}</span>
-  	<span class="bookingPickUp">{{ $booking->pick_up_date }}</span>
-  	<span class="bookingDropOff">{{ $booking->drop_off_date }}</span>
-  </div>
-  @endforeach
+	  @foreach($bookings as $booking)
+	  <div class="bookings hidden">
+	  	<span class="bookingId">{{ $booking->id }}</span>
+	  	<span class="bookingUserId">{{ $booking->user->id }}</span>
+	  	<span class="bookingUser">{{ $booking->user->name }}</span>
+	  	<span class="bookingPickUp">{{ $booking->pick_up_date }}</span>
+	  	<span class="bookingDropOff">{{ $booking->drop_off_date }}</span>
+	  </div>
+	  @endforeach
+	  
 @stop
 
 @section('scripts')

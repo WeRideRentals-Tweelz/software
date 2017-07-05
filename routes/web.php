@@ -22,7 +22,7 @@ Route::post('/home/scooters/{scooter_id}/update', 'scooterController@update');
 
 
 // BOOKINGS
-Route::get('/bookings/confirm/{bookingId}/{email}', 'bookingController@confirmBooking');
+Route::get('/confirm/{bookingId}/{email}/booking', 'bookingController@confirmBooking');
 
 //LANDING PAGE
 
@@ -41,7 +41,7 @@ Route::post('/home/drivers/{driver_id}/update', 'DriversController@update');
 
 // ADMIN
 
-Route::get('/home', 'BookingController@index');
+Route::get('/home', 'bookingController@index');
 
 // USERS
 
