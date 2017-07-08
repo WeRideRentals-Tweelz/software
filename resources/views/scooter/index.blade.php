@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
 	<div class="container" style="min-height: 670px;">
-		<h1 style="text-align: center;">Our Scooters</h1>
+		<h1 style="text-align: center;">Scooters</h1>
 		<div class="row" style="margin-top: 50px">
 			@foreach($scooters as $scooter)
 			<div class="col-md-3">

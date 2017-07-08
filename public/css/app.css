@@ -322,6 +322,24 @@ h1
     top: -5px;
 }
 
+/*
+*
+*   Scooters
+*
+*/
+#arrows
+{
+    font-size: 4vw;
+}
+#arrows > a 
+{
+    color: #424242;
+}
+.table > tbody > tr > td
+{
+    vertical-align: middle;
+}
+
   @media screen and (max-width:767px)
  {
     /***

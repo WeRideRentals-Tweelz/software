@@ -10,15 +10,13 @@
 |
 */
 
-Route::get('/', 'scooterController@last4');
-
-
 // SCOOTERS
-Route::get('/scooters', 'scooterController@index');
-Route::get('/scooters/{scooter_model}', 'scooterController@show');
-Route::get('/scooters/{scooter_model}/{color}', 'scooterController@showcolor');
-Route::get('/home/scooters/{scooter_id}', 'scooterController@adminInfo');
-Route::post('/home/scooters/{scooter_id}/update', 'scooterController@update');
+Route::resource('scooters','ScooterController');
+Route::get('/scooters/color/{scooter_model}/{color}', 'ScooterController@showcolor');
+Route::get('/home/scooters', 'ScooterController@adminScooterIndex');
+Route::get('/home/scooters/{scooter_id}', 'ScooterController@adminScooterInfo');
+Route::post('/scooters/{scooterId}', 'ScooterController@update');
+Route::get('/scooters/{scooterId}/destroy', 'ScooterController@destroy');
 
 
 // BOOKINGS

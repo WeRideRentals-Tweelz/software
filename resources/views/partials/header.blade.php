@@ -40,6 +40,9 @@
                             <li>
                                 <a href="{{ url('/home') }}">Dashboard</a>
                             </li>
+                            <li>
+                                <a href="{{ url('/home/scooters') }}">Scooters</a>
+                            </li>
                             <!-- 
                             <li>
                                 <a href="{{ url('/home/bookings') }}">Bookings</a>
