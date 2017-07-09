@@ -92,7 +92,10 @@
        @show
 
         @yield('content')
-
+        
+       @section('footer')
+           @include('partials.footer')
+       @show
             <!-- Scripts -->
     
         <script
@@ -108,10 +111,6 @@
         
 
         @yield('scripts')
-
-       @section('footer')
-           @include('partials.footer')
-       @show
 
     </body>
 </html>

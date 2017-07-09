@@ -1,39 +1,56 @@
 @extends('layouts.main')
 @section('content')
-	<div class="container" style="max-height: 670px">
-		<h1>Scooters available </h1>
-		<h2>From {{ date_format(date_create($pick_up_date),'l d F Y') }} 
-		to {{ date_format(date_create($drop_off_date),'l d F Y') }} - ${{$price}}/day</h2>
-		<div class="row">
-		@if(count($available) >= 1)
-			@foreach($available as $scooter)
-			<div class="col-md-3">
-				<div class="thumbnail">
-					<img src="{{ asset('images/'.$scooter->plate.'-'.str_replace(' ','',$scooter->model).'.jpg') }}" alt="{{ 'scooter '.$scooter->model.' of '.$scooter->year }}">
-					<div class="caption">
-						<h3 style="text-align: center">{{ ucfirst($scooter->model) }}</h3>
-						<p style="text-align: center"><a href="{{ url('scooters/'.$scooter->id) }}" class="btn btn-info" role="button">More Information</a></p>
-
-						<form action="{{url('bookings/confirmation')}}" method="post">
-							{{ csrf_field() }}
-							<input type="hidden" name="pick_up_date" value="{{ $pick_up_date }}">
-							<input type="hidden" name="drop_off_date" value="{{ $drop_off_date }}">
-							<input type="hidden" name="scooter_id" value="{{ $scooter->id }}">
-							@if(null !== Auth::user())
-							<button type="submit" class="btn btn-success" style="margin-left: 75px;">Rent now</button>
+<div class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h1>Bookings</h1>
+		</div>
+		<div class="panel-body">
+			<table class="table table-stripped">
+				<thead>
+					<tr>
+						<th>Booking Number</th>
+						<th>Start Date</th>
+						<th>End Date</th>
+						<th>Days Booked</th>
+						<th>Driver</th>
+						<th>Scooter</th>
+						<th>Booking Status</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($bookings as $booking)
+						<tr>
+							<td>{{ $booking->id }}</td>
+							<td>{{ date_format(date_create($booking->pick_up_date), 'D d M Y') }}</td>
+							<td>{{ date_format(date_create($booking->drop_off_date), 'D d M Y') }}</td>
+							<td>{{ date_create($booking->drop_off_date)->diff(date_create($booking->pick_up_date))->d }}</td>
+							
+							@if($booking->user_id != 0 && $booking->user->driver->confirmed)
+								<td><a href="{{ url('/profile/'.$booking->user_id) }}">{{ $booking->user->name }}</td>
+							@elseif($booking->user_id !=0 && $booking->user->driver->confirmed == 0)
+								<td class="alert alert-warning"><a href="{{ url('/profile/'.$booking->user_id) }}">{{ $booking->user->name }}</a> <br>User's not Confirmed</td>
 							@else
-							<a href="{{ url('/login') }}" class="btn btn-warning" role="button" style="margin-left:65px">Login to rent</a>
+								<td class="alert alert-danger">No User</td>
 							@endif
-						</form>
-					</div>
-				</div>				
-			</div>
-			@endforeach
-		@else
-			<h3 style="text-align: center">There is no scooter available for the requested dates</h3>
-			<h4 style="text-align: center; margin-top: 50px;margin-bottom: -25px;">Change the dates</h4>
-			@include('home.date_picker')
-		@endif
+
+							@if($booking->scooter_id != 0)
+								<td>{{ $booking->scooter->model }} - {{ $booking->scooter->plate }}</td>
+							@else
+								<td class="alert alert-danger">No Scooter</td>
+							@endif
+
+							<td>{{ $booking->status }}</td>
+							<td><a href="{{ url('/bookings/'.$booking->id.'/edit') }}" class="btn btn-info">Details</a></td>
+						</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
+		<div class="panel-footer">
+			<a href="{{ url('/bookings/create') }}" class="btn btn-primary">Create Booking</a>
 		</div>
 	</div>
+</div>
 @stop

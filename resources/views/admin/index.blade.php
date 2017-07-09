@@ -7,7 +7,7 @@
 			<h1><span class="gold">B</span>ookings </h1>
 		</div>
 		<div class="panel-body row">
-			<div class="col-sm-4 col-sm-offset-1">
+			<div class="col-sm-5">
 				<div id="dayList"></div>
 			</div>
 			<div class="col-sm-6 col-sm-offset-1">
@@ -29,9 +29,12 @@
         <div class="modal-body">
           <p id="modalText"></p>
           <ul>
+          	<li>Booking Number : <span id="modalId"></span></li>
           	<li>Start : <span id='modalStart'></span></li>
           	<li>End : <span id='modalEnd'></span></li>
+          	<li>Scooter : <span id="modalScooter"></span></li>
           </ul>
+          <h5 id="modalBookingLink"></h5>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -45,10 +48,19 @@
 	  @foreach($bookings as $booking)
 	  <div class="bookings hidden">
 	  	<span class="bookingId">{{ $booking->id }}</span>
-	  	<span class="bookingUserId">{{ $booking->user->id }}</span>
-	  	<span class="bookingUser">{{ $booking->user->name }}</span>
+	  	@if($booking->user_id != 0)
+	  		<span class="bookingUserId">{{ $booking->user->id }}</span>
+	  		<span class="bookingUser">{{ $booking->user->name }}</span>
+	  	@else
+	  		<span class="bookingUser">No User</span>
+	  	@endif
 	  	<span class="bookingPickUp">{{ $booking->pick_up_date }}</span>
 	  	<span class="bookingDropOff">{{ $booking->drop_off_date }}</span>
+	  	@if($booking->scooter_id != 0)
+	  		<span class="bookingScooter">{{ $booking->scooter->model }}</span>
+	  	@else
+	  		<span class="bookingScooter">No scooter</span>
+	  	@endif
 	  </div>
 	  @endforeach
 	  
@@ -61,17 +73,22 @@
 		// Get Hidden Bookings informations to store into javascript variables then pushed into array for calendar
 		var pickups = [];
 		var dropoffs = [];
+		var dayPickUps = [];
+		var dayDropOffs = [];
 		$(".bookings").each(function(booking){
 			var eventId = $(this).find('.bookingId').html();
 			var eventUserId = $(this).find('.bookingUserId').html();
 			var eventUser = $(this).find('.bookingUser').html();
 			var eventPickUp = $(this).find('.bookingPickUp').html();
 			var eventDropOff = $(this).find('.bookingDropOff').html();
+			var eventScooter = $(this).find('.bookingScooter').html();
 
-			var pickup = {id: eventId, start: eventPickUp, in: eventPickUp, out: eventDropOff, title: eventUser, userId: eventUserId,allDay: true, color: "green"};
+			var title = "<p><a href='/profile/"+eventUserId+"'>"+eventUser+"</a> - <a href='/bookings/"+eventId+"/edit' class='btn btn-primary'>Booking</a></p>";
+
+			var pickup = {id: eventId, start: eventPickUp, in: eventPickUp, out: eventDropOff, title: eventUser, user: eventUser, userId: eventUserId,scooter: eventScooter,allDay: true, color: "green"};
 			pickups.push(pickup);
 
-			var dropoff = {id: eventId, start: eventDropOff, in: eventPickUp, out: eventDropOff, title: eventUser, userId: eventUserId, allDay: true, color: "orange"};
+			var dropoff = {id: eventId, start: eventDropOff, in: eventPickUp, out: eventDropOff, title: eventUser, user: eventUser, userId: eventUserId,scooter: eventScooter, allDay: true, color: "orange"};
 			dropoffs.push(dropoff);
 		});
 
@@ -85,9 +102,12 @@
 	    		firstDay: 1,
 	    		defaultView: "listWeek",
 	    		eventSources: [
-				pickups,
-				dropoffs
-			],
+					pickups,
+					dropoffs
+				],
+				eventRender: function(event, element){
+					return title = "<tr class='fc-list-item-time fc-widget-content'><td>All Day</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:green'></span></td><td class='fc-list-item-title fc-widget-content'><a href='/profile/"+event.userId+"'>"+event.user+"</a> - <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
+				},
     		});
 
     		// MonthCalendar of bookings
@@ -108,7 +128,9 @@
 			eventClick: function(event,view){
 				var format = "D MMMM YYYY";
 				var url = '<a href="/profile/'+event.userId+'/">'+event.title+'</a>';
+				var bookingUrl = '<a href="/bookings/'+event.id+'/edit" class="btn btn-info">See Booking Details</a>';
 
+				$("#modalId").text(event.id);
 				$("#modalTitle").html(url);
 				if(event.details === null){
 					$("#modalText").text("");
@@ -117,6 +139,8 @@
 				}
 				$("#modalStart").text(moment(event.in).format(format));
 				$("#modalEnd").text(moment(event.out).format(format));	
+				$("#modalScooter").text(event.scooter);
+				$('#modalBookingLink').html(bookingUrl);
 				$("#myModal").modal();
 			}
 	    	});

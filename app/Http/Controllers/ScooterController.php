@@ -29,7 +29,7 @@ class ScooterController extends Controller
      */
     public function create()
     {
-        return view('dashboard.scooter-details');
+        return view('admin.scooter-details');
     }
 
     /**
@@ -173,6 +173,6 @@ class ScooterController extends Controller
             }
             $prev = $scooter_id - 1;
             
-            return view('dashboard.scooter-details')->with(compact('scooter','bookings','next','prev'));
+            return view('admin.scooter-details')->with(compact('scooter','bookings','next','prev'));
     }    
 }

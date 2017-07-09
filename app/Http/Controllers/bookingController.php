@@ -84,22 +84,7 @@ class bookingController extends Controller
 
     public function store(Request $request)
     {
-            $name           =   $request->input('name');
-            $phone          =   $request->input('phone');
-            $email          =   $request->input('email');
-            $pickUp        =   date("Y-m-d",strtotime(str_replace('/','-',$request->input('pickUp'))));
-            $dropOff        =  date("Y-m-d",strtotime(str_replace('/','-',$request->input('dropOff'))));
 
-            Booking::create([
-                "pick_up_date"      =>      $pickUp,
-                "drop_off_date"     =>      $dropOff,
-                "scooter_id"           =>       0,
-                "user_id"              =>       0
-            ]); 
-
-            // Use an event listener to send a confirmation email
-            Session::flash('success','You will receive a confirmation email soon');
-            return redirect("/"); 
     }
 
     public function quote(QuoteRequest $request)

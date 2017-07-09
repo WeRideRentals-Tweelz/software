@@ -46,7 +46,7 @@ class LoginController extends Controller
         // If the hidden input "booked" is different than 0 then the user is redirect to the next process
         if($request->input('booked'))
         {
-            $this->redirectTo = "/bookings/confirm/".$request->input('booked')."/".$request->input('email');
+            $this->redirectTo = "/confirm/".$request->input('booked')."/".$request->input('email')."/booking";
         }
     }
 }

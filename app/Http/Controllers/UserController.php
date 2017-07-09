@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Drivers;
 use App\Booking;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash; 
 use Illuminate\Support\Facades\Session; 
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -66,7 +69,7 @@ class UserController extends Controller
         if(Auth::user()->role_id == 1|| Auth::user()->id == $userId)
         {
             $user = User::find($userId);
-            $bookings = Booking::where('user_id','=',$userId)->where('pick_up_date','>=',date('Y-m-d'))->get();
+            $bookings = Booking::where('user_id','=',$userId)->get();
             $driver = $user->driver;
             return view('users.details')->with(compact('user','bookings','driver'));
         }
@@ -81,6 +84,15 @@ class UserController extends Controller
      */
     public function smallUpdate(Request $request)
     {
+        if($request->hasFile('userPicture')){
+            if($request->file('userPicture')->isValid()){
+                if(Storage::disk('local')->exists($request->input('name').'.jpg'))
+                {
+                    Storage::delete($request->input('name').'.jpg');
+                }
+                $file = $request->userPicture->storeAs('public',$request->input('name').'.jpg');
+            }
+        }
         $user = User::find($request->input('user'));
         $user->name = $request->input('name');
         $user->phone = $request->input('phone');
