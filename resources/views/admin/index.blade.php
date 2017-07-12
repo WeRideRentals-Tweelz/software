@@ -28,12 +28,20 @@
         </div>
         <div class="modal-body">
           <p id="modalText"></p>
-          <ul>
-          	<li>Booking Number : <span id="modalId"></span></li>
-          	<li>Start : <span id='modalStart'></span></li>
-          	<li>End : <span id='modalEnd'></span></li>
-          	<li>Scooter : <span id="modalScooter"></span></li>
-          </ul>
+          <table class="table table-striped table-hover table-condensed">
+          <tr>
+          	<td>Booking Number : </td><td id="modalId"></td>
+          </tr>
+          <tr>
+          	<td>Start : </td><td id='modalStart'></td>
+          </tr>
+          <tr>
+          	<td>End : </td><td id='modalEnd'></td>
+          </tr>
+          <tr>	
+          	<td>Scooter : </td><td id="modalScooter"></td>
+          </tr>
+          </table>
           <h5 id="modalBookingLink"></h5>
         </div>
         <div class="modal-footer">
@@ -85,10 +93,10 @@
 
 			var title = "<p><a href='/profile/"+eventUserId+"'>"+eventUser+"</a> - <a href='/bookings/"+eventId+"/edit' class='btn btn-primary'>Booking</a></p>";
 
-			var pickup = {id: eventId, start: eventPickUp, in: eventPickUp, out: eventDropOff, title: eventUser, user: eventUser, userId: eventUserId,scooter: eventScooter,allDay: true, color: "green"};
+			var pickup = {id: eventId, start: eventPickUp, in: eventPickUp, out: eventDropOff, title: eventId+"-"+eventUser, user: eventUser, userId: eventUserId,scooter: eventScooter,allDay: true, color: "green", type: "Pick Up"};
 			pickups.push(pickup);
 
-			var dropoff = {id: eventId, start: eventDropOff, in: eventPickUp, out: eventDropOff, title: eventUser, user: eventUser, userId: eventUserId,scooter: eventScooter, allDay: true, color: "orange"};
+			var dropoff = {id: eventId, start: eventDropOff, in: eventPickUp, out: eventDropOff, title: eventId+"-"+eventUser, user: eventUser, userId: eventUserId,scooter: eventScooter, allDay: true, color: "orange", type: "Drop Off"};
 			dropoffs.push(dropoff);
 		});
 
@@ -106,7 +114,7 @@
 					dropoffs
 				],
 				eventRender: function(event, element){
-					return title = "<tr class='fc-list-item-time fc-widget-content'><td>All Day</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:green'></span></td><td class='fc-list-item-title fc-widget-content'><a href='/profile/"+event.userId+"'>"+event.user+"</a> - <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
+					return title = "<tr class='fc-list-item-time fc-widget-content'><td>"+event.type+"</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:"+event.color+"'></span></td><td class='fc-list-item-title fc-widget-content'><a href='/profile/"+event.userId+"'>"+event.user+"</a> - <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
 				},
     		});
 
