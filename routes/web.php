@@ -23,6 +23,9 @@ Route::get('/scooters/{scooterId}/destroy', 'ScooterController@destroy');
 //Admin
 	Route::get('/home/scooters', 'ScooterController@adminScooterIndex');
 	Route::get('/home/scooters/{scooter_id}', 'ScooterController@adminScooterInfo');
+	
+	Route::get('/home/scooter/{scooterId}/KmCheck/{check}','ScooterController@kmCheckSheet');
+	Route::get('/home/scooter/checked/{scooterId}/kmCheck/{check}','ScooterController@checkKilometers');
 
 // BOOKINGS
 Route::resource('bookings','BookingController');
@@ -30,6 +33,8 @@ Route::resource('bookings','BookingController');
 	Route::post('/booking/quote', 'BookingController@quote');
 	Route::get('/confirm/{bookingId}/{email}/booking', 'BookingController@confirmBooking');
 //Admin
+	Route::get('/pastbookings','BookingController@pastbookings');
+	Route::post('/pastbookings','BookingController@pastbookings');
 	Route::get('/bookings/{booking}/destroy', 'BookingController@destroy');
 	Route::post('/bookings', 'BookingController@store');
 	Route::post('/bookings/{booking}', 'BookingController@update');
@@ -44,11 +49,23 @@ Route::get('/home/drivers/{driver_id}/confirm', 'DriversController@confirm');
 Route::post('/home/drivers/{driver_id}/update', 'DriversController@update');
 
 // ADMIN
-Route::get('/home', 'BookingController@dashboard');
+Route::get('/home', 'BookingController@dashboard')->middleware('admin');
 
 // USERS
+Route::resource('users','UserController');
+Route::get('/banned', 'UserController@indexBanned');
 Route::get('/profile', 'UserController@show');
 Route::get('/profile/{userId}', 'UserController@showUser');
+Route::get('/profile/{userId}/delete', 'UserController@destroy');
+
 Route::post('/user/update', 'UserController@smallUpdate');
 Route::post('/user/changePassword', 'UserController@changePassword');
 Route::get('/user/confirm/{userId}', 'UserController@confirmUser');
+Route::get('/users/fromBooking/{bookingId}', 'UserController@createFromBooking');
+
+//Tolls
+Route::resource('tolls','TollsController');
+Route::get('/tolls/{sort}/{order}/{limit}', 'TollsController@index');
+Route::post('/tolls/edit', 'TollsController@edit');
+Route::post('/tolls/update', 'TollsController@update');
+Route::post('/tolls/delete', 'TollsController@destroy');

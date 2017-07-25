@@ -52,7 +52,7 @@
     </div>
   </div>
 
-  <!-- Bookings -->
+  	  <!-- Bookings -->
 	  @foreach($bookings as $booking)
 	  <div class="bookings hidden">
 	  	<span class="bookingId">{{ $booking->id }}</span>
@@ -71,6 +71,15 @@
 	  	@endif
 	  </div>
 	  @endforeach
+
+	  <!-- Bonds -->
+	  @foreach($bonds as $bond)
+	  <div class="bonds hidden">
+	  	<span class="bookingNumber">{{ $bond['bookingNumber'] }}</span>
+	  	<span class="bondDate">{{ $bond['bondDate'] }}</span>
+	  	<span class="bondName">{{ $bond['bondName'] }}</span>
+	  </div>
+	  @endforeach
 	  
 @stop
 
@@ -81,8 +90,8 @@
 		// Get Hidden Bookings informations to store into javascript variables then pushed into array for calendar
 		var pickups = [];
 		var dropoffs = [];
-		var dayPickUps = [];
-		var dayDropOffs = [];
+		var bonds = [];
+
 		$(".bookings").each(function(booking){
 			var eventId = $(this).find('.bookingId').html();
 			var eventUserId = $(this).find('.bookingUserId').html();
@@ -100,6 +109,15 @@
 			dropoffs.push(dropoff);
 		});
 
+		$('.bonds').each(function(bond){
+			var bondBookingNumber = $(this).find('.bookingNumber').html();
+			var bondDate = $(this).find('.bondDate').html();
+			var bondName = $(this).find('.bondName').html();
+
+			var bond = {id: bondBookingNumber, title: bondBookingNumber+" - "+bondName, date: bondDate, allDay: true, color:"purple", type: "Bond"};
+			bonds.push(bond); 
+		});
+
 		// List Calendar of bookings
     		$('#dayList').fullCalendar({
     			header:{
@@ -111,10 +129,16 @@
 	    		defaultView: "listWeek",
 	    		eventSources: [
 					pickups,
-					dropoffs
+					dropoffs,
+					bonds
 				],
 				eventRender: function(event, element){
-					return title = "<tr class='fc-list-item-time fc-widget-content'><td>"+event.type+"</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:"+event.color+"'></span></td><td class='fc-list-item-title fc-widget-content'><a href='/profile/"+event.userId+"'>"+event.user+"</a> - <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
+					if(event.user == "No User"){
+						title = "<tr class='fc-list-item-time fc-widget-content'><td>"+event.type+"</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:"+event.color+"'></span></td><td class='fc-list-item-title fc-widget-content'>"+event.user+" - <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
+					} else {
+						title = "<tr class='fc-list-item-time fc-widget-content'><td>"+event.type+"</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:"+event.color+"'></span></td><td class='fc-list-item-title fc-widget-content'><a href='/profile/"+event.userId+"'>"+event.user+"</a> - <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
+					}
+					return title;
 				},
     		});
 
@@ -128,7 +152,8 @@
 	    		defaultView: "month",
 			eventSources: [
 				pickups,
-				dropoffs
+				dropoffs,
+				bonds
 			],
 			firstDay: 1,
 			defaultTimedEventDuration: "00:30",

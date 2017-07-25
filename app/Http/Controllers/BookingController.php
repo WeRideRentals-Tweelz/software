@@ -20,9 +20,16 @@ use App\Scooter;
 //Services
 use App\Services\checkUser;
 use App\Services\EmailSender;
+use App\Services\BookingServices;
+use App\Services\ScooterServices;
 
 class BookingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin')->except('quote','confirmBooking');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,8 +37,21 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $bookings = Booking::where('confirmation','=',1)->get();
+        $date = date('Y-m-d'); 
+        $bookings = Booking::where('confirmation','=',1)->where('drop_off_date',">=",$date)->orderBy('pick_up_date','asc')->get();
         return view('bookings.index')->with(compact('bookings'));
+    }
+
+    public function pastbookings(Request $request)
+    {
+        if($request->input('date') === null){
+            return view('bookings.pastbookings'); 
+        }
+        $date = $request->input('date').'-01';
+        $maxDate = $request->input('date').'-31';
+        $bookings = Booking::where('confirmation','=',1)->where('pick_up_date','>=',$request->input('date'))->where('pick_up_date','<=',$maxDate)->orderBy('pick_up_date','asc')->get();
+        
+        return view('bookings.pastbookings')->with(compact('bookings','date'));
     }
 
     /**
@@ -40,10 +60,9 @@ class BookingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        $scooters = Scooter::all();
-        $users = User::all();
-        return view('bookings.edit')->with(compact('scooters','users'));
+    { 
+        $users = User::where('banned','=',0)->get();
+        return view('bookings.edit')->with(compact('users'));
     }
 
     /**
@@ -98,8 +117,9 @@ class BookingController extends Controller
     public function edit(Booking $booking)
     {
         // Create a service that returns only Available scooters
-        $scooters = Scooter::all();
-        $users = User::all();
+        $scooterService = new ScooterServices();
+        $scooters = $scooterService->scootersAvailable($booking);
+        $users = User::where('banned','=',0)->get();
         return view('bookings.edit')->with(compact('booking','scooters','users'));
     }
 
@@ -141,8 +161,10 @@ class BookingController extends Controller
     */
     public function dashboard()
     {
-        $bookings = booking::where('confirmation','=',1)->get();    
-        return view('admin.index')->with(compact('bookings'));
+        $bookings = booking::where('confirmation','=',1)->get();
+        $bookingService = new BookingServices();
+        $bonds = $bookingService->BondPaymentReminder($bookings);    
+        return view('admin.index')->with(compact('bookings','bonds'));
     }
 
     /**

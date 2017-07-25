@@ -5,6 +5,7 @@ namespace Illuminate\Foundation\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Session;
 
 trait AuthenticatesUsers
 {
@@ -113,7 +114,13 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        //
+        if($user->banned){
+            $this->logout($request);
+        }
+
+        if($user->role_id == 1){
+            return redirect('/home');
+        }
     }
 
     /**

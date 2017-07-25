@@ -36,7 +36,7 @@
 							@endif
 
 							@if($booking->scooter_id != 0)
-								<td>{{ $booking->scooter->model }} - {{ $booking->scooter->plate }}</td>
+								<td>{{ $booking->scooter->plate }} - {{ $booking->scooter->model }}</td>
 							@else
 								<td class="alert alert-danger">No Scooter</td>
 							@endif
@@ -50,6 +50,7 @@
 		</div>
 		<div class="panel-footer">
 			<a href="{{ url('/bookings/create') }}" class="btn btn-primary">Create Booking</a>
+			<a href="{{ url('/pastBookings/') }}" class="btn btn-info pull-right">See Past Bookings</a>
 		</div>
 	</div>
 </div>

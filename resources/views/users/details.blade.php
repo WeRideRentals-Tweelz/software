@@ -4,7 +4,11 @@
 		<div class="col-sm-6 col-sm-offset-1">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h2>My Profile</h2>
+					@if(isset($user))
+						<h2>My Profile</h2>
+					@else
+						<h2>New User</h2>
+					@endif
 				</div>
 				<div class="panel-body">
 					@if(Session::has('personnalInfoSuccess'))
@@ -19,28 +23,32 @@
 					</div>
 					@endif
 
-					@if($user->driver->confirmed && Auth::user()->role_id == 1)
+					@if(isset($user) && $user->driver->confirmed && Auth::user()->role_id == 1)
 					<div class="alert alert-success">
 						<p>Driver confirmed</p>
 					</div>
-					@elseif(!$user->driver->confirmed)
+					@elseif(isset($user) && !$user->driver->confirmed)
 					<div class="alert alert-warning">
 						<p>Save time at check in by filling all your information</p>
 					</div>
 					@endif
 					
-					<form class="form" action="{{ url('/user/update') }}" method="POST" enctype="multipart/form-data">
+					<form class="form" action="{{ isset($user) ? url('/user/update') : url('/users') }}" method="POST" enctype="multipart/form-data">
 
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-					<input id="userIdInput" type="hidden" name="user" value="{{ $user->id }}">
+					<input id="userIdInput" type="hidden" name="user" value="{{ $user->id or old('user')}}">
+					
+					@if(isset($bookingId))
+						<input type="hidden" name="booking" value="{{ $bookingId }}">
+					@endif
 
 					<div class="col-sm-12">
 						<div class="col-sm-4 col-sm-offset-4">
 							<div class="col-sm-8 col-sm-offset-2 ">
-								@if(file_exists('storage/'.$user->name.'.jpg'))
+								@if(isset($user) && file_exists('storage/'.$user->name.'.jpg'))
 									<img class="portrait" src="{{ url('storage/'.$user->name.'.jpg')}}" alt="{{ $user->name.' portrait' }}" width="400">
 								@else
-									<img class="portrait" src="{{ url('storage/user.png')}}" alt="{{ $user->name.' portrait' }}" width="400">
+									<img class="portrait" src="{{ url('storage/user.png')}}" alt="{{ 'User portrait' }}" width="400">
 									<p>No image</p>
 								@endif
 							</div>
@@ -96,7 +104,7 @@
 	                        <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
 	                            <label for="address" class="col-xs-10 control-label">Renter's Address</label>
 	                            <div class="col-xs-12">
-	                                <input id="address" type="text" class="form-control infoInputs" name="address" value="{{ $user->driver->address !== null ? $user->driver->address : old('address')}}" >
+	                                <input id="address" type="text" class="form-control infoInputs" name="address" value="{{ isset($user) && $user->driver->address !== null ? $user->driver->address : old('address')}}" >
 
 	                                @if ($errors->has('address'))
 	                                    <span class="help-block">
@@ -113,7 +121,7 @@
 			                        <div class="form-group{{ $errors->has('drivers_licence') ? ' has-error' : '' }}">
 			                            <label for="drivers_licence" class="col-xs-10 control-label">Driver's Licence Number</label>
 			                            <div class="col-xs-12">
-			                                <input id="drivers_licence" type="text" class="form-control infoInputs" name="drivers_licence" value="{{  $user->driver->drivers_licence !== null ? $user->driver->drivers_licence : old('drivers_licence') }}" >
+			                                <input id="drivers_licence" type="text" class="form-control infoInputs" name="drivers_licence" value="{{ isset($user) && $user->driver->drivers_licence !== null ? $user->driver->drivers_licence : old('drivers_licence') }}" >
 
 			                                @if ($errors->has('drivers_licence'))
 			                                    <span class="help-block">
@@ -126,7 +134,7 @@
 			                        <div class="form-group{{ $errors->has('licence_state') ? ' has-error' : '' }}">
 			                            <label for="licence_state" class="col-xs-10 control-label">Driver's Licence State of issue</label>
 			                            <div class="col-xs-12">
-			                                <input id="licence_state" type="text" class="form-control infoInputs" name="licence_state" value="{{ $user->driver->licence_state !== null ? $user->driver->licence_state : old('licence_state')}}" >
+			                                <input id="licence_state" type="text" class="form-control infoInputs" name="licence_state" value="{{ isset($user) && $user->driver->licence_state !== null ? $user->driver->licence_state : old('licence_state')}}" >
 
 			                                @if ($errors->has('licence_state'))
 			                                    <span class="help-block">
@@ -139,7 +147,7 @@
 			                        <div class="form-group col-xs-12 ">
 			        			<label for="expiry_date" class="col-xs-10 control-label">Expiry Date</label>
 					            <div class='input-group date  col-xs-12' id='expiry_date'>
-					                    <input type='text' name="expiry_date" class="form-control infoInputs" value="{{ $user->driver->expiry_date !== null ? date_format(date_create($user->driver->expiry_date),'d/m/Y') : null }}" />
+					                    <input type='text' name="expiry_date" class="form-control infoInputs" value="{{ isset($user) && $user->driver->expiry_date !== null ? date_format(date_create($user->driver->expiry_date),'d/m/Y') : null }}" />
 					                    <span class="input-group-addon">
 					                        <span class="glyphicon glyphicon-calendar"></span>
 					                    </span>
@@ -148,7 +156,7 @@
 							<div class="form-group col-xs-12 ">
 					            <label for="date_of_birth" class="col-xs-10 control-label">Date of birth</label>
 					            <div class='input-group date  col-xs-12' id='date_of_birth'>
-					                    <input type='text' name="date_of_birth" class="form-control infoInputs" value="{{ $user->driver->date_of_birth !== null ? date_format(date_create($user->driver->date_of_birth),'d/m/Y') : null }}" />
+					                    <input type='text' name="date_of_birth" class="form-control infoInputs" value="{{ isset($user) && $user->driver->date_of_birth !== null ? date_format(date_create($user->driver->date_of_birth),'d/m/Y') : null }}" />
 					                    <span class="input-group-addon">
 					                        <span class="glyphicon glyphicon-calendar"></span>
 					                    </span>
@@ -158,24 +166,35 @@
 						<div class='col-xs-12'>
 	                        <div class="form-group">
 	                            <div class="col-xs-2 col-xs-offset-5">
-	                                <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 10px; margin-bottom: 10px">
+	                            	@if(isset($user))
+	                                <button type="submit" class="btn btn-primary btn-sm form-control" style="margin-top: 10px; margin-bottom: 10px">
 	                                    Update Profile
 	                                </button>
+	                                @else
+	                                <button type="submit" class="btn btn-primary btn-sm form-control" style="margin-top: 10px; margin-bottom: 10px">
+	                                    Create
+	                                </button>
+	                                @endif
 							    </div>
 							</div>
 						</div>
 					</form>
 
-					@if(Auth::user()->role_id == 1 && !$user->driver->confirmed)
+					@if(Auth::user()->role_id == 1 && isset($user))
 					<div class="form-group">
-                        <div id="confirmUserPlace"class="col-xs-2 col-xs-offset-5">
-                           <!-- Here goes the javascript button for confirming User -->
+						@if(!$user->driver->confirmed)
+	                        <div id="confirmUserPlace" class="col-xs-2 col-xs-offset-5">
+	                           <!-- Here goes the javascript button for confirming User -->
+						    </div>
+					    @endif
+					    <div class="col-xs-2 col-xs-offset-5">
+					    	<button type="button" class=" form-control btn btn-danger btn-sm" data-toggle="modal" data-target="#banUser">Ban</button>
 					    </div>
 					</div>
 					@endif
 				</div>
 
-				@if(Auth::user()->id == $user->id)
+				@if(isset($user) && Auth::user()->id == $user->id)
 				<hr>
 				<div class="container-fluid">
 					<div class="col-sm-4 col-sm-offset-4">
@@ -239,7 +258,7 @@
 					<h2>My Bookings</h2>
 				</div>
 				<div class="panel-body">
-				@if(isset($bookings))
+				@if(isset($bookings) && count($bookings) > 0)
 					<table class="table table-hover table-condensed">
 						<thead>
 							<tr>
@@ -325,6 +344,29 @@
 	</div>
 	@endif
 
+	@if(isset($user))
+	<!-- Ban User Modal -->
+	<div id="banUser" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Do you really want to ban this user ?</h4>
+	      </div>
+	      <div class="modal-body">
+	        <form action="{{ url('/profile/'.$user->id.'/delete') }}" method="DELETE">
+	        	<button type="submit" class="btn btn-danger">Yes</button>
+	        	<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+	        </form>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+	@endif
+
 @stop
 
 @section("scripts")
@@ -365,7 +407,7 @@
 	            var confirmUserButton = document.createElement('button');
 	            confirmUserButton.id = "confirmUser";
 	            confirmUserButton.setAttribute('type','button');
-	            confirmUserButton.className = "btn btn-success btn-sm";
+	            confirmUserButton.className = "form-control btn btn-success btn-sm";
 	            confirmUserButton.style.marginTop = "10px";
 	            confirmUserButton.style.marginBottom = "10px";
 	            confirmUserButton.textContent = "Confirm User";

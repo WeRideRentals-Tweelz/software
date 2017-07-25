@@ -8,7 +8,7 @@ class Scooter extends Model
 {
     protected $table = 'scooters';
 
-    protected $fillable = ['state','plate','model','year','color','kilometers','category','last_check','availability'];
+    protected $fillable = ['state','plate','model','year','color','kilometers','category','last_check','last_kilometers_check','availability'];
 
     protected $hidden= [];
 

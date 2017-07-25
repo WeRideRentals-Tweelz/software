@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use DateTime;
 use App\Scooter;
 use App\Booking;
+use App\Repairs;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use App\Services\ScooterServices;
 
 class ScooterController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin')->except('index','show','showcolor');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -47,15 +54,16 @@ class ScooterController extends Controller
         }
 
         Scooter::create([
-            'state'          => $request->input('state'),
-            'plate'          => $request->input('plate') ,
-            'model'          => $request->input('model') ,
-            'year'           => $request->input('year') ,
-            'color'          => $request->input('color') ,
-            'kilometers'     => $request->input('kilometers') ,
-            'category'       => $request->input('category') ,
-            'last_check'     => $request->input('last_check'),
-            'availability'   => 0
+            'state'                 => $request->input('state'),
+            'plate'                 => $request->input('plate') ,
+            'model'                 => $request->input('model') ,
+            'year'                  => $request->input('year') ,
+            'color'                 => $request->input('color') ,
+            'kilometers'            => $request->input('kilometers') ,
+            'category'              => $request->input('category') ,
+            'last_check'            => $request->input('last_check'),
+            'last_kilometers_check' => $request->input('kilometers'),
+            'availability'          => 0
         ]);
 
         return redirect('/home/scooters');
@@ -155,13 +163,16 @@ class ScooterController extends Controller
     public function adminScooterIndex()
     {
         $scooters = Scooter::all();
-        return view('admin.scooter-index')->with(compact('scooters'));
+        $scooterService = new ScooterServices ();
+        return view('admin.scooter-index')->with(compact('scooters','scooterService'));
     }
 
     public function adminScooterInfo($scooter_id)
     {
+            $scooterService = new ScooterServices();
             $scooter = Scooter::find($scooter_id);
             $bookings = Booking::where('scooter_id','=',$scooter->id)->get();
+
             //Arrow links
             if(Scooter::find($scooter_id + 1) !== null )
             {
@@ -173,6 +184,33 @@ class ScooterController extends Controller
             }
             $prev = $scooter_id - 1;
             
-            return view('admin.scooter-details')->with(compact('scooter','bookings','next','prev'));
-    }    
+            return view('admin.scooter-details')->with(compact('scooter','bookings','scooterService','next','prev'));
+    }  
+    
+    public function kmCheckSheet($scooterId,$check)
+    {
+        $scooter = Scooter::find($scooterId);
+        $scooterService = new ScooterServices();
+        $actionsNeeded = $scooterService->partIntervention($check);
+
+        return view('admin.scooter-kmSheet')->with(compact('scooter','actionsNeeded','check'));
+    }
+
+    public function checkKilometers($scooterId,$check)
+    {
+        $scooter = Scooter::find($scooterId);
+        $scooter->last_check = date('Y-m-d');
+        $scooter->save();
+
+        Repairs::create([
+            'scooter_id'        => $scooterId,
+            'date'              => date('Y-m-d'),
+            'kilometers'        => $scooter->kilometers,
+            'reason'            => $check.'km check',
+            'part'              => '',
+            'status'            => '1'
+        ]);
+
+        return redirect(url('/home/scooters/'.$scooterId));
+    }  
 }

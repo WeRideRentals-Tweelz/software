@@ -16,6 +16,7 @@
 				<div class="row">
 					
 					<div id="scooterInfo" class="col-sm-4">
+					@if(isset($scooters))
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h2>Scooter Info</h2>
@@ -67,6 +68,7 @@
 								@endif
 							</div>
 						</div>
+					@endif
 					</div>
 
 
@@ -237,7 +239,7 @@
 	</div>
 </div>
 
-
+@if(isset($booking))
 <!-- Scooters Modal -->
 <div id="scooterModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -272,6 +274,8 @@
 
   </div>
 </div>
+@endif
+
 
 <!-- User Modal -->
 <div id="userModal" class="modal fade" role="dialog">
@@ -303,7 +307,7 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Assign</button>
         @if(isset($booking))
-        	<a href="{{ url('/users/create/fromBooking/'.$booking->id) }}" class="btn btn-success">Create New User</a>
+        	<a href="{{ url('/users/fromBooking/'.$booking->id) }}" class="btn btn-success">Create New User</a>
         @endif
       </div>
     </div>

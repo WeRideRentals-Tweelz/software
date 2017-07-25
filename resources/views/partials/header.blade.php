@@ -31,26 +31,27 @@
                     <li><a href="{{ url('/login') }}">Login</a></li>
                     <li><a href="{{ url('/register') }}">Register</a></li>
                 @elseif(Auth::user()->role_id == 1)
+                    <li>
+                        <a href="{{ url('/home') }}">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/bookings') }}">Bookings</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/home/scooters') }}">Scooters</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/users') }}">Users</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/tolls/') }}">Tolls</a>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="{{ url('/home') }}">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('/bookings') }}">Bookings</a>
-                            </li>
-                            <li>
-                                <a href="{{ url('/home/scooters') }}">Scooters</a>
-                            </li>
-                            <!-- 
-                            <li>
-                                <a href="{{ url('/home/drivers') }}">Drivers</a>
-                            </li>
-                            -->
                             <li>
                                 <a href="{{ url('/logout') }}"
                                     onclick="event.preventDefault();

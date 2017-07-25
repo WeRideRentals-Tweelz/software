@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->only('show','showUser','smallUpdate','changePassword');
+        $this->middleware('admin')->except('show','showUser');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +28,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::where('banned','=',0)->get();
+        return view('users.index')->with(compact('users'));
+    }
+
+    public function indexBanned()
+    {
+        $users = User::where('banned','=',1)->get();
+        return view('users.index')->with(compact('users'));
     }
 
     /**
@@ -32,7 +45,12 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.details');
+    }
+
+    public function createFromBooking($bookingId)
+    {
+        return view('users.details')->with(compact('bookingId'));
     }
 
     /**
@@ -43,7 +61,33 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::create([
+            'name'      =>  $request->input('name'),
+            'email'     =>  $request->input('email'),
+            'password'  =>  bcrypt('WeRide2017'),
+            'phone'     =>  $request->input('phone'),
+            'banned'    => 0
+        ]);
+
+        $driver = Drivers::create([
+            'user_id'           => $user->id,
+            'date_of_birth'     => $request->input('date_of_birth'),
+            'address'           => $request->input('address'),
+            'drivers_licence'   => $request->input('drivers_licence'),
+            'licence_state'     => $request->input('licence_state'),
+            'expiry_date'       => $request->input('expiry_date'),
+            'confirmed'         => 0
+        ]); 
+
+        if(null !== $request->input('booking')){
+            $booking = Booking::find($request->input('booking'));
+            $booking->user_id = $user->id;
+            $booking->save();
+
+            return redirect('/bookings/'.$booking->id.'/edit');
+        }
+
+        return redirect('/profile/'.$user->id);
     }
 
     /**
@@ -73,7 +117,7 @@ class UserController extends Controller
             $driver = $user->driver;
             return view('users.details')->with(compact('user','bookings','driver'));
         }
-            return redirect("/profile");
+            return redirect("/");
     }
 
     /**
@@ -184,8 +228,12 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($userId)
     {
-        //
+        $user = User::find($userId);
+        $user->banned = 1;
+        $user->save();
+
+        return redirect('/users');
     }
 }

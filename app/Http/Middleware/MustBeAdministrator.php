@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -16,10 +15,10 @@ class MustBeAdministrator
      */
     public function handle($request, Closure $next)
     {
-
-        if(Auth::user()->role_id == 1)
-        {
-            return $next($request);            
+        if (null === Auth::user() || Auth::user()->role_id != 1) {
+            return response()->view('home');
         }
+        return $next($request);
     }
+
 }

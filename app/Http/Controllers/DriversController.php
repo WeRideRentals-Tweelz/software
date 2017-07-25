@@ -9,6 +9,11 @@ use App\Booking;
 
 class DriversController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin');
+    }
+
     public function index()
     {
     	$drivers = Drivers::where('confirmed','<>',0)->get();
