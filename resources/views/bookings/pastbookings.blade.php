@@ -10,7 +10,7 @@
 		                <span class="glyphicon glyphicon-calendar"></span>
 		            </span>
 		        </div>
-		        <button role="submit" class="btn btn-primary">Search</button>
+		        <button role="submit" class="form-control btn btn-primary" style="margin-top: 25px">Search</button>
 			</form>
 		</div>
 	</div>

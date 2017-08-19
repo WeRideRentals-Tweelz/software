@@ -39,6 +39,9 @@ Route::resource('bookings','BookingController');
 	Route::post('/bookings', 'BookingController@store');
 	Route::post('/bookings/{booking}', 'BookingController@update');
 
+	//Payments
+	Route::get('/booking/payment/delete/{paymentsId}/{bookindId}', 'PaymentsController@destroy');
+
 	//Creation of users from Booking file
 	Route::get('/users/create/fromBooking/{booking}','UserController@create');
 

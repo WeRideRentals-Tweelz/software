@@ -37,7 +37,7 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $date = date('Y-m-d'); 
+        $date = date('Y-m-d'.'+ 10 days'); 
         $bookings = Booking::where('confirmation','=',1)->where('drop_off_date',">=",$date)->orderBy('pick_up_date','asc')->get();
         return view('bookings.index')->with(compact('bookings'));
     }
@@ -49,7 +49,7 @@ class BookingController extends Controller
         }
         $date = $request->input('date').'-01';
         $maxDate = $request->input('date').'-31';
-        $bookings = Booking::where('confirmation','=',1)->where('pick_up_date','>=',$request->input('date'))->where('pick_up_date','<=',$maxDate)->orderBy('pick_up_date','asc')->get();
+        $bookings = Booking::where('confirmation','=',1)->where('pick_up_date','>=',$date)->where('pick_up_date','<=',$maxDate)->where('drop_off_date','<',date('Y-m-d'))->orderBy('pick_up_date','asc')->get();
         
         return view('bookings.pastbookings')->with(compact('bookings','date'));
     }
@@ -87,7 +87,9 @@ class BookingController extends Controller
 
         $booking = Booking::create([
             'pick_up_date'      =>      $request->input('pick_up_date'),
+            'pick_up_time'      =>      $request->input('pick_up_time'),
             'drop_off_date'     =>      $request->input('drop_off_date'),
+            'drop_off_time'     =>      $request->input('drop_off_time'),
             'scooter_id'        =>      $scooterId,
             'user_id'           =>      $userId,
             'status'            =>      "Regular Booking", //Create a service that check on user to change it automaticly
@@ -116,11 +118,17 @@ class BookingController extends Controller
      */
     public function edit(Booking $booking)
     {
+        $bookingService = new BookingServices();
+        $bookingHistories = $bookingService->GetBookingHistory($booking);
+
+        $payments = $bookingService->getPayments($booking);
+
         // Create a service that returns only Available scooters
         $scooterService = new ScooterServices();
         $scooters = $scooterService->scootersAvailable($booking);
+
         $users = User::where('banned','=',0)->get();
-        return view('bookings.edit')->with(compact('booking','scooters','users'));
+        return view('bookings.edit')->with(compact('booking','scooters','users','bookingHistories','payments'));
     }
 
     /**
@@ -132,11 +140,19 @@ class BookingController extends Controller
      */
     public function update(Request $request, Booking $booking)
     {
+        $bookingService = new BookingServices();
+        $bookingService->CopyBooking($booking);
+        $bookingService->AddPayment($request);
+
         $booking->pick_up_date      = $request->input('pick_up_date');
+        $booking->pick_up_time      = $request->input('pick_up_time');
         $booking->drop_off_date     = $request->input('drop_off_date');
+        $booking->drop_off_time     = $request->input('drop_off_time');
         $booking->scooter_id        = $request->input('scooter');
         $booking->user_id           = $request->input('user');
         $booking->save();
+
+        $bookingService->CheckBookingModifications($booking);
 
         return redirect('/bookings/'.$booking->id.'/edit');
     }

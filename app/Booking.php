@@ -16,6 +16,12 @@ class Booking extends Model
     	'id' => 'integer'
     ];	
 
+    /*
+    protected $events = [
+        'updating' => BookingEvent::handle();
+    ]
+    */
+
     public function scooter()
     {
     	return $this->belongsTo('App\Scooter');
@@ -29,5 +35,15 @@ class Booking extends Model
     public function accessories()
     {
         return $this->belongsTo('App\Accessories');
+    }
+
+    public function history()
+    {
+        return $this->hasMany('App\BookingHistory');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany('App\Payments');
     }
 }

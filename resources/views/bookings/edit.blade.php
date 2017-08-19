@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-<form action="{{ isset($booking) ? url('/bookings/'.$booking->id) : url('/bookings')}}" method="POST">
+<form id="mainForm" action="{{ isset($booking) ? url('/bookings/'.$booking->id) : url('/bookings')}}" method="POST">
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 <div class="container">
@@ -56,7 +56,7 @@
 										<p>{{ $booking->scooter->kilometers }} km</p>
 									</div>
 
-									<input class="hidden" type="radio" name="scooter" value="{{ $booking->scooter->id }}" checked>
+									<input class="hidden" type="radio" name="scooter" form="mainForm" value="{{ $booking->scooter->id }}" checked>
 
 									<div class="col-sm-8 col-sm-offset-2">
 										<button type="button" class="btn btn-info form-control" data-toggle="modal" data-target="#scooterModal">Assign Another Scooter</button>
@@ -108,6 +108,16 @@
 									</div>
 
 									<div class="form-group col-xs-12">
+										<label for="pick_up_time">Pick up time</label>
+		                                <div class="input-group date" id="pick_up_time">
+		                                    <span class="input-group-addon">
+		                                        <span class="glyphicon glyphicon-time"></span>
+		                                    </span>
+		                                    <input type="text" class="form-control" name="pick_up_time" value="{{ $booking->pick_up_time or old('pick_up_time') }}"/>
+		                                </div>
+									</div>
+
+									<div class="form-group col-xs-12">
 										<label for="drop_off_date">End Date</label>
 										<div class='input-group date' id="drop_off_date">
 						                    <input  type='text' name="drop_off_date" class="form-control" value="{{ isset($booking) ? $booking->drop_off_date : ''}}" required/>
@@ -116,19 +126,29 @@
 						                    </span>
 								        </div>
 									</div>
+
+									<div class="form-group col-xs-12">
+										<label for="drop_off_time">Drop off time</label>
+		                                <div class="input-group date" id="drop_off_time">
+		                                    <span class="input-group-addon">
+		                                        <span class="glyphicon glyphicon-time"></span>
+		                                    </span>
+		                                    <input type="text" class="form-control" name="drop_off_time" value="{{ $booking->drop_off_time or old('drop_off_time') }}"/>
+		                                </div>
+									</div>
 									
 									<div class="row">
 
 										@if(isset($booking))
 											<div class="col-xs-6">
-												<button type="submit" class="btn btn-primary btn-sm form-control">Update</button>
+												<button type="submit" form="mainForm" class="btn btn-primary btn-sm form-control">Update</button>
 											</div>
 											<div class="col-xs-6">
 												<button type="button" class="btn btn-danger btn-sm form-control" data-toggle="modal" data-target="#removeModal"><span class="glyphicon glyphicon-remove"></span> Delete</button>
 											</div>
 										@else
 											<div class="col-xs-12">
-												<button type="submit" class="btn btn-success form-control">Create</button>
+												<button type="submit" form="mainForm" class="btn btn-success form-control">Create</button>
 											</div>
 										@endif
 
@@ -216,7 +236,7 @@
 									@endif
 								</div>
 
-								<input class="hidden" type="radio" name="user" value="{{ $booking->user->id }}" checked>
+								<input class="hidden" type="radio" name="user" form="mainForm" value="{{ $booking->user->id }}" checked>
 
 								<div class="row">
 									<div class="col-sm-8 col-sm-offset-2">
@@ -231,6 +251,105 @@
 							</div>
 						</div>
 					</div>
+
+					@if(isset($bookingHistories) && count($bookingHistories) > 0)
+
+					<div class="col-sm-4">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3>Booking History</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table table-stripped table-condensed table-hover">
+								<thead>
+									<tr>
+										<th>Date</th>
+										<th>Modification</th>
+										<th>Old Value</th>
+										<th>New Value</th>
+									</tr>
+								</thead>
+								<tbody>	
+									
+										@foreach($bookingHistories as $history)
+										<tr>
+											<td>{{ date_format(date_create($history->date),'d/m/Y') }}</td>
+											<td>{{ $history->object }}</td>
+											<td>{{ $history->old_value }}</td>
+											<td>{{ $history->new_value }}</td>
+										</tr>
+										@endforeach
+			
+								</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					@endif
+
+					@if(isset($booking))
+					<div class="col-sm-4">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h3>Paiement information</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table table-stripped table-condensed">
+									<thead>
+										<tr>
+											<th>Date</th>
+											<th>Amount</th>
+											<th>Modality</th>	
+										</tr>
+									</thead>
+									<tbody>
+										@foreach($payments as $payment)
+											<tr>
+												<td>{{ $payment->payDate }}</td>
+												<td>{{ $payment->amount }}</td>
+												<td>{{ $payment->modality }}</td>
+												<td><a href="{{ url('/booking/payment/delete/'.$payment->id.'/'.$booking->id) }}" clas="btn btn-danger"><span class="glyphicon glyphicon-cross"></span></a></td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
+							
+							<div class="panel-heading">
+								<h4>Add a payment</h4>
+							</div>
+							<div class="panel-body">
+								<div class="col-xs-12">
+										<div class="form-group col-xs-12">
+											<label for="payDate">Paiement Date</label>
+											<div class='input-group date' id="payDate">
+							                    <input  type='text' name="payDate" class="form-control">
+							                    <span class="input-group-addon">
+							                        <span class="glyphicon glyphicon-calendar"></span>
+							                    </span>
+									        </div>
+										</div>
+
+										<div class="form-group col-xs-12">
+											<label for="amount">Amount</label>
+											<input type="number" name="amount" step="0.01">
+										</div>
+
+										<div class="form-group col-xs-12">
+											<label for="modality">Modality</label>
+											<select name="modality">
+												<option value="cash">Cash</option>
+												<option value="transfert">Transfert</option>
+												<option value="card">Card</option>
+												<option value="discount">Discount</option>
+											</select>
+										</div>
+										<button class="form-control btn btn-primary" form="paymentForm" role="submit">Add</button>
+									</div>
+							</div>
+						</div>
+					</div>
+					@endif
 				</div>
 		</div>
 		<div class="panel-footer">
@@ -254,7 +373,7 @@
         @foreach($scooters as $scooter)
         	<div class="radio">
         		<label>
-        			<input type="radio" name="scooter" value="{{ $scooter->id }}">
+        			<input type="radio" name="scooter" form="mainForm" value="{{ $scooter->id }}">
         			<span class="scooterName">{{ $scooter->plate }}-{{ $scooter->model }}</span><span class="colorPanel" style="background-color: {{ $scooter->color }}"></span>
         		</label>
         	</div>
@@ -262,7 +381,7 @@
         <hr>
        		 <div class="radio">
         		<label>
-        			<input type="radio" name="scooter" value="0">
+        			<input type="radio" name="scooter" form="mainForm" value="0">
         			<span class="scooterName">No Scooter</span><span class="colorPanel" style="background-color: transparent;"></span>
         		</label>
         	</div>
@@ -291,7 +410,7 @@
         @foreach($users as $user)
         	<div class="radio">
         		<label>
-        			<input type="radio" name="user" value="{{ $user->id }}">
+        			<input type="radio" name="user" form="mainForm" value="{{ $user->id }}">
         			<span class="userName">{{ $user->name }}</span>
         		</label>
         	</div>
@@ -299,7 +418,7 @@
         <hr>
         	<div class="radio">
         		<label>
-        			<input type="radio" name="user" value="0">
+        			<input type="radio" name="user" form="mainForm" value="0">
         			<span class="userName">No User</span>
         		</label>
         	</div>
@@ -350,9 +469,18 @@
                 $('#pick_up_date').datetimepicker({
                 	format: "YYYY-MM-DD"
                 });
+                $('#pick_up_time').datetimepicker({
+			        format:'HH:mm'
+			    });
                 $('#drop_off_date').datetimepicker({
                 	format: "YYYY-MM-DD"
                 });
+                $('#drop_off_time').datetimepicker({
+			        format:'HH:mm'
+			    });
+			    $('#payDate').datetimepicker({
+			    	format:'YYYY-MM-DD'
+			    });
             });
 </script>
 @stop

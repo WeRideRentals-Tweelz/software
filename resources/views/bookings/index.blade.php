@@ -30,7 +30,7 @@
 							@if($booking->user_id != 0 && $booking->user->driver->confirmed)
 								<td><a href="{{ url('/profile/'.$booking->user_id) }}">{{ $booking->user->name }}</td>
 							@elseif($booking->user_id !=0 && $booking->user->driver->confirmed == 0)
-								<td class="alert alert-warning"><a href="{{ url('/profile/'.$booking->user_id) }}">{{ $booking->user->name }}</a> <br>User's not Confirmed</td>
+								<td class="alert alert-warning"><a href="{{ url('/profile/'.$booking->user_id) }}">{{ $booking->user->name }}</a> <br>Profile's not complete</td>
 							@else
 								<td class="alert alert-danger">No User</td>
 							@endif
@@ -50,7 +50,7 @@
 		</div>
 		<div class="panel-footer">
 			<a href="{{ url('/bookings/create') }}" class="btn btn-primary">Create Booking</a>
-			<a href="{{ url('/pastBookings/') }}" class="btn btn-info pull-right">See Past Bookings</a>
+			<a href="{{ url('/pastbookings/') }}" class="btn btn-info pull-right">See Past Bookings</a>
 		</div>
 	</div>
 </div>

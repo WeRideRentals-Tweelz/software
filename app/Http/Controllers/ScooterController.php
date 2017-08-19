@@ -36,7 +36,8 @@ class ScooterController extends Controller
      */
     public function create()
     {
-        return view('admin.scooter-details');
+        $scooterService = new ScooterServices();
+        return view('admin.scooter-details')->with(compact('scooterService'));
     }
 
     /**
@@ -164,6 +165,7 @@ class ScooterController extends Controller
     {
         $scooters = Scooter::all();
         $scooterService = new ScooterServices ();
+        
         return view('admin.scooter-index')->with(compact('scooters','scooterService'));
     }
 

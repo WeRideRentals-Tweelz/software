@@ -137,7 +137,7 @@ class ScooterServices{
 		// Gives the modulo between two figures
 		public function howManyChecksNeeded(Scooter $scooter, $kmCheck)
 		{
-			if($kmCheck == 300){
+			if($kmCheck == 300 && $scooter->kilometers >= 300){
 				return 1;
 			}
 			$times = $scooter->kilometers/$kmCheck;

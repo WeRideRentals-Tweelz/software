@@ -21,10 +21,12 @@
 			</div>
 			<div class="panel-body">
 				<div class="col-sm-12">
-					@if($scooterService->isAvailable($scooter))
-						<p class="alert alert-success">{{ $scooterService->isAvailable($scooter,true) }}</p>
-					@else
-						<p class="alert alert-danger">{{ $scooterService->isAvailable($scooter,true) }}</p>
+					@if(isset($scooter))
+						@if($scooterService->isAvailable($scooter))
+							<p class="alert alert-success">{{ $scooterService->isAvailable($scooter,true) }}</p>
+						@else
+							<p class="alert alert-danger">{{ $scooterService->isAvailable($scooter,true) }}</p>
+						@endif
 					@endif
 				</div>
 				<div class="col-sm-6" style="border-right: 2px solid silver">
@@ -138,13 +140,15 @@
 				</div>
 
 				<div class="col-sm-6">
-					@if($scooterService->checksNeeded($scooter))
-						<h2>Checks needed :</h2>
-						<ul class="list-group">
-							@foreach($scooterService->checksNeeded($scooter,true) as $check)
-								<li class="list-group-item">{{ $check }}km x {{ $scooterService->howManyChecksNeeded($scooter,$check) }}<a href="{{ url('/home/scooter/'.$scooter->id.'/KmCheck/'.$check) }}" class="btn btn-warning btn-xs pull-right">Details</a></li>
-							@endforeach
-						</ul>
+					@if(isset($scooter))
+						@if($scooterService->checksNeeded($scooter))
+							<h2>Checks needed :</h2>
+							<ul class="list-group">
+								@foreach($scooterService->checksNeeded($scooter,true) as $check)
+									<li class="list-group-item">{{ $check }}km x {{ $scooterService->howManyChecksNeeded($scooter,$check) }}<a href="{{ url('/home/scooter/'.$scooter->id.'/KmCheck/'.$check) }}" class="btn btn-warning btn-xs pull-right">Details</a></li>
+								@endforeach
+							</ul>
+						@endif
 					@endif
 					<h2>Bookings History</h2>
 						@if(isset($bookings) && count($bookings) > 0 )
