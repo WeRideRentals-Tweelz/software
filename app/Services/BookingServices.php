@@ -38,10 +38,11 @@ class BookingServices {
 
 	public function addPayment($request)
 	{
-		if(isset($request->input('payDate') && isset($request->input('amount'))))
+		if(null !== $request->input('payDate') && null !== $request->input('amount'))
 		{
 			Payments::create([
-				'payDate' 	=> $request->input('payDate'),
+				'booking_id'=> $request->input('bookingId'),
+				'paymentDate' 	=> $request->input('paymentDate'),
 				'amount'	=> $request->input('amount'),
 				'modality'	=> $request->input('modality')
 			]);

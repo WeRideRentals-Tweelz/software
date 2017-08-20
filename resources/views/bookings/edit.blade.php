@@ -2,6 +2,9 @@
 @section('content')
 <form id="mainForm" action="{{ isset($booking) ? url('/bookings/'.$booking->id) : url('/bookings')}}" method="POST">
 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+@if(isset($booking))
+<input type="hidden" name="bookingId">
+@endif
 
 <div class="container">
 	<div class="panel panel-default">
@@ -299,16 +302,17 @@
 										<tr>
 											<th>Date</th>
 											<th>Amount</th>
-											<th>Modality</th>	
+											<th>Modality</th>
+											<th></th>	
 										</tr>
 									</thead>
 									<tbody>
 										@foreach($payments as $payment)
 											<tr>
-												<td>{{ $payment->payDate }}</td>
+												<td>{{ $payment->paymentDate }}</td>
 												<td>{{ $payment->amount }}</td>
 												<td>{{ $payment->modality }}</td>
-												<td><a href="{{ url('/booking/payment/delete/'.$payment->id.'/'.$booking->id) }}" clas="btn btn-danger"><span class="glyphicon glyphicon-cross"></span></a></td>
+												<td><a href="{{ url('/booking/payment/delete/'.$payment->id.'/'.$booking->id) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></a></td>
 											</tr>
 										@endforeach
 									</tbody>
@@ -321,9 +325,9 @@
 							<div class="panel-body">
 								<div class="col-xs-12">
 										<div class="form-group col-xs-12">
-											<label for="payDate">Paiement Date</label>
-											<div class='input-group date' id="payDate">
-							                    <input  type='text' name="payDate" class="form-control">
+											<label for="paymentDate">Paiement Date</label>
+											<div class='input-group date' id="paymentDate">
+							                    <input  type='text' name="paymentDate" class="form-control">
 							                    <span class="input-group-addon">
 							                        <span class="glyphicon glyphicon-calendar"></span>
 							                    </span>
@@ -344,7 +348,7 @@
 												<option value="discount">Discount</option>
 											</select>
 										</div>
-										<button class="form-control btn btn-primary" form="paymentForm" role="submit">Add</button>
+										<button class="form-control btn btn-primary" role="submit">Add</button>
 									</div>
 							</div>
 						</div>
@@ -478,7 +482,7 @@
                 $('#drop_off_time').datetimepicker({
 			        format:'HH:mm'
 			    });
-			    $('#payDate').datetimepicker({
+			    $('#paymentDate').datetimepicker({
 			    	format:'YYYY-MM-DD'
 			    });
             });
