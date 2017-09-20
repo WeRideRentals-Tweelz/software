@@ -421,21 +421,15 @@
         <h4 class="modal-title">Drivers</h4>
       </div>
       <div class="modal-body">
-        @foreach($users as $user)
-        	<div class="radio">
-        		<label>
-        			<input type="radio" name="user" form="mainForm" value="{{ $user->id }}">
-        			<span class="userName">{{ $user->name }}</span>
-        		</label>
-        	</div>
-        @endforeach
-        <hr>
-        	<div class="radio">
-        		<label>
-        			<input type="radio" name="user" form="mainForm" value="0">
-        			<span class="userName">No User</span>
-        		</label>
-        	</div>
+
+      	<select class="selectpicker" name="user" data-live-search="true" data-size="8" data-width="100%">
+            <option value="{{ $user->id or old('user')}}"></option>
+            @foreach($users as $user)
+            	<option {{ $user->id == $booking->user_id ? 'selected' : '' }} value="{{ $user->id }}">{{ ucfirst($user->name) }}</option>
+            @endforeach
+            <option value="0">No User</option>
+        </select>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Assign</button>
