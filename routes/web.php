@@ -27,6 +27,10 @@ Route::get('/scooters/{scooterId}/destroy', 'ScooterController@destroy');
 	Route::get('/home/scooter/{scooterId}/KmCheck/{check}','ScooterController@kmCheckSheet');
 	Route::get('/home/scooter/checked/{scooterId}/kmCheck/{check}','ScooterController@checkKilometers');
 
+	//Repairs
+	Route::post('/scooter/{scooterId}/repair','ScooterController@addRepair');
+	Route::get('/scooter/{repairId}/removeRepair', 'ScooterController@removeRepair');
+
 // BOOKINGS
 Route::resource('bookings','BookingController');
 //Users
@@ -41,6 +45,9 @@ Route::resource('bookings','BookingController');
 
 	//Payments
 	Route::get('/booking/payment/delete/{paymentsId}/{bookindId}', 'PaymentsController@destroy');
+	Route::get('/booking/payment/delete/{paymentsId}/{bookindId}/bondBack', 'PaymentsController@destroyAndBondBack');
+	Route::get('/bookings/{bookingId}/payBond', 'BookingController@payBond');
+	Route::get('/bookings/{bookingId}/payBondFinancial', 'BookingController@payBondFinancial');
 
 	//Creation of users from Booking file
 	Route::get('/users/create/fromBooking/{booking}','UserController@create');

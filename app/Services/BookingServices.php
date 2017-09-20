@@ -21,10 +21,12 @@ class BookingServices {
 
 		foreach($bookings as $booking)
 		{
-			$bookingNumber = $booking->id;
-			$bondDate = date('Y-m-d',strtotime($booking->drop_off_date.'+ 10 days'));
-			$userName = isset($booking->user) ? $booking->user->name : "No User"; 
-			$bonds[] = ['bookingNumber' => $bookingNumber,'bondDate' => $bondDate, 'bondName' => $userName ];
+			if(!$booking->bondStatus){
+				$bookingNumber = $booking->id;
+				$bondDate = $booking->bond_return;
+				$userName = isset($booking->user) ? $booking->user->name : "No User"; 
+				$bonds[] = ['bookingNumber' => $bookingNumber,'bondDate' => $bondDate, 'bondName' => $userName ];
+			}
 		}
 
 		return $bonds;
@@ -36,15 +38,24 @@ class BookingServices {
 		return $bookingHistories;
 	}
 
-	public function addPayment($request)
+	public function addPayment($bookingId,$request=null)
 	{
-		if(null !== $request->input('payDate') && null !== $request->input('amount'))
-		{
+		if($request !== null){
+			if($request->input('payDate') !== '' && $request->input('amount') !== '')
+			{
+				Payments::create([
+					'booking_id'=> $bookingId,
+					'paymentDate' 	=> $request->input('payDate'),
+					'amount'	=> $request->input('amount'),
+					'modality'	=> $request->input('modality')
+				]);
+			}
+		} else {
 			Payments::create([
-				'booking_id'=> $request->input('bookingId'),
-				'paymentDate' 	=> $request->input('paymentDate'),
-				'amount'	=> $request->input('amount'),
-				'modality'	=> $request->input('modality')
+				'booking_id'=> $bookingId,
+				'paymentDate' 	=> date('Y-m-d'),
+				'amount'	=> -140,
+				'modality'	=> 'bond'
 			]);
 		}
 	}
@@ -124,6 +135,18 @@ class BookingServices {
 						return "";
 					}
 					return $user->name;
+
+				case 'pick_up_date':
+					return date_format(date_create($objectValue),'d/m/Y');
+					break;
+
+				case 'drop_off_date':
+					return date_format(date_create($objectValue), 'd/m/Y');
+					break;
+
+				case 'bond_return':
+					return date_format(date_create($objectValue), 'd/m/Y');
+					break;
 
 				default:
 					return $objectValue;

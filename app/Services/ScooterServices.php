@@ -29,7 +29,7 @@ class ScooterServices{
 	protected function bookings($booking=null)
 	{
 		if($booking !== null){
-			return $bookings = Booking::where('drop_off_date','>=',$booking->pick_up_date)->where('pick_up_date','<=',$booking->drop_off_date)->where('confirmation','=',1)->get();
+			return $bookings = Booking::where('drop_off_date','>',$booking->pick_up_date)->where('pick_up_date','<',$booking->drop_off_date)->where('confirmation','=',1)->get();
 		}
 		return $bookings = Booking::where('drop_off_date','>=',$this->today)->where('pick_up_date','<=',$this->today)->where('confirmation','=',1)->get();
 	}
@@ -74,9 +74,9 @@ class ScooterServices{
 	}
 
 		// Check if a specific scooter is available
-		public function isAvailable(Scooter $scooter,$verbose=false)
+		public function isAvailable(Scooter $scooter,Booking $booking=null,$verbose=false)
 		{
-			$scootersAvailable = $this->availableScooters();
+			$scootersAvailable = $this->availableScooters($booking);
 			foreach ($scootersAvailable as $scooterAvailable) {
 				if($scooterAvailable->id == $scooter->id)
 				{
@@ -105,7 +105,7 @@ class ScooterServices{
 			$availableScooters = $this->availableScooters($booking);
 			$scootersAvailable = [];
 			foreach($availableScooters as $scooter){
-				if($this->isAvailable($scooter)){
+				if($this->isAvailable($scooter,$booking)){
 					$scootersAvailable[] = $scooter;
 				}
 			}
@@ -120,7 +120,7 @@ class ScooterServices{
 			foreach ($scooters as $scooter) {
 				$aScooters[] = $scooter;
 			}
-			$this->scooters = $aScooters;
+			return $this->scooters = $aScooters;
 		} 
 
 		// Take the settings from user or use original one

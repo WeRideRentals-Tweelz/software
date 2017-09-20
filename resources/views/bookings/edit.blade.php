@@ -83,7 +83,7 @@
 							<div class="panel-body">
 								<div class="col-xs-12">
 								@if(isset($booking))
-									@if($booking->user_id != 0 && $booking->scooter_id != 0)
+									@if($booking->user_id != 0 && !$booking->user->driver->confirmed && $booking->scooter_id != 0)
 										<p class="alert alert-info">Booking Ready</p>
 									@elseif($booking->user_id == 0 || $booking->scooter_id == 0)
 										
@@ -96,6 +96,10 @@
 										@if($booking->scooter_id == 0)
 											<p class="alert alert-danger">Please Assign Scooter</p>
 										@endif
+									@endif
+
+									@if($booking->bondStatus)
+										<p class="alert alert-success">Bond Back</p>
 									@endif
 								@endif
 								</div>
@@ -257,7 +261,7 @@
 
 					@if(isset($bookingHistories) && count($bookingHistories) > 0)
 
-					<div class="col-sm-4">
+					<div class="col-sm-8">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h3>Booking History</h3>
@@ -294,7 +298,7 @@
 					<div class="col-sm-4">
 						<div class="panel panel-default">
 							<div class="panel-heading">
-								<h3>Paiement information</h3>
+								<h3>Payment information</h3>
 							</div>
 							<div class="panel-body">
 								<table class="table table-stripped table-condensed">
@@ -309,10 +313,16 @@
 									<tbody>
 										@foreach($payments as $payment)
 											<tr>
-												<td>{{ $payment->paymentDate }}</td>
+												<td>{{ date_format(date_create($payment->paymentDate),"d/m/Y") }}</td>
 												<td>{{ $payment->amount }}</td>
 												<td>{{ $payment->modality }}</td>
-												<td><a href="{{ url('/booking/payment/delete/'.$payment->id.'/'.$booking->id) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></a></td>
+												<td>
+													@if($payment->modality != "bond")
+														<a href="{{ url('/booking/payment/delete/'.$payment->id.'/'.$booking->id) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
+													@else
+														<a href="{{ url('/booking/payment/delete/'.$payment->id.'/'.$booking->id.'/bondBack') }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
+													@endif
+												</td>
 											</tr>
 										@endforeach
 									</tbody>
@@ -325,9 +335,9 @@
 							<div class="panel-body">
 								<div class="col-xs-12">
 										<div class="form-group col-xs-12">
-											<label for="paymentDate">Paiement Date</label>
+											<label for="payDate">Payment Date</label>
 											<div class='input-group date' id="paymentDate">
-							                    <input  type='text' name="paymentDate" class="form-control">
+							                    <input  type='text' name="payDate" class="form-control">
 							                    <span class="input-group-addon">
 							                        <span class="glyphicon glyphicon-calendar"></span>
 							                    </span>
@@ -348,7 +358,7 @@
 												<option value="discount">Discount</option>
 											</select>
 										</div>
-										<button class="form-control btn btn-primary" role="submit">Add</button>
+										<button class="form-control btn btn-primary" form="mainForm" role="submit">Add</button>
 									</div>
 							</div>
 						</div>

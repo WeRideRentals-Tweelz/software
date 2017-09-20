@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
 @section('content')
 <div class="container-fluid">
@@ -159,22 +159,27 @@
 			defaultTimedEventDuration: "00:30",
 			// Show booking details when click on event
 			eventClick: function(event,view){
-				var format = "D MMMM YYYY";
-				var url = '<a href="/profile/'+event.userId+'/">'+event.title+'</a>';
-				var bookingUrl = '<a href="/bookings/'+event.id+'/edit" class="btn btn-info">See Booking Details</a>';
-
-				$("#modalId").text(event.id);
-				$("#modalTitle").html(url);
-				if(event.details === null){
-					$("#modalText").text("");
-				}else{
-					$("#modalText").text(event.details);
+				if(event.type != 'Bond'){
+					var url = '<a href="/profile/'+event.userId+'/">'+event.title+'</a>';
+					var bookingUrl = '<a href="/bookings/'+event.id+'/edit" class="btn btn-info">See Booking Details</a>';
+					$("#modalTitle").html(url);
+				} else {
+					var bookingUrl = '<a href="/bookings/'+event.id+'/payBond" class="btn btn-info">Pay Bond</a> <a href="/bookings/'+event.id+'/payBondFinancial" class="btn btn-success">Pay Bond and enter it in financial history</a>';
+					$('#modalTitle').text('Bond for Booking N°'+event.id);
 				}
-				$("#modalStart").text(moment(event.in).format(format));
-				$("#modalEnd").text(moment(event.out).format(format));	
-				$("#modalScooter").text(event.scooter);
-				$('#modalBookingLink').html(bookingUrl);
-				$("#myModal").modal();
+					var format = "D MMMM YYYY";
+					
+					$("#modalId").text(event.id);
+					if(event.details === null){
+						$("#modalText").text("");
+					}else{
+						$("#modalText").text(event.details);
+					}
+					$("#modalStart").text(moment(event.in).format(format));
+					$("#modalEnd").text(moment(event.out).format(format));	
+					$("#modalScooter").text(event.scooter);
+					$('#modalBookingLink').html(bookingUrl);
+					$("#myModal").modal();	
 			}
 	    	});
 	});

@@ -89,6 +89,9 @@ class ComposerStaticInita828aaf9ee20e949447bbb11fdf850f6
         array (
             'Dotenv\\' => 7,
             'Doctrine\\Instantiator\\' => 22,
+            'Doctrine\\Common\\Cache\\' => 22,
+            'Doctrine\\Common\\Annotations\\' => 28,
+            'Doctrine\\Common\\' => 16,
             'DeepCopy\\' => 9,
         ),
         'C' => 
@@ -242,6 +245,18 @@ class ComposerStaticInita828aaf9ee20e949447bbb11fdf850f6
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
         ),
+        'Doctrine\\Common\\Cache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/cache/lib/Doctrine/Common/Cache',
+        ),
+        'Doctrine\\Common\\Annotations\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/annotations/lib/Doctrine/Common/Annotations',
+        ),
+        'Doctrine\\Common\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
+        ),
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
@@ -292,9 +307,21 @@ class ComposerStaticInita828aaf9ee20e949447bbb11fdf850f6
         ),
         'D' => 
         array (
+            'Doctrine\\DBAL\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/dbal/lib',
+            ),
+            'Doctrine\\Common\\Lexer\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/lexer/lib',
+            ),
             'Doctrine\\Common\\Inflector\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/inflector/lib',
+            ),
+            'Doctrine\\Common\\Collections\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/doctrine/collections/lib',
             ),
         ),
     );
@@ -303,6 +330,8 @@ class ComposerStaticInita828aaf9ee20e949447bbb11fdf850f6
         'AddAccessoriesIdToBookings' => __DIR__ . '/../..' . '/database/migrations/2017_01_25_021209_add_accessories_id_to_bookings.php',
         'AddAvailabilityToScooters' => __DIR__ . '/../..' . '/database/migrations/2017_01_24_231107_add_availability_to_scooters.php',
         'AddBannedToUsers' => __DIR__ . '/../..' . '/database/migrations/2017_07_14_011134_add_banned_to_users.php',
+        'AddBondReturnToBookings' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_234748_add_bond_return_to_bookings.php',
+        'AddBondStatusToBookings' => __DIR__ . '/../..' . '/database/migrations/2017_09_20_004604_add_bond_status_to_bookings.php',
         'AddCategoryToScooters' => __DIR__ . '/../..' . '/database/migrations/2017_01_25_015514_add_category_to_scooters.php',
         'AddConfirmationToBookings' => __DIR__ . '/../..' . '/database/migrations/2017_01_25_013850_add_confirmation_to_bookings.php',
         'AddConfirmedToDriver' => __DIR__ . '/../..' . '/database/migrations/2017_01_25_025659_add_confirmed_to_driver.php',

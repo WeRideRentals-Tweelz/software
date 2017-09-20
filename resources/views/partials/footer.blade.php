@@ -28,7 +28,7 @@
 					<li>Beaconsfield, 2015</li>
 					<li>NSW Sydney</li>
 					<li>0410 125 994</li>
-					<li>contact@tweelz.com</li>
+					<li>contact@weride.com</li>
 				</ul>
 			</div>
 		</div>

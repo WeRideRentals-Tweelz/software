@@ -22,10 +22,10 @@
 			<div class="panel-body">
 				<div class="col-sm-12">
 					@if(isset($scooter))
-						@if($scooterService->isAvailable($scooter))
-							<p class="alert alert-success">{{ $scooterService->isAvailable($scooter,true) }}</p>
+						@if(!$scooterService->isBooked($scooter))
+							<p class="alert alert-success">{{ $scooterService->scooterStatus($scooter) }}</p>
 						@else
-							<p class="alert alert-danger">{{ $scooterService->isAvailable($scooter,true) }}</p>
+							<p class="alert alert-danger">{{ $scooterService->scooterStatus($scooter) }}</p>
 						@endif
 					@endif
 				</div>
@@ -139,49 +139,9 @@
 					</form>
 				</div>
 
-				<div class="col-sm-6">
-					@if(isset($scooter))
-						@if($scooterService->checksNeeded($scooter))
-							<h2>Checks needed :</h2>
-							<ul class="list-group">
-								@foreach($scooterService->checksNeeded($scooter,true) as $check)
-									<li class="list-group-item">{{ $check }}km x {{ $scooterService->howManyChecksNeeded($scooter,$check) }}<a href="{{ url('/home/scooter/'.$scooter->id.'/KmCheck/'.$check) }}" class="btn btn-warning btn-xs pull-right">Details</a></li>
-								@endforeach
-							</ul>
-						@endif
-					@endif
-					<h2>Bookings History</h2>
-						@if(isset($bookings) && count($bookings) > 0 )
-						<table class="table table-striped table-condensed">
-							<thead>
-								<tr>
-									<th>Booking Number</th>
-									<th>Driver</th>
-									<th>Start Date</th>
-									<th>End Date</th>
-									<th>Days Booked</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach($bookings as $booking)
-								<tr>
-									<td>{{ $booking->id }}</td>
-									<td><a href="{{ url('/profile/'.$booking->user_id) }}">{{ $booking->user->name }}</a></td>
-									<td>{{ date_format(date_create($booking->pick_up_date), 'd M Y') }}</td>
-									<td>{{ date_format(date_create($booking->drop_off_date), 'd M Y') }}</td>
-									<td>{{ date_create($booking->drop_off_date)->diff(date_create($booking->pick_up_date))->d }}</td>
-									<td><a href="{{ url('/bookings/'.$booking->id.'/edit') }}" class="btn btn-info btn-xs">Details</a></td>
-								</tr>
-								@endforeach
-							</tbody>
-						</table>
-						@else
-						<p>No Booking History</p>
-						@endif
-				</div>
-
-
+				<!-- See scooter-aside -->
+				@include('admin.scooter-aside')
+			
 			</div>
 			<div class="panel-footer">
 				<a href="{{ url('/home/scooters') }}" class="btn btn-info"><span class="fa fa-undo fa-2x"></span>Back</a>
@@ -221,6 +181,10 @@
                 $('#last_check').datetimepicker({
                 	format: "YYYY-MM-DD"
                 });
+
+                $('#repairDate').datetimepicker({
+			    	format:'YYYY-MM-DD'
+			    });
             });
 </script>
 @stop

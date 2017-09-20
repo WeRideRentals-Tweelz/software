@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Booking;
 use App\Payments;
 use Illuminate\Http\Request;
 
@@ -25,5 +26,14 @@ class PaymentsController extends Controller
     	$payment->delete();
 
     	return  redirect('/bookings/'.$bookingId.'/edit');
+    }
+
+    public function destroyAndBondBack($paymentsId,$bookingId)
+    {
+        $booking = Booking::find($bookingId);
+        $booking->bondStatus = 0;
+        $booking->save();
+
+        return $this->destroy($paymentsId,$bookingId);
     }
 }

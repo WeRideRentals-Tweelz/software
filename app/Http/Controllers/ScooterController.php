@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use App\Services\ScooterServices;
+use App\Services\ScooterServices2;
 
 class ScooterController extends Controller
 {
@@ -36,7 +37,7 @@ class ScooterController extends Controller
      */
     public function create()
     {
-        $scooterService = new ScooterServices();
+        $scooterService = new ScooterServices2();
         return view('admin.scooter-details')->with(compact('scooterService'));
     }
 
@@ -164,35 +165,35 @@ class ScooterController extends Controller
     public function adminScooterIndex()
     {
         $scooters = Scooter::all();
-        $scooterService = new ScooterServices ();
+        $scooterService = new ScooterServices2();
         
         return view('admin.scooter-index')->with(compact('scooters','scooterService'));
     }
 
     public function adminScooterInfo($scooter_id)
     {
-            $scooterService = new ScooterServices();
-            $scooter = Scooter::find($scooter_id);
-            $bookings = Booking::where('scooter_id','=',$scooter->id)->get();
+        $scooterService = new ScooterServices2();
+        $scooter = Scooter::find($scooter_id);
+        $bookings = Booking::where('scooter_id','=',$scooter->id)->get();
 
-            //Arrow links
-            if(Scooter::find($scooter_id + 1) !== null )
-            {
-                $next = $scooter_id + 1;
-            }
-            else
-            {
-                $next = $scooter_id;
-            }
-            $prev = $scooter_id - 1;
-            
-            return view('admin.scooter-details')->with(compact('scooter','bookings','scooterService','next','prev'));
+        //Arrow links
+        if(Scooter::find($scooter_id + 1) !== null )
+        {
+            $next = $scooter_id + 1;
+        }
+        else
+        {
+            $next = $scooter_id;
+        }
+        $prev = $scooter_id - 1;
+        
+        return view('admin.scooter-details')->with(compact('scooter','bookings','scooterService','next','prev'));
     }  
     
     public function kmCheckSheet($scooterId,$check)
     {
         $scooter = Scooter::find($scooterId);
-        $scooterService = new ScooterServices();
+        $scooterService = new ScooterServices2();
         $actionsNeeded = $scooterService->partIntervention($check);
 
         return view('admin.scooter-kmSheet')->with(compact('scooter','actionsNeeded','check'));
@@ -215,4 +216,18 @@ class ScooterController extends Controller
 
         return redirect(url('/home/scooters/'.$scooterId));
     }  
+
+    public function addRepair(Request $request, $scooterId){
+        $scooterService = new ScooterServices2();
+        $scooterService->addRepair($request,$scooterId);
+
+        return redirect()->back();
+    }
+
+    public function removeRepair($repairId){
+        $scooterService = new ScooterServices2();
+        $scooterService->removeRepair($repairId);
+
+        return redirect()->back();
+    }
 }
