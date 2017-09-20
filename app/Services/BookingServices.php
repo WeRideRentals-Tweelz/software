@@ -74,13 +74,15 @@ class BookingServices {
 		
 		foreach($bookingAttributes as $key => $value){
 			if($this->isWanted($key) && $this->booking->$key != $value){
-				BookingHistory::create([
-					'booking_id'=> $booking->id,	
-					'date' 		=> date('Y-m-d'),
-					'object'	=> $this->InHumanWords($key),
-					'old_value'	=> $this->InHumanWords($key,$this->booking->$key),
-					'new_value'	=> $this->InHumanWords($key,$value)
-				]);
+				if($this->booking->key != "" || $value != ""){
+					BookingHistory::create([
+						'booking_id'=> $booking->id,	
+						'date' 		=> date('Y-m-d'),
+						'object'	=> $this->InHumanWords($key),
+						'old_value'	=> $this->InHumanWords($key,$this->booking->$key),
+						'new_value'	=> $this->InHumanWords($key,$value)
+					]);
+				}
 			}
 		}
 	}
@@ -124,7 +126,7 @@ class BookingServices {
 					$scooter = Scooter::find($objectValue);
 					if($scooter === null)
 					{
-						return "";
+						return " ";
 					}
 					return $scooter->plate;
 					break;

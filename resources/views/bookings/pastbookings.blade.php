@@ -25,7 +25,9 @@
 					<tr>
 						<th>Booking Number</th>
 						<th>Start Date</th>
+						<th>Start Time</th>
 						<th>End Date</th>
+						<th>End Time</th>
 						<th>Days Booked</th>
 						<th>Driver</th>
 						<th>Scooter</th>
@@ -38,6 +40,26 @@
 						<tr>
 							<td>{{ $booking->id }}</td>
 							<td>{{ date_format(date_create($booking->pick_up_date), 'D d M Y') }}</td>
+							@if($booking->pick_up_time == '')
+							<td class="alert-info">
+								NO START TIME
+							</td>
+							@else
+							<td>
+								{{ date_format(date_create($booking->pick_up_time), 'H:i A') }}
+							</td>
+							@endif
+							<td>{{ date_format(date_create($booking->drop_off_date), 'D d M Y') }}</td>
+							@if($booking->drop_off_time == '')
+							<td class="alert-danger">
+								
+								NO END TIME
+							</td>
+							@else
+							<td>
+									{{ date_format(date_create($booking->drop_off_time),'H:i A') }}
+							</td>
+							@endif
 							<td>{{ date_format(date_create($booking->drop_off_date), 'D d M Y') }}</td>
 							<td>{{ date_create($booking->drop_off_date)->diff(date_create($booking->pick_up_date))->d }}</td>
 							

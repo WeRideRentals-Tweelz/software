@@ -1,17 +1,19 @@
-@extends('layouts.main')
+@extends('layouts.dashboard')
 
 @section('content')
 <div class="container-fluid">
-	<div class="panel panel-default col-sm-8 col-sm-offset-2">
+	<div class="panel panel-default col-sm-10 col-sm-offset-1">
 		<div class="panel-heading row">
 			<h1><span class="gold">B</span>ookings </h1>
 		</div>
 		<div class="panel-body row">
-			<div class="col-sm-5">
-				<div id="dayList"></div>
-			</div>
-			<div class="col-sm-6 col-sm-offset-1">
-				<div id="monthCalendar"></div>
+			<div id="panel-body-height">
+				<div class="col-sm-5">
+					<div id="dayList"></div>
+				</div>
+				<div class="col-sm-6 col-sm-offset-1">
+					<div id="monthCalendar"></div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -133,10 +135,14 @@
 					bonds
 				],
 				eventRender: function(event, element){
-					if(event.user == "No User"){
-						title = "<tr class='fc-list-item-time fc-widget-content'><td>"+event.type+"</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:"+event.color+"'></span></td><td class='fc-list-item-title fc-widget-content'>"+event.user+" - <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
+					if(event.type  != "Bond"){
+						if(event.user == "No User"){
+							title = "<tr class='fc-list-item-time fc-widget-content'><td>"+event.type+"</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:"+event.color+"'></span></td><td class='fc-list-item-title fc-widget-content'>"+event.user+" - <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
+						} else {
+							title = "<tr class='fc-list-item-time fc-widget-content'><td>"+event.type+"</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:"+event.color+"'></span></td><td class='fc-list-item-title fc-widget-content'><a href='/profile/"+event.userId+"'>"+event.user+"</a> - <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
+						}
 					} else {
-						title = "<tr class='fc-list-item-time fc-widget-content'><td>"+event.type+"</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:"+event.color+"'></span></td><td class='fc-list-item-title fc-widget-content'><a href='/profile/"+event.userId+"'>"+event.user+"</a> - <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
+						title = "<tr class='fc-list-item-time fc-widget-content'><td>"+event.type+"</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:"+event.color+"'></span></td><td class='fc-list-item-title fc-widget-content'><a href='/profile/"+event.id+"'>Bond Booking N°</a><a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
 					}
 					return title;
 				},

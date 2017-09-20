@@ -425,7 +425,7 @@
       	<select class="selectpicker" name="user" data-live-search="true" data-size="8" data-width="100%">
             <option value="{{ $user->id or old('user')}}"></option>
             @foreach($users as $user)
-            	<option {{ $user->id == $booking->user_id ? 'selected' : '' }} value="{{ $user->id }}">{{ ucfirst($user->name) }}</option>
+            	<option {{ isset($booking) && $user->id == $booking->user_id ? 'selected' : '' }} value="{{ $user->id }}">{{ ucfirst($user->name) }}</option>
             @endforeach
             <option value="0">No User</option>
         </select>
