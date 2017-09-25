@@ -86,3 +86,4 @@ Route::post('/tolls/delete', 'TollsController@destroy');
 
 //Documents
 Route::resource('documents','DocumentsController');
+Route::get('/general-terms-and-conditions-of-sale', 'DocumentsController@terms');

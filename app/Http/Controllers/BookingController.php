@@ -338,7 +338,7 @@ class BookingController extends Controller
             $booking->delete();
         }
         Auth::logout();
-        Session::flash('error','Sorry we cannot allow you to make a reservation without agreeing with our sales policies');
+        Session::flash('error','Sorry we cannot allow you to make a reservation without agreeing with our Terms & Conditions of Sale');
         return redirect('/');
     }
 

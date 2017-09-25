@@ -6,7 +6,7 @@
 				<li><a href="{{ url('/sitemaps.xml')}}">Site map</a></li>
 				<li><a href="#">Our policies</a></li>
 				<li><a href="#">FAQ</a></li>
-				<li><a href="#">General Terms & Conditions of Sale</a></li>
+				<li><a href="{{ url('/general-terms-and-conditions-of-sale')}}">General Terms & Conditions of Sale</a></li>
 			</ul>
 		</div>
 		<div class="col-sm-4">

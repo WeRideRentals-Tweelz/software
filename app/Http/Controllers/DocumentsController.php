@@ -56,6 +56,12 @@ class DocumentsController extends Controller
         return view('documents.details')->with(compact('document'));
     }
 
+    public function terms()
+    {
+        $document = Documents::find(1);
+        return view('documents.details')->with(compact('document'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
