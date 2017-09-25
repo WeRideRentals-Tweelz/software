@@ -11,6 +11,7 @@
 					<thead>
 						<tr>
 							<th>Name</th>
+							<th>Surname</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -18,6 +19,7 @@
 						@foreach($users as $user)
 							<tr>
 								<td>{{ $user->name }}</td>
+								<td>{{ $user->surname }}</td>
 								<td><a href="{{ url('/profile/'.$user->id) }}" class="btn btn-info btn-sm">Profile</a></td>
 							</tr>
 						@endforeach

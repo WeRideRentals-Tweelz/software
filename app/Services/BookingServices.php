@@ -54,8 +54,8 @@ class BookingServices {
 			Payments::create([
 				'booking_id'=> $bookingId,
 				'paymentDate' 	=> date('Y-m-d'),
-				'amount'	=> -140,
-				'modality'	=> 'bond'
+				'amount'	=> -280,
+				'modality'	=> 'bond refund'
 			]);
 		}
 	}

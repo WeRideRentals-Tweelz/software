@@ -24,11 +24,11 @@
 			<div class="row">
 				<h5><span class="gold">C</span>ontact</h5>
 				<ul class="list-unstyled">
-					<li>406  Botany road</li>
+					<li>406, Botany road</li>
 					<li>Beaconsfield, 2015</li>
 					<li>NSW Sydney</li>
-					<li>0410 125 994</li>
-					<li>contact@weride.com</li>
+					<li>0412140826</li>
+					<li>contact@weriderentals.com</li>
 				</ul>
 			</div>
 		</div>

@@ -317,7 +317,7 @@
 												<td>{{ $payment->amount }}</td>
 												<td>{{ $payment->modality }}</td>
 												<td>
-													@if($payment->modality != "bond")
+													@if($payment->modality != "bond refund")
 														<a href="{{ url('/booking/payment/delete/'.$payment->id.'/'.$booking->id) }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
 													@else
 														<a href="{{ url('/booking/payment/delete/'.$payment->id.'/'.$booking->id.'/bondBack') }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></a>

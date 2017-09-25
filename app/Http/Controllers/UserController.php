@@ -17,8 +17,9 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only('show','showUser','smallUpdate','changePassword');
-        $this->middleware('admin')->except('show','showUser');
+        $this->middleware('auth')->only('show','showUser');
+        $this->middleware('admin')->except('show','showUser','smallUpdate','changePassword');
+        $this->middleware('adminOrAuth')->only('smallUpdate','changePassword');
     }
 
     /**
@@ -63,16 +64,21 @@ class UserController extends Controller
     {
         $user = User::create([
             'name'      =>  $request->input('name'),
+            'surname'   =>  $request->input('surname'),
             'email'     =>  $request->input('email'),
             'password'  =>  bcrypt('WeRide2017'),
             'phone'     =>  $request->input('phone'),
             'banned'    => 0
         ]);
 
+
         $driver = Drivers::create([
             'user_id'           => $user->id,
             'date_of_birth'     => $request->input('date_of_birth'),
             'address'           => $request->input('address'),
+            'city'              => $request->input('city'),
+            'state'             => $request->input('state'),
+            'postcode'          => $request->input('postcode'),
             'drivers_licence'   => $request->input('drivers_licence'),
             'licence_state'     => $request->input('licence_state'),
             'expiry_date'       => $request->input('expiry_date'),
@@ -138,30 +144,35 @@ class UserController extends Controller
             }
         }
         $user = User::find($request->input('user'));
-        $user->name = $request->input('name');
-        $user->phone = $request->input('phone');
-        $user->email = $request->input('email');
+        $user->name     = $request->input('name');
+        $user->surname  = $request->input('surname');
+        $user->phone    = $request->input('phone');
+        $user->email    = $request->input('email');
+        $user->signed = 1;
 
         $driver = $user->driver;
-        $driver->address = $request->input('address');
-        $driver->drivers_licence = $request->input('drivers_licence');
-        $driver->licence_state = $request->input('licence_state');
-
-        if($request->input('expiry_date') !== '')
-        {
-            $driver->expiry_date = date("Y-m-d",strtotime(str_replace('/','-',$request->input('expiry_date'))));
+        $driver->address            = $request->input('address');
+        $driver->city               = $request->input('city');
+        $driver->state              = $request->input('state');
+        $driver->postcode           = $request->input('postcode');   
+        $driver->drivers_licence    = $request->input('drivers_licence');
+        $driver->licence_state      = $request->input('licence_state');
+        if($request->input('expiry_date') !== null && $request->input('expiry_date') != ''){
+            $driver->expiry_date        = date("Y-m-d",strtotime(str_replace('/','-',$request->input('expiry_date'))));
+        } else {
+            $driver->expiry_date = '';
         }
-
-        if($request->input('date_of_birth') !== '')
-        {
-            $driver->date_of_birth = date("Y-m-d",strtotime(str_replace('/','-',$request->input('date_of_birth'))));
+        if($request->input('date_of_birth') !== null && $request->input('date_of_birth') != ''){
+            $driver->date_of_birth      = date("Y-m-d",strtotime(str_replace('/','-',$request->input('date_of_birth'))));
+        } else {
+            $driver->date_of_birth = '';
         }
 
         $driver->save();
         $user->save();
 
         Session::flash('success','Your informations has been updated.');
-        return redirect()->back();
+        return redirect('/profile/'.$user->id);
     }
 
     /**

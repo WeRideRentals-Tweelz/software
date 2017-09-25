@@ -52,9 +52,9 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
+            'surname' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'phone' =>  'required|digits:10',
-            'password' => 'required|min:6|confirmed',
         ]);
     }
 
@@ -68,6 +68,7 @@ class RegisterController extends Controller
     {
         return User::create([
             'name'      => $data['name'],
+            'surname'   => $data['surname'],
             'email'     => $data['email'],
             'phone'     => $data['phone'],
             'password'  => bcrypt($data['password']),
@@ -93,7 +94,8 @@ class RegisterController extends Controller
         // If the hidden input "booked" is different than 0 then the user is redirect to the next process
         if($request->input('booked'))
         {
-            $this->redirectTo = "/confirm/".$request->input('booked')."/".$request->input('email')."/booking";
+            return $this->redirectTo = "/signDocument/".$request->input('email')."/".$request->input('booked')."/";
         }
+        return $this->redirectTo = '/signDocument/'.$request->input('email').'/';
     }
 }

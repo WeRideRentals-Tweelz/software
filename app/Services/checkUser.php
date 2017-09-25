@@ -30,8 +30,8 @@ class CheckUser {
 	        {
 	            // The user is logged in
 	            // -> Send request to bookingcontroller@store
-	            Session::flash('success','We well receive your demand ! For a faster check-in, please login');
-	        	return $path = redirect("/confirm/".$bookingId."/".$request->input('email')."/booking");
+	            Session::flash('success','We well receive your demand ! For a faster check-in, please consider filling all your informations.');
+	        	return app('App\Http\Controllers\BookingController')->storeBooking($request,$bookingId);
 	        }
 	        else
 	        {

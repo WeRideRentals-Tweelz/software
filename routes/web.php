@@ -35,7 +35,11 @@ Route::get('/scooters/{scooterId}/destroy', 'ScooterController@destroy');
 Route::resource('bookings','BookingController');
 //Users
 	Route::post('/booking/quote', 'BookingController@quote');
-	Route::get('/confirm/{bookingId}/{email}/booking', 'BookingController@confirmBooking');
+	Route::get('/signDocument/{email}/{bookingId}/', 'BookingController@confirmUser');
+	Route::get('/signDocument/{email}/', 'BookingController@confirmUser');
+	Route::post('/confirm-booking', 'BookingController@confirmBooking');
+	Route::get('/noSign/{userId}/{bookingId}/','BookingController@refusedToSign');
+	Route::get('/noSign/{userId}/','BookingController@refusedToSign');
 //Admin
 	Route::get('/pastbookings','BookingController@pastbookings');
 	Route::post('/pastbookings','BookingController@pastbookings');
@@ -79,3 +83,6 @@ Route::get('/tolls/{sort}/{order}/{limit}', 'TollsController@index');
 Route::post('/tolls/edit', 'TollsController@edit');
 Route::post('/tolls/update', 'TollsController@update');
 Route::post('/tolls/delete', 'TollsController@destroy');
+
+//Documents
+Route::resource('documents','DocumentsController');

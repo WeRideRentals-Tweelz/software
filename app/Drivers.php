@@ -8,7 +8,7 @@ class Drivers extends Model
 {
     protected $table = 'drivers';
 
-    protected $fillable = ['user_id','date_of_birth','address','drivers_licence','licence_state','expiry_date',"confirmed"];
+    protected $fillable = ['user_id','date_of_birth','address','city','state','postcode','drivers_licence','licence_state','expiry_date',"confirmed"];
 
     protected $hidden= [];
 

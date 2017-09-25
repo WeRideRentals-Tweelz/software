@@ -15,6 +15,7 @@ use App\Http\Requests\QuoteRequest;
 // Models    
 use App\User;
 use App\Booking;
+use App\Documents;
 use App\Drivers;
 use App\Scooter;
 //Services
@@ -27,7 +28,7 @@ class BookingController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin')->except('quote','confirmBooking');
+        $this->middleware('admin')->except('quote','confirmBooking','confirmUser','refusedToSign');
     }
 
     /**
@@ -111,6 +112,9 @@ class BookingController extends Controller
         $booking->bond_return = date('Y-m-d',strtotime($booking->drop_off_date) + (24*3600*10));
         $booking->save();
 
+        if(Auth::user()->role_id != 1){
+            return redirect('/profile');
+        }
         return redirect('/bookings');
     }
 
@@ -267,20 +271,74 @@ class BookingController extends Controller
     *   @param  App\User     $user->email
     *   @return Illuminate\Http\Response
     */
-    public function confirmBooking($bookingId,$email)
+    public function confirmBooking(Request $request)
     {
+        $user = User::find($request->input('userId')); 
+        $user->signed = 1;
+        $user->save();
 
-        $user = User::where('email','=',$email)->first();    
+        if($request->input('bookingId') !== null){
+            $booking = Booking::find($request->input('bookingId'));
+            $booking->status = "Regular Booking";
+            $booking->confirmation = 1;
+            $booking->user_id = $user->id;
+            $booking->save();
+
+            $booking->bond_return = date('Y-m-d',strtotime($booking->drop_off_date) + (24*3600*10));
+            $booking->save();
+
+            $sendEmail = new EmailSender($user->email);
+            $sendEmail->confirmation($booking);
+
+            Session::flash('success','Thank you for booking with us ! For a faster check-in, consider filling your information in your profile.');
+            return redirect('/profile');
+        }
+        Session::flash('success','You well created your profile '.$user->surname.' !');
+        return redirect('/profile');
+    }
+
+    public function storeBooking(Request $request, $bookingId)
+    {
+        $user = User::find($request->input('userId')); 
+
         $booking = Booking::find($bookingId);
         $booking->status = "Regular Booking";
         $booking->confirmation = 1;
         $booking->user_id = $user->id;
         $booking->save();
 
+        $booking->bond_return = date('Y-m-d',strtotime($booking->drop_off_date) + (24*3600*10));
+        $booking->save();
+
         $sendEmail = new EmailSender($user->email);
         $sendEmail->confirmation($booking);
 
         Session::flash('success','Thank you for booking with us ! For a faster check-in, consider filling your information in your profile.');
+        return redirect('/profile');
+    }
+
+    public function confirmUser($email,$bookingId=null)
+    {
+        $document = Documents::where('name','WeRide Scooter Rentals by Tweelz, Terms and Conditions')->first();
+
+        $user = User::where('email','=',$email)->first();    
+        if($user->signed){
+            return redirect('/profile');
+        }
+        if($bookingId === null){
+            return view('users.details')->with(compact('user','document'));
+        }
+        return view('users.details')->with(compact('user','bookingId','document'));
+    }
+
+    public function refusedToSign($userId,$bookingId=null)
+    {
+        if($bookingId !== null){
+            $booking = Booking::find($bookingId);
+            $booking->delete();
+        }
+        Auth::logout();
+        Session::flash('error','Sorry we cannot allow you to make a reservation without agreeing with our sales policies');
         return redirect('/');
     }
 

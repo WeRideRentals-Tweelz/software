@@ -45,6 +45,7 @@
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<div id="form-input-group">
 						<input type="{{ Auth::check() ? 'hidden' : 'text' }}" name="name" placeholder="Name" class="form-control" value="{{ Auth::check() ? Auth::user()->name : '' }}" required>
+						<input type="{{ Auth::check() ? 'hidden' : 'text' }}" name="surname" placeholder="Surname" class="form-control" value="{{ Auth::check() ? Auth::user()->surname : '' }}" required>
 						<input type="{{ Auth::check() ? 'hidden' : 'text' }}" name="phone" placeholder="Phone" class="form-control" value="{{ Auth::check() ? Auth::user()->phone : '' }}" required>
 						<input type="{{ Auth::check() ? 'hidden' : 'email' }}" name="email" placeholder="Email" class="form-control" value="{{ Auth::check() ? Auth::user()->email : '' }}" required>
 						

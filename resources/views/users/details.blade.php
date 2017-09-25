@@ -1,4 +1,13 @@
 @extends('layouts.main')
+@section('styles')
+	<style type="text/css">
+		input
+		{
+			margin-bottom: 20px;
+		}
+	</style>
+@stop
+
 @section('content')
 	<div class="container-fluid">
 		<div class="col-sm-6 col-sm-offset-1">
@@ -62,8 +71,8 @@
 					<div class="col-sm-6">
 						<h3>Personnal Informations</h3>
 
-							<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-	                            <label for="name" class="col-xs-10 control-label">Name</label>
+							<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}" id="nameFormGroup">
+	                            <label  id="nameLabel" for="name" class="col-xs-11 control-label">Name <small><em>as on id or passeport</em></small></label>
 	                            <div class="col-xs-12">
 	                                <input id="name" type="text" class="form-control infoInputs" name="name" value="{{ $user->name or old('name') }}" required>
 
@@ -75,8 +84,21 @@
 	                            </div>
 	                        </div>
 
-							<div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
-	                            <label for="phone" class="col-xs-10 control-label">Phone Number</label>
+	                        <div class="form-group{{ $errors->has('surname') ? ' has-error' : '' }}" id="surnameFormGroup">
+	                            <label id="surnameLabel" for="surname" class="col-xs-11 control-label">Surname <small class=""><em>as on id or passeport</em></small></label>
+	                            <div class="col-xs-12">
+	                                <input id="surname" type="text" class="form-control infoInputs" name="surname" value="{{ $user->surname or old('surname') }}" required>
+
+	                                @if ($errors->has('surname'))
+	                                    <span class="help-block">
+	                                        <strong>{{ $errors->first('surname') }}</strong>
+	                                    </span>
+	                                @endif
+	                            </div>
+	                        </div>
+
+							<div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}" id="phoneFormGroup">
+	                            <label id="phoneLabel" for="phone" class="col-xs-11 control-label">Phone Number</label>
 	                            <div class="col-xs-12">
 	                                <input id="phone" type="phone" class="form-control infoInputs" name="phone" value="{{ $user->phone or old('phone') }}" required>
 
@@ -88,8 +110,8 @@
 	                            </div>
 	                        </div>
 
-							<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-	                            <label for="email" class="col-xs-10 control-label">E-Mail Address</label>
+							<div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}" id="emailFormGroup">
+	                            <label id="emailLabel" for="email" class="col-xs-11 control-label">E-Mail Address</label>
 	                            <div class="col-xs-12">
 	                                <input id="email" type="email" class="form-control infoInputs" name="email" value="{{ $user->email or old('email') }}" required>
 
@@ -101,8 +123,8 @@
 	                            </div>
 	                        </div>
 
-	                        <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">
-	                            <label for="address" class="col-xs-10 control-label">Renter's Address</label>
+	                        <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}" id="addressFormGroup">
+	                            <label id="addressLabel" for="address" class="col-xs-11 control-label">Renter's Address</label>
 	                            <div class="col-xs-12">
 	                                <input id="address" type="text" class="form-control infoInputs" name="address" value="{{ isset($user) && $user->driver->address !== null ? $user->driver->address : old('address')}}" >
 
@@ -113,13 +135,49 @@
 	                                @endif
 	                            </div>
 	                        </div>	
+	                        <div class="form-group{{ $errors->has('city') ? ' has-error' : '' }}" id="cityFormGroup">
+	                            <label id="cityLabel" for="city" class="col-xs-11 control-label">Suburb</label>
+	                            <div class="col-xs-12">
+	                                <input id="city" type="text" class="form-control infoInputs" name="city" value="{{ isset($user) && $user->driver->city !== null ? $user->driver->city : old('city')}}" >
+
+	                                @if ($errors->has('city'))
+	                                    <span class="help-block">
+	                                        <strong>{{ $errors->first('city') }}</strong>
+	                                    </span>
+	                                @endif
+	                            </div>
+	                        </div>
+	                        <div class="form-group{{ $errors->has('state') ? ' has-error' : '' }}" id="stateFormGroup">
+	                            <label id="stateLabel" for="state" class="col-xs-11 control-label">State</label>
+	                            <div class="col-xs-12">
+	                                <input id="state" type="text" class="form-control infoInputs" name="state" value="{{ isset($user) && $user->driver->state !== null ? $user->driver->state : old('state')}}" >
+
+	                                @if ($errors->has('state'))
+	                                    <span class="help-block">
+	                                        <strong>{{ $errors->first('state') }}</strong>
+	                                    </span>
+	                                @endif
+	                            </div>
+	                        </div>
+	                        <div class="form-group{{ $errors->has('postcode') ? ' has-error' : '' }}" id="postcodeFormGroup">
+	                            <label id="postcodeLabel" for="postcode" class="col-xs-11 control-label">Post Code</label>
+	                            <div class="col-xs-12">
+	                                <input id="postcode" type="number" class="form-control infoInputs" name="postcode" value="{{ isset($user) && $user->driver->postcode !== null ? $user->driver->postcode : old('postcode')}}" >
+
+	                                @if ($errors->has('postcode'))
+	                                    <span class="help-block">
+	                                        <strong>{{ $errors->first('postcode') }}</strong>
+	                                    </span>
+	                                @endif
+	                            </div>
+	                        </div>
 					            </div>
 
 					            <div class="col-sm-6">
 			                        <h3>Driver's Licence Information</h3>
 
-			                        <div class="form-group{{ $errors->has('drivers_licence') ? ' has-error' : '' }}">
-			                            <label for="drivers_licence" class="col-xs-10 control-label">Driver's Licence Number</label>
+			                        <div class="form-group{{ $errors->has('drivers_licence') ? ' has-error' : '' }}" id="drivers_licenceFormGroup">
+			                            <label id="drivers_licenceLabel" for="drivers_licence" class="col-xs-11 control-label">Driver's Licence Number</label>
 			                            <div class="col-xs-12">
 			                                <input id="drivers_licence" type="text" class="form-control infoInputs" name="drivers_licence" value="{{ isset($user) && $user->driver->drivers_licence !== null ? $user->driver->drivers_licence : old('drivers_licence') }}" >
 
@@ -131,8 +189,8 @@
 			                            </div>
 			                        </div>
 
-			                        <div class="form-group{{ $errors->has('licence_state') ? ' has-error' : '' }}">
-			                            <label for="licence_state" class="col-xs-10 control-label">Driver's Licence State of issue</label>
+			                        <div class="form-group{{ $errors->has('licence_state') ? ' has-error' : '' }}" id="licence_stateFormGroup">
+			                            <label id="licence_stateLabel" for="licence_state" class="col-xs-11 control-label">Driver's Licence State of issue</label>
 			                            <div class="col-xs-12">
 			                                <input id="licence_state" type="text" class="form-control infoInputs" name="licence_state" value="{{ isset($user) && $user->driver->licence_state !== null ? $user->driver->licence_state : old('licence_state')}}" >
 
@@ -144,19 +202,21 @@
 			                            </div>
 			                        </div>
 
-			                        <div class="form-group col-xs-12 ">
-			        			<label for="expiry_date" class="col-xs-10 control-label">Expiry Date</label>
+			                <div class="form-group col-xs-12" id="expiry_dateFormGroup">
+			        			<label id="expiry_dateLabel" for="expiry_date" class="col-xs-11 control-label">Expiry Date</label>
 					            <div class='input-group date  col-xs-12' id='expiry_date'>
-					                    <input type='text' name="expiry_date" class="form-control infoInputs" value="{{ isset($user) && $user->driver->expiry_date !== null ? date_format(date_create($user->driver->expiry_date),'d/m/Y') : null }}" />
+					                    <input id="expiryDate" type='text' name="expiry_date" class="form-control" value="{{ isset($user) && $user->driver->expiry_date != '' ? date_format(date_create($user->driver->expiry_date),'d/m/Y') : '' }}" />
 					                    <span class="input-group-addon">
 					                        <span class="glyphicon glyphicon-calendar"></span>
 					                    </span>
 					            </div>
+					            <input type="checkbox" name="noExpiry" id="noExpiry" {{ isset($user) && $user->driver->expiry_date == '' ? 'checked':'' }}>
+					            <label for="noExpiry">No expiration date</label>
 							</div>
-							<div class="form-group col-xs-12 ">
-					            <label for="date_of_birth" class="col-xs-10 control-label">Date of birth</label>
+							<div class="form-group col-xs-12" id="date_of_birthFormGroup">
+					            <label id="date_of_birthLabel" for="date_of_birth" class="col-xs-11 control-label">Date of birth</label>
 					            <div class='input-group date  col-xs-12' id='date_of_birth'>
-					                    <input type='text' name="date_of_birth" class="form-control infoInputs" value="{{ isset($user) && $user->driver->date_of_birth !== null ? date_format(date_create($user->driver->date_of_birth),'d/m/Y') : null }}" />
+					                    <input type='text' name="date_of_birth" class="form-control infoInputs" value="{{ isset($user) && $user->driver->date_of_birth != ' ' ? date_format(date_create($user->driver->date_of_birth),'d/m/Y') : null }}" />
 					                    <span class="input-group-addon">
 					                        <span class="glyphicon glyphicon-calendar"></span>
 					                    </span>
@@ -167,8 +227,8 @@
 	                        <div class="form-group">
 	                            <div class="col-xs-2 col-xs-offset-5">
 	                            	@if(isset($user))
-	                                <button type="submit" class="btn btn-primary btn-sm form-control" style="margin-top: 10px; margin-bottom: 10px">
-	                                    Update Profile
+	                                <button type="submit" class="btn btn-primary btn-sm btn-block" style="margin-top: 10px; margin-bottom: 10px">
+	                                    Update
 	                                </button>
 	                                @else
 	                                <button type="submit" class="btn btn-primary btn-sm form-control" style="margin-top: 10px; margin-bottom: 10px">
@@ -297,6 +357,47 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3>Make a new reservation</h3>
+				</div>
+				<div class="panel-body">
+					<form id="book" class="form" action="/booking/quote" method="POST">
+						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						<div id="form-input-group">
+							<input type="hidden" name="userId" value="{{ $user->id }}">
+							<input type="{{ Auth::check() ? 'hidden' : 'text' }}" name="name" placeholder="Name" class="form-control" value="{{ Auth::check() ? Auth::user()->name : '' }}" required>
+							<input type="{{ Auth::check() ? 'hidden' : 'text' }}" name="surname" placeholder="Surname" class="form-control" value="{{ Auth::check() ? Auth::user()->surname : '' }}" required>
+							<input type="{{ Auth::check() ? 'hidden' : 'text' }}" name="phone" placeholder="Phone" class="form-control" value="{{ Auth::check() ? Auth::user()->phone : '' }}" required>
+							<input type="{{ Auth::check() ? 'hidden' : 'email' }}" name="email" placeholder="Email" class="form-control" value="{{ Auth::check() ? Auth::user()->email : '' }}" required>
+							
+							<div class="form-group col-xs-6">
+						            <div class='input-group date row' id='pickUpDate'>
+						                    <input id="pickUp"  type='text' name="pickUp" class="form-control" placeholder="Pick Up Date" required/>
+						                    <span class="input-group-addon">
+						                        <span class="glyphicon glyphicon-calendar"></span>
+						                    </span>
+						                </div>
+						            </div>
+
+						            <div class="form-group col-xs-6">
+						            <div class='input-group date row' id='dropOffDate'>
+						                    <input id="dropOff" type='text' name="dropOff" class="form-control" placeholder="Drop Off Date" required/>
+						                    <span class="input-group-addon">
+						                        <span class="glyphicon glyphicon-calendar"></span>
+						                    </span>
+						                </div>
+						            </div>
+
+							<div id="form-button-container" class="col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3">
+								<button type="submit" form="book" onclick=ga(‘send’,’event’,’Button’,’Click’,’NewClient’, '0') class="button-bounce btn btn-primary form-control rent-scooter">Book Now</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	@if(isset($booking))
@@ -366,11 +467,89 @@
 	  </div>
 	</div>
 	@endif
+	@if(!$user->signed && Auth::user()->role_id != 1 && isset($document))
+	<!-- Sign Modal -->
+	<div id="signModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
 
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Please take a moment to read and sign</h4>
+	      </div>
+	      <div class="modal-body" style="box-shadow: 0px 0px 10px 0px rgba(0,0,0,.5) inset">
+	        <div id="signContent" class="row" style="height: 550px; overflow-y: scroll;">
+	        	<h4>{{ $document->name }}</h4>
+	        	<div class="col-xs-10 col-xs-offset-1">
+	        		{{ print($document->content) }}
+	        	</div>
+	        </div>
+	      </div>
+	      <div class="modal-footer" style="min-height: 150px">
+	      	<p id="signInstructions" style="color: gray; font-size: 2em">Please read and scroll down to the end of the document before proceeding to signature</p>
+	      	<form id="signForm" action="/confirm-booking" method="POST" class="hidden">
+	      		{{ csrf_field() }}
+	      		<input type="hidden" name="userId" value="{{ $user->id }}">
+	      		@if(isset($bookingId))
+	      			<input type="hidden" name="bookingId" value="{{ $bookingId }}">
+	      		@endif
+	      		<div class="form-group{{ $errors->has('signedName') ? ' has-error' : '' }}">
+	      			@if ($errors->has('signedName'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('signedName') }}</strong>
+                        </span>
+                    @endif
+
+                    @if(Session::has('error'))
+                    	<p class="alert alert-danger">{{ Session::get('error') }}</p>
+                    @endif
+			      	<p style="text-align: justify; font-size: 1em">
+			      		<label for="signedName"> I, 
+			      			<input type="text" name="signedName" id="signedName" placeholder="Name Surname" required>
+			      		hereby acknowledge the fact that I read and accepted the aggreement between WeRideRentals.pty and I :
+			      		</label>
+			      		<p style="text-align: center">
+			      			<input id="electronicSign" type="checkbox" name="electronicSign" required>
+			      			<label for="electronicSign"><em>signature</em></label>	
+			      		</p>
+			      	</p>
+		      	</div>
+		      	<button id="signButton" type="submit" class="btn btn-primary btn-block">Sign</button>
+		    </form>
+		    <br>
+		    <br>
+		    <a class="btn btn-danger btn-block" href="{{ isset($bookingId) ? url('/noSign/'.$user->id.'/'.$bookingId.'/') : url('/noSign/'.$user->id.'/') }}">
+                    I don't want to sign this
+            </a>
+	      </div>
+	    </div>
+
+	  </div>
+	</div>
+	@endif
 @stop
 
 @section("scripts")
 <script type="text/javascript">
+			
+			//SignModalActivation
+	        if($('#signModal') !== null){
+	        	$('#signModal').modal({
+	        	  backdrop: 'static',	
+				  keyboard: false,
+				}).modal('show');
+	        }
+	        //END
+
+	        //Sign document scrolled
+	        $('#signContent').on('scroll', function() {
+		        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+		            $('#signInstructions').addClass('hidden');
+		            $('#signForm').removeClass('hidden');
+		      	}
+		    });
+	        //End
+
             $(function () {
                 $('#pickUpDate').datetimepicker({
                 	format: "DD/MM/YYYY"
@@ -378,12 +557,20 @@
                 $('#dropOffDate').datetimepicker({
                 	format: "DD/MM/YYYY"
                 });
-                $('#expiry_date').datetimepicker({
-                	format: "DD/MM/YYYY"
-                });
-                $('#date_of_birth').datetimepicker({
-                	format: "DD/MM/YYYY"
-                });
+                if($('#expiry_date').value != ' '){
+                	$('#expiry_date').datetimepicker({
+	                	format: "DD/MM/YYYY"
+	                });
+                } else {
+                	$('#expiry_date').datetimepicker();
+                }
+                if($('#date_of_birth').value != ' '){
+                	$('#date_of_birth').datetimepicker({
+	                	format: "DD/MM/YYYY"
+	                });
+                } else {
+                	$('#date_of_birth').datetimepicker();
+                }
             });
 
             var inputs = document.getElementsByClassName('infoInputs');
@@ -391,13 +578,13 @@
         	var filled = false;
         	for (var i = inputs.length - 1; i >= 0; i--) {
         		var filled = false;
-        		if(inputs[i].value !== ''){
+        		if(inputs[i].value != '' && inputs[i].value !== null && inputs[i].id != 'expiryDate'){
         			var filled = true;
         			var tick = document.createElement('span');
-        			tick.className = 'glyphicon glyphicon-ok';
+        			tick.className = 'glyphicon glyphicon-ok pull-right';
         			tick.style.color	= 'green';
-        			inputs[i].parentElement.parentElement.prepend(tick);
-        			console.log(inputs[i].value);
+        			$('#'+ inputs[i].name +'Label').append(tick);
+        			$('#'+ inputs[i].name +'FormGroup').addClass('has-success');
         		}
         		else{
         			showButton = false;
@@ -420,6 +607,19 @@
 	            	location.href = "/user/confirm/"+userId;
 	            });
         	}
+
+        	if($('#noExpiry').is(':checked')){
+	        		$('#expiryDate').attr('disabled','');
+	        		$('#expiryDate').attr('value','');
+	        }
+        	$('#noExpiry').click(function(){
+	        	if($('#noExpiry').is(':checked')){
+	        		$('#expiryDate').attr('disabled','');
+	        		$('#expiryDate').attr('value','');
+	        	} else {
+	        		$('#expiryDate').removeAttr('disabled');
+	        	}
+	        });
 
 </script>
 @stop
