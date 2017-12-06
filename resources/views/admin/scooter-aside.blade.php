@@ -16,7 +16,7 @@
 		@endif
 	@endif
 
-
+	@if(isset($scooter))
 	<div class="panel panel-success">
 		<div class="panel-heading">
 			<h2>Repairs History</h2>
@@ -84,7 +84,8 @@
 			</form>
 		</div>
 	</div>
-
+	@endif
+	
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<h2>Bookings History</h2>

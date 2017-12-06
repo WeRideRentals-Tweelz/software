@@ -46,9 +46,12 @@
                     <li>
                         <a href="{{ url('/tolls/') }}">Tolls</a>
                     </li>
+                    <li>
+                        <a href="{{ url('/documents') }}">Documents</a>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ Auth::user()->name }} <span class="caret"></span>
+                            {{ ucfirst(Auth::user()->name) }} <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">

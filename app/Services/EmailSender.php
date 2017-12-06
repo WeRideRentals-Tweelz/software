@@ -28,4 +28,17 @@ class EmailSender {
 		            $message->to($contact)->subject('New Booking - '.$name);
 		});
 	}
+
+	public function sendDocument($document,$request)
+	{	
+		$documentName = $document->name;
+		$documentContent = $document->content;
+		$name = $request->input('signedName');
+		$signature = $request->input('electronicSign');
+		$contactEmail = $this->contactEmail;
+
+		Mail::send('emails.document', ['documentName' => $documentName, 'documentContent' => $documentContent , 'name' => $name, 'signature' => $signature], function($message) use ($contactEmail, $name, $documentName){
+			$message->to($this->contactEmail)->subject($name.' signed '.$documentName.'.');
+		});
+	}
 }

@@ -205,7 +205,7 @@
 			                <div class="form-group col-xs-12" id="expiry_dateFormGroup">
 			        			<label id="expiry_dateLabel" for="expiry_date" class="col-xs-11 control-label">Expiry Date</label>
 					            <div class='input-group date  col-xs-12' id='expiry_date'>
-					                    <input id="expiryDate" type='text' name="expiry_date" class="form-control" value="{{ isset($user) && $user->driver->expiry_date != '' ? date_format(date_create($user->driver->expiry_date),'d/m/Y') : '' }}" />
+					                    <input id="expiryDate" type='text' name="expiry_date" class="form-control" value="{{ isset($user) && $user->driver->expiry_date != '' ? $user->driver->expiry_date : '' }}" />
 					                    <span class="input-group-addon">
 					                        <span class="glyphicon glyphicon-calendar"></span>
 					                    </span>
@@ -216,7 +216,7 @@
 							<div class="form-group col-xs-12" id="date_of_birthFormGroup">
 					            <label id="date_of_birthLabel" for="date_of_birth" class="col-xs-11 control-label">Date of birth</label>
 					            <div class='input-group date  col-xs-12' id='date_of_birth'>
-					                    <input type='text' name="date_of_birth" class="form-control infoInputs" value="{{ isset($user) && $user->driver->date_of_birth != ' ' ? date_format(date_create($user->driver->date_of_birth),'d/m/Y') : null }}" />
+					                    <input type='text' name="date_of_birth" class="form-control infoInputs" value="{{ $user->driver->date_of_birth or old('date_of_birth') }}" />
 					                    <span class="input-group-addon">
 					                        <span class="glyphicon glyphicon-calendar"></span>
 					                    </span>
@@ -225,7 +225,10 @@
 						</div>
 						<div class='col-xs-12'>
 	                        <div class="form-group">
-	                            <div class="col-xs-2 col-xs-offset-5">
+	                            <div class="col-xs-6 col-xs-offset-3">
+	                            	@if(Auth::user()->role_id == 1 && isset($user) && !$user->signed)
+	                            		<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#signModal">Make user sign</button>
+	                            	@endif
 	                            	@if(isset($user))
 	                                <button type="submit" class="btn btn-primary btn-sm btn-block" style="margin-top: 10px; margin-bottom: 10px">
 	                                    Update
@@ -243,7 +246,7 @@
 					@if(Auth::user()->role_id == 1 && isset($user))
 					<div class="form-group">
 						@if(!$user->driver->confirmed)
-	                        <div id="confirmUserPlace" class="col-xs-2 col-xs-offset-5">
+	                        <div id="confirmUserPlace" class="col-xs-6 col-xs-offset-3">
 	                           <!-- Here goes the javascript button for confirming User -->
 						    </div>
 					    @endif
@@ -253,6 +256,8 @@
 					</div>
 					@endif
 				</div>
+
+				<div id="userAuth" class="hidden">{{ Auth::user()->role_id }}</div>
 
 				@if(isset($user) && Auth::user()->id == $user->id)
 				<hr>
@@ -357,6 +362,7 @@
 				</div>
 			</div>
 		</div>
+		@if(isset($user))
 		<div class="col-sm-4">
 			<div class="panel panel-info">
 				<div class="panel-heading">
@@ -367,10 +373,10 @@
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div id="form-input-group">
 							<input type="hidden" name="userId" value="{{ $user->id }}">
-							<input type="{{ Auth::check() ? 'hidden' : 'text' }}" name="name" placeholder="Name" class="form-control" value="{{ Auth::check() ? Auth::user()->name : '' }}" required>
-							<input type="{{ Auth::check() ? 'hidden' : 'text' }}" name="surname" placeholder="Surname" class="form-control" value="{{ Auth::check() ? Auth::user()->surname : '' }}" required>
-							<input type="{{ Auth::check() ? 'hidden' : 'text' }}" name="phone" placeholder="Phone" class="form-control" value="{{ Auth::check() ? Auth::user()->phone : '' }}" required>
-							<input type="{{ Auth::check() ? 'hidden' : 'email' }}" name="email" placeholder="Email" class="form-control" value="{{ Auth::check() ? Auth::user()->email : '' }}" required>
+							<input type="hidden" name="name" placeholder="Name" class="form-control" value="{{ $user->name }}" required>
+							<input type="hidden" name="surname" placeholder="Surname" class="form-control" value="{{ $user->surname }}" required>
+							<input type="hidden" name="phone" placeholder="Phone" class="form-control" value="{{ $user->phone }}" required>
+							<input type="hidden" name="email" placeholder="Email" class="form-control" value="{{ $user->email }}" required>
 							
 							<div class="form-group col-xs-6">
 						            <div class='input-group date row' id='pickUpDate'>
@@ -398,6 +404,7 @@
 				</div>
 			</div>
 		</div>
+		@endif
 	</div>
 
 	@if(isset($booking))
@@ -467,7 +474,8 @@
 	  </div>
 	</div>
 	@endif
-	@if(!$user->signed && Auth::user()->role_id != 1 && isset($document))
+
+	@if(isset($user) && !$user->signed && isset($document))
 	<!-- Sign Modal -->
 	<div id="signModal" class="modal fade" role="dialog">
 	  <div class="modal-dialog">
@@ -490,6 +498,7 @@
 	      	<form id="signForm" action="/confirm-booking" method="POST" class="hidden">
 	      		{{ csrf_field() }}
 	      		<input type="hidden" name="userId" value="{{ $user->id }}">
+	      		<input type="hidden" name="documentId" value="{{ $document->id }}">
 	      		@if(isset($bookingId))
 	      			<input type="hidden" name="bookingId" value="{{ $bookingId }}">
 	      		@endif
@@ -518,9 +527,11 @@
 		    </form>
 		    <br>
 		    <br>
-		    <a class="btn btn-danger btn-block" href="{{ isset($bookingId) ? url('/noSign/'.$user->id.'/'.$bookingId.'/') : url('/noSign/'.$user->id.'/') }}">
-                    I don't want to sign this
-            </a>
+		    @if(isset($user) && isset($bookingId))
+		    	<a href="/notSigned/{{$user->id}}/{{$bookingId}}" type="button" class="btn btn-danger btn-block">I don't want to sign this</a>
+		    @else
+		    	<a href="/notSigned" type="button" class="btn btn-danger btn-block">I don't want to sign this</a>
+		    @endif
 	      </div>
 	    </div>
 
@@ -533,11 +544,9 @@
 <script type="text/javascript">
 			
 			//SignModalActivation
-	        if($('#signModal') !== null){
-	        	$('#signModal').modal({
-	        	  backdrop: 'static',	
-				  keyboard: false,
-				}).modal('show');
+			var userAuth = $('#userAuth');
+	        if($('#signModal') !== null && userAuth.html() != 1){
+	        	$('#signModal').modal('show');
 	        }
 	        //END
 
@@ -557,20 +566,13 @@
                 $('#dropOffDate').datetimepicker({
                 	format: "DD/MM/YYYY"
                 });
-                if($('#expiry_date').value != ' '){
-                	$('#expiry_date').datetimepicker({
-	                	format: "DD/MM/YYYY"
-	                });
-                } else {
-                	$('#expiry_date').datetimepicker();
-                }
-                if($('#date_of_birth').value != ' '){
-                	$('#date_of_birth').datetimepicker({
-	                	format: "DD/MM/YYYY"
-	                });
-                } else {
-                	$('#date_of_birth').datetimepicker();
-                }
+                $('#expiry_date').datetimepicker({
+                	format: "YYYY-MM-DD"
+                });
+                
+                $('#date_of_birth').datetimepicker({
+                	format: "YYYY-MM-DD"
+                });
             });
 
             var inputs = document.getElementsByClassName('infoInputs');

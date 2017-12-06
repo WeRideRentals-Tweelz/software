@@ -60,7 +60,7 @@
 	  	<span class="bookingId">{{ $booking->id }}</span>
 	  	@if($booking->user_id != 0)
 	  		<span class="bookingUserId">{{ $booking->user->id }}</span>
-	  		<span class="bookingUser">{{ $booking->user->name }}</span>
+	  		<span class="bookingUser">{{ $booking->user->surname }} {{ $booking->user->name }}</span>
 	  	@else
 	  		<span class="bookingUser">No User</span>
 	  	@endif

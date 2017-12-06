@@ -328,6 +328,7 @@ class ComposerStaticInita828aaf9ee20e949447bbb11fdf850f6
 
     public static $classMap = array (
         'AddAccessoriesIdToBookings' => __DIR__ . '/../..' . '/database/migrations/2017_01_25_021209_add_accessories_id_to_bookings.php',
+        'AddAcknowledgeToBooking' => __DIR__ . '/../..' . '/database/migrations/2017_09_25_203716_add_acknowledge_to_booking.php',
         'AddAvailabilityToScooters' => __DIR__ . '/../..' . '/database/migrations/2017_01_24_231107_add_availability_to_scooters.php',
         'AddBannedToUsers' => __DIR__ . '/../..' . '/database/migrations/2017_07_14_011134_add_banned_to_users.php',
         'AddBondReturnToBookings' => __DIR__ . '/../..' . '/database/migrations/2017_09_19_234748_add_bond_return_to_bookings.php',

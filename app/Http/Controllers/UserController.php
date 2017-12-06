@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Documents;
 use App\Drivers;
 use App\Booking;
+
+use App\Services\UserServices;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -62,6 +65,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $userService = new UserServices();
+
         $user = User::create([
             'name'      =>  $request->input('name'),
             'surname'   =>  $request->input('surname'),
@@ -74,14 +79,14 @@ class UserController extends Controller
 
         $driver = Drivers::create([
             'user_id'           => $user->id,
-            'date_of_birth'     => $request->input('date_of_birth'),
+            'date_of_birth'     => $userService->checkDate($request->input('date_of_birth')),
             'address'           => $request->input('address'),
             'city'              => $request->input('city'),
             'state'             => $request->input('state'),
             'postcode'          => $request->input('postcode'),
             'drivers_licence'   => $request->input('drivers_licence'),
             'licence_state'     => $request->input('licence_state'),
-            'expiry_date'       => $request->input('expiry_date'),
+            'expiry_date'       => $userService->checkDate($request->input('expiry_date')),
             'confirmed'         => 0
         ]); 
 
@@ -118,10 +123,11 @@ class UserController extends Controller
     {
         if(Auth::user()->role_id == 1|| Auth::user()->id == $userId)
         {
+            $document = Documents::find(1);
             $user = User::find($userId);
             $bookings = Booking::where('user_id','=',$userId)->get();
             $driver = $user->driver;
-            return view('users.details')->with(compact('user','bookings','driver'));
+            return view('users.details')->with(compact('user','bookings','driver','document'));
         }
             return redirect("/");
     }
@@ -143,6 +149,8 @@ class UserController extends Controller
                 $file = $request->userPicture->storeAs('public',$request->input('name').'.jpg');
             }
         }
+        $userService = new UserServices();
+
         $user = User::find($request->input('user'));
         $user->name     = $request->input('name');
         $user->surname  = $request->input('surname');
@@ -157,16 +165,8 @@ class UserController extends Controller
         $driver->postcode           = $request->input('postcode');   
         $driver->drivers_licence    = $request->input('drivers_licence');
         $driver->licence_state      = $request->input('licence_state');
-        if($request->input('expiry_date') !== null && $request->input('expiry_date') != ''){
-            $driver->expiry_date        = date("Y-m-d",strtotime(str_replace('/','-',$request->input('expiry_date'))));
-        } else {
-            $driver->expiry_date = '';
-        }
-        if($request->input('date_of_birth') !== null && $request->input('date_of_birth') != ''){
-            $driver->date_of_birth      = date("Y-m-d",strtotime(str_replace('/','-',$request->input('date_of_birth'))));
-        } else {
-            $driver->date_of_birth = '';
-        }
+        $driver->expiry_date = $userService->checkDate($request->input('expiry_date'));
+        $driver->date_of_birth = $userService->checkDate($request->input('date_of_birth'));
 
         $driver->save();
         $user->save();

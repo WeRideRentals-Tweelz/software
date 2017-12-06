@@ -88,7 +88,7 @@ class RegisterController extends Controller
             'user_id'   =>  $user->id,
         ]);
     }
-    // If the user made a booking before login in, he will be redirected to confirm its booking
+    // If the user made a booking before registering, he will be redirected to confirm its booking
     protected function redirectUser(Request $request)
     {
         // If the hidden input "booked" is different than 0 then the user is redirect to the next process

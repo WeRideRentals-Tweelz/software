@@ -38,8 +38,11 @@ Route::resource('bookings','BookingController');
 	Route::get('/signDocument/{email}/{bookingId}/', 'BookingController@confirmUser');
 	Route::get('/signDocument/{email}/', 'BookingController@confirmUser');
 	Route::post('/confirm-booking', 'BookingController@confirmBooking');
-	Route::get('/noSign/{userId}/{bookingId}/','BookingController@refusedToSign');
-	Route::get('/noSign/{userId}/','BookingController@refusedToSign');
+	Route::get('/notSigned/{userId}/{bookingId}','BookingController@refusedToSign');
+	Route::get('/notSigned','BookingController@refusedToSign');
+
+	Route::post('/start-booking', 'BookingController@acknowledge');
+	Route::get('/stop-booking/{bookingId}', 'BookingController@stopBooking');
 //Admin
 	Route::get('/pastbookings','BookingController@pastbookings');
 	Route::post('/pastbookings','BookingController@pastbookings');

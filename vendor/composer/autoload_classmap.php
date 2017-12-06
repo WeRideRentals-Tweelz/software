@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddAccessoriesIdToBookings' => $baseDir . '/database/migrations/2017_01_25_021209_add_accessories_id_to_bookings.php',
+    'AddAcknowledgeToBooking' => $baseDir . '/database/migrations/2017_09_25_203716_add_acknowledge_to_booking.php',
     'AddAvailabilityToScooters' => $baseDir . '/database/migrations/2017_01_24_231107_add_availability_to_scooters.php',
     'AddBannedToUsers' => $baseDir . '/database/migrations/2017_07_14_011134_add_banned_to_users.php',
     'AddBondReturnToBookings' => $baseDir . '/database/migrations/2017_09_19_234748_add_bond_return_to_bookings.php',

@@ -150,6 +150,16 @@ class BookingServices {
 					return date_format(date_create($objectValue), 'd/m/Y');
 					break;
 
+				case 'acknowledged':
+					if($objectValue == 1){
+						return 'Signed and started';
+					} elseif($objectValue == 2){
+						return 'Booking finished';
+					} else {
+						return "";
+					}
+					break;
+
 				default:
 					return $objectValue;
 					break;

@@ -23,7 +23,7 @@
 				</thead>
 				<tbody>
 					@foreach($bookings as $booking)
-						<tr>
+						<tr class="{{ $booking->acknowledged ? 'alert alert-success' : '' }}">
 							<td>{{ $booking->id }}</td>
 							<td>{{ date_format(date_create($booking->pick_up_date), 'D d M Y') }}</td>
 							@if($booking->pick_up_time == '')
@@ -49,9 +49,9 @@
 							<td>{{ date_create($booking->drop_off_date)->diff(date_create($booking->pick_up_date))->d }}</td>
 							
 							@if($booking->user_id != 0 && $booking->user->driver->confirmed)
-								<td><a href="{{ url('/profile/'.$booking->user_id) }}">{{ $booking->user->name }}</td>
+								<td><a href="{{ url('/profile/'.$booking->user_id) }}">{{ $booking->user->surname }} {{ $booking->user->name }}</td>
 							@elseif($booking->user_id !=0 && $booking->user->driver->confirmed == 0)
-								<td class="alert alert-warning"><a href="{{ url('/profile/'.$booking->user_id) }}">{{ $booking->user->name }}</a> <br>Profile's not complete</td>
+								<td class="alert alert-warning"><a href="{{ url('/profile/'.$booking->user_id) }}">{{ $booking->user->surname }} {{ $booking->user->name }}</a> <br>Profile's not complete</td>
 							@else
 								<td class="alert alert-danger">No User</td>
 							@endif

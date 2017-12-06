@@ -20,7 +20,7 @@
 					
 					<div id="scooterInfo" class="col-sm-4">
 					@if(isset($scooters))
-						<div class="panel panel-default">
+						<div class="panel {{ isset($booking) && $booking->scooter_id != 0 ? 'panel-success' : 'panel-default'}}">
 							<div class="panel-heading">
 								<h2>Scooter Info</h2>
 							</div>
@@ -76,7 +76,7 @@
 
 
 					<div class="col-sm-4">
-						<div class="panel panel-default">
+						<div class="panel {{ isset($booking) && $booking->acknowledged == 1 ? 'panel-success' : isset($booking) && $booking->acknowledged == 2 ? 'panel-info':'panel-default' }}">
 							<div class="panel-heading">
 								<h2>Booking Info</h2>
 							</div>
@@ -96,6 +96,8 @@
 										@if($booking->scooter_id == 0)
 											<p class="alert alert-danger">Please Assign Scooter</p>
 										@endif
+									@elseif($booking->acknowledged == 1)
+										<p class="alert alert-success">Booking Started</p>
 									@endif
 
 									@if($booking->bondStatus)
@@ -160,6 +162,44 @@
 										@endif
 
 									</div>
+									<br>
+									<br>
+									<div class="row">
+										@if(isset($booking) && $booking->acknowledged != 2)
+										<div class="panel panel-default">
+											<div class="panel-heading">
+												<h3>Action Required</h3>
+											</div>
+											<div class="panel-body">
+												@if(isset($booking))
+													@if($booking->user_id == 0)
+														<button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#userModal">Assign User</button>
+													@elseif(!$booking->user->signed)
+														<div class="col-sm-12">
+															<a href="{{ url('/profile/'.$booking->user_id) }}" class="btn btn-danger btn-block" style="margin-bottom: 20px">User needs to sign</a>
+														</div>
+													@elseif($booking->user_id != 0 && !$booking->user->driver->confirmed)
+														<div class="col-sm-12">
+															<a href="{{ url('/profile/'.$booking->user_id) }}" class="btn btn-warning btn-block" style="margin-bottom: 20px">Fill drivers details</a>
+														</div>
+													@elseif($booking->scooter_id == 0)
+														<button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#scooterModal">Assign Scooter</button>
+													@elseif($booking->acknowledged == 1 && date_format(date_create($booking->drop_off_date),'Y-m-d') <= date('Y-m-d'))
+														<div class="col-sm-12">
+															<a href="/stop-booking/{{ $booking->id }}" class="btn btn-danger btn-block">Check-out</a>
+														</div>
+													@elseif($booking->acknowledged == 0 && $booking->scooter_id !=0 )
+														<div class="col-sm-12">
+															<button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#signModal">Sign last document</button>
+														</div>
+													@else
+														<p>None</p>
+													@endif
+												@endif
+											</div>
+										</div>
+										@endif
+									</div>
 
 								</div>
 							</div>
@@ -168,7 +208,7 @@
 
 
 					<div id="driverInfo" class="col-sm-4" style="font-size: 8px">
-						<div class="panel panel-default">
+						<div class="panel {{ isset($booking) && $booking->user_id != 0 && $booking->user->driver->confirmed ? 'panel-success' : 'panel-default' }}">
 
 							<div class="panel-heading">
 								<h2>Driver Info</h2>
@@ -193,12 +233,12 @@
 
 										<div class="col-sm-6">
 											<h3>Name</h3>
-											<p>{{ $booking->user->name }}</p>
+											<p>{{ ucfirst($booking->user->surname) }} {{ ucfirst($booking->user->name) }}</p>
 										</div>
 										
 										<div class="col-sm-6">
 											<h3>Date Of Birth</h3>
-											@if($booking->user->driver->date_of_birth !== null)
+											@if($booking->user->driver->date_of_birth !== '')
 												<p>{{ date_format(date_create($booking->user->driver->date_of_birth), 'd/m/Y') }}</p>
 											@endif
 										</div>
@@ -211,6 +251,8 @@
 										<div class="col-sm-6">
 											<h3>Address</h3>
 											<p>{{ $booking->user->driver->address }}</p>
+											<p>{{ $booking->user->driver->postcode }}, {{ $booking->user->driver->city }}</p>
+											<p>{{ $booking->user->driver->state }}</p>
 										</div>
 
 										<div class="col-sm-6">
@@ -221,14 +263,14 @@
 										<h4 class="col-xs-12">Licence Info</h4>
 
 										<div class="col-sm-6">
-											<h3>Drivers Licence</h3>
+											<h3>Driver's Licence</h3>
 											<p>{{ $booking->user->driver->drivers_licence }}</p>
 										</div>
 
 										<div class="col-sm-6">
 											<h3>Expiry Date</h3>
-											@if($booking->user->driver->expiry_date !== null)
-												<p>{{ date_format(date_create($booking->user->driver->expiry_date), ' D d/m/Y') }}</p>
+											@if($booking->user->driver->expiry_date !== '')
+												<p>{{ $booking->user->driver->expiry_date }}</p>
 											@endif
 										</div>
 
@@ -465,8 +507,59 @@
   </div>
 </div>
 @endif
-
 </form>
+
+@if(isset($document) && isset($booking) && $booking->user_id != 0)
+<!-- Sign Modal -->
+	<div id="signModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	  	<form id="signForm" action="/start-booking" method="POST">
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Please take a moment to read and sign</h4>
+	      </div>
+	      <div class="modal-body" style="box-shadow: 0px 0px 10px 0px rgba(0,0,0,.5) inset">
+	        <div id="signContent" class="row" style="height: 225px; overflow-y: scroll;">
+	        	<h4>Tweelz Rentals Agreement</h4>
+	        	<input type="hidden" name="bookingId" value="{{ $booking->id }}">
+	        	<input type="hidden" name="documentId" value="{{ $document->id }}">
+	        	<div class="col-xs-10 col-xs-offset-1">
+	        		I, <input type="text" name="signedName" value="{{ $booking->user->name }} {{ $booking->user->surname }}">, acknowledge that I have read and agree: 
+	        		<br>
+	        		<ol>
+	        			<li>to pay the Rental Charges detailed in this Rental Agreement;</li> 
+	        			<li>to be bound by the Tweelz Scooter Rental Terms and Conditions (that have been provided to me before signing this Rental Agreement);</li> 
+	        			<li>and the Tweelz Privacy Policy.</li>
+	        		</ol>
+	        	</div>
+	        </div>
+	      </div>
+	      <div class="modal-footer" style="min-height: 150px">
+	      	<div id="">
+	      		<p>
+	      			<span class="pull-left">
+	      				<input type="checkbox" name="electronicSign" id="electronicSign">
+	      				<label for="electronicSign"> Signature</label>
+ 					</span>
+ 					<span class="pull-right">
+ 						<b>Date:</b> {{ date('d/m/Y') }}
+ 					</span>
+ 				</p>
+ 				<br>
+ 				<br>
+ 				<br>
+	      		<button id="startBooking" form="signForm" type="submit" class="btn btn-success btn-block" disabled>Start Check-in</button>
+	      	</div>
+		    <br>
+	      </div>
+	    </div>
+		</form>
+	  </div>
+	</div>
+@endif
+
+
 
 
 
@@ -491,4 +584,15 @@
 			    });
             });
 </script>
+@if(isset($booking))
+<script type="text/javascript">
+            $('#electronicSign').click(function(){
+            	if($(this).is(':checked')){
+            		$('#startBooking').removeAttr('disabled');
+            	} else {
+            		$('#startBooking').attr('disabled','');
+            	}
+            });
+</script>
+@endif
 @stop
