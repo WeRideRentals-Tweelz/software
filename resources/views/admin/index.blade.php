@@ -102,7 +102,7 @@
 			var eventDropOff = $(this).find('.bookingDropOff').html();
 			var eventScooter = $(this).find('.bookingScooter').html();
 
-			var title = "<p><a href='/profile/"+eventUserId+"'>"+eventUser+"</a> - <a href='/bookings/"+eventId+"/edit' class='btn btn-primary'>Booking</a></p>";
+			var title = "<p><a href='/user/"+eventUserId+"'>"+eventUser+"</a> - <a href='/bookings/"+eventId+"/edit' class='btn btn-primary'>Booking</a></p>";
 
 			var pickup = {id: eventId, start: eventPickUp, in: eventPickUp, out: eventDropOff, title: eventId+"-"+eventUser, user: eventUser, userId: eventUserId,scooter: eventScooter,allDay: true, color: "green", type: "Pick Up"};
 			pickups.push(pickup);
@@ -139,10 +139,10 @@
 						if(event.user == "No User"){
 							title = "<tr class='fc-list-item-time fc-widget-content'><td>"+event.type+"</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:"+event.color+"'></span></td><td class='fc-list-item-title fc-widget-content'>"+event.user+" - <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
 						} else {
-							title = "<tr class='fc-list-item-time fc-widget-content'><td>"+event.type+"</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:"+event.color+"'></span></td><td class='fc-list-item-title fc-widget-content'><a href='/profile/"+event.userId+"'>"+event.user+"</a> - <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
+							title = "<tr class='fc-list-item-time fc-widget-content'><td>"+event.type+"</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:"+event.color+"'></span></td><td class='fc-list-item-title fc-widget-content'><a href='/user/"+event.userId+"'>"+event.user+"</a> - <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
 						}
 					} else {
-						title = "<tr class='fc-list-item-time fc-widget-content'><td>"+event.type+"</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:"+event.color+"'></span></td><td class='fc-list-item-title fc-widget-content'><a href='/profile/"+event.id+"'>Bond Refund</a> <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
+						title = "<tr class='fc-list-item-time fc-widget-content'><td>"+event.type+"</td><td class='fc-list-item-marker fc-widget-content'><span class='fc-event-dot' style='background-color:"+event.color+"'></span></td><td class='fc-list-item-title fc-widget-content'><a href='/user/"+event.id+"'>Bond Refund</a> <a href='/bookings/"+event.id+"/edit' class='btn btn-info btn-xs' style='color:white'>"+event.id+"</a></td><tr>";
 					}
 					return title;
 				},
@@ -166,7 +166,7 @@
 			// Show booking details when click on event
 			eventClick: function(event,view){
 				if(event.type != 'Bond'){
-					var url = '<a href="/profile/'+event.userId+'/">'+event.title+'</a>';
+					var url = '<a href="/user/'+event.userId+'/">'+event.title+'</a>';
 					var bookingUrl = '<a href="/bookings/'+event.id+'/edit" class="btn btn-info">See Booking Details</a>';
 					$("#modalTitle").html(url);
 				} else {

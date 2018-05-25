@@ -30,17 +30,12 @@ Route::get('/scooters/{scooterId}/destroy', 'ScooterController@destroy');
 	//Repairs
 	Route::post('/scooter/{scooterId}/repair','ScooterController@addRepair');
 	Route::get('/scooter/{repairId}/removeRepair', 'ScooterController@removeRepair');
-
+// QUOTES
+	Route::post('/quote', 'QuoteController@store');
+	Route::get('/quote/{quoteId}/confirmation', 'QuoteController@confirmation');
 // BOOKINGS
 Route::resource('bookings','BookingController');
 //Users
-	Route::post('/booking/quote', 'BookingController@quote');
-	Route::get('/signDocument/{email}/{bookingId}/', 'BookingController@confirmUser');
-	Route::get('/signDocument/{email}/', 'BookingController@confirmUser');
-	Route::post('/confirm-booking', 'BookingController@confirmBooking');
-	Route::get('/notSigned/{userId}/{bookingId}','BookingController@refusedToSign');
-	Route::get('/notSigned','BookingController@refusedToSign');
-
 	Route::post('/start-booking', 'BookingController@acknowledge');
 	Route::get('/stop-booking/{bookingId}', 'BookingController@stopBooking');
 //Admin
@@ -49,6 +44,8 @@ Route::resource('bookings','BookingController');
 	Route::get('/bookings/{booking}/destroy', 'BookingController@destroy');
 	Route::post('/bookings', 'BookingController@store');
 	Route::post('/bookings/{booking}', 'BookingController@update');
+	Route::get('/on-hold', 'BookingController@onHold');
+	Route::get('/past-update/bookings', 'BookingController@pastUpdate');
 
 	//Payments
 	Route::get('/booking/payment/delete/{paymentsId}/{bookindId}', 'PaymentsController@destroy');
@@ -71,14 +68,17 @@ Route::get('/home', 'BookingController@dashboard')->middleware('admin');
 // USERS
 Route::resource('users','UserController');
 Route::get('/banned', 'UserController@indexBanned');
-Route::get('/profile', 'UserController@show');
-Route::get('/profile/{userId}', 'UserController@showUser');
-Route::get('/profile/{userId}/delete', 'UserController@destroy');
-
-Route::post('/user/update', 'UserController@smallUpdate');
-Route::post('/user/changePassword', 'UserController@changePassword');
+Route::get('/user/{userId}', 'UserController@showUser');
+Route::get('/user/{userId}/delete', 'UserController@destroy');
 Route::get('/user/confirm/{userId}', 'UserController@confirmUser');
 Route::get('/users/fromBooking/{bookingId}', 'UserController@createFromBooking');
+Route::get('/export', 'UserController@export');
+
+// PROFILE
+Route::get('/profile', 'ProfileController@show');
+Route::post('/profile/{userId}/update', 'ProfileController@update');
+Route::post('/profile/changePassword', 'ProfileController@changePassword');
+Route::post('/profile/{userId}/signed', 'ProfileController@signDocument');
 
 //Tolls
 Route::resource('tolls','TollsController');

@@ -41,7 +41,7 @@
 						</div>
 					@endif
 				</div>
-				<form class="form" action="/booking/quote" method="POST">
+				<form class="form" action="/quote" method="POST">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<div id="form-input-group">
 						<input type="{{ Auth::check() ? 'hidden' : 'text' }}" name="name" placeholder="Name" class="form-control" value="{{ Auth::check() ? Auth::user()->name : '' }}" required>
@@ -102,10 +102,6 @@
 							<br>
 							No hidden fees, you exactly know how much it is going to cost you for the week, starting from $20/day<span class="italic-little">*including GST.</span>
 						</p>
-
-						<div class="row cta-container">
-							<a href="{{ url('/scooters') }}" onclick=ga(‘send’,’event’,’Button’,’Click’,’CheckScooters’,'0') class="button-bounce col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3 btn btn-primary btn-lg btn-responsive">Look at the scooters</a>
-						</div>
 
 						@include('home.price_display')
 

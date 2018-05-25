@@ -49,11 +49,8 @@ class ScooterController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->hasFile('scooterPicture')){
-            if($request->file('scooterPicture')->isValid()){
-                $file = $request->scooterPicture->storeAs('public',$request->plate.'-'.$request->model.'-'.$request->color.'.jpg');
-            }
-        }
+        $scooterService = new ScooterServices2();
+        $scooterService->storeScooterImage($request);
 
         Scooter::create([
             'state'                 => $request->input('state'),
@@ -121,15 +118,8 @@ class ScooterController extends Controller
      */
     public function update(Request $request, $scooterId)
     {
-        if($request->hasFile('scooterPicture')){
-            if($request->file('scooterPicture')->isValid()){
-                if(Storage::disk('local')->exists($request->plate.'-'.$request->model.'-'.$request->color.'.jpg'))
-                {
-                    Storage::delete($request->plate.'-'.$request->model.'-'.$request->color.'.jpg');
-                }
-                $file = $request->scooterPicture->storeAs('public',$request->plate.'-'.$request->model.'-'.$request->color.'.jpg');
-            }
-        }
+        $scooterService = new ScooterServices2();
+        $scooterService->storeScooterImage($request);
 
         $scooter = Scooter::find($scooterId);
 

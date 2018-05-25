@@ -358,6 +358,8 @@ class ComposerStaticInita828aaf9ee20e949447bbb11fdf850f6
         'CreateDriversTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_25_014052_create_drivers_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreatePaymentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_19_024906_create_payments_table.php',
+        'CreateProfilesTable' => __DIR__ . '/../..' . '/database/migrations/2017_12_09_035704_create_profiles_table.php',
+        'CreateQuotesTable' => __DIR__ . '/../..' . '/database/migrations/2017_12_08_033921_create_quotes_table.php',
         'CreateRepairsTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_19_232036_create_repairs_table.php',
         'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_25_022114_create_roles_table.php',
         'CreateScooterPartsTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_22_065329_create_scooter_parts_table.php',

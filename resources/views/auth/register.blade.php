@@ -18,7 +18,7 @@
                             <label for="name" class="col-md-4 control-label">Name</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="name" type="text" class="form-control" name="name" value="{{ $quote->name or old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -32,7 +32,7 @@
                             <label for="surname" class="col-md-4 control-label">Surname</label>
 
                             <div class="col-md-6">
-                                <input id="surname" type="text" class="form-control" name="surname" value="{{ old('surname') }}" required autofocus>
+                                <input id="surname" type="text" class="form-control" name="surname" value="{{ $quote->surname or old('surname') }}" required autofocus>
 
                                 @if ($errors->has('surname'))
                                     <span class="help-block">
@@ -46,7 +46,7 @@
                             <label for="phone" class="col-md-4 control-label">Phone Number</label>
 
                             <div class="col-md-6">
-                                <input id="phone" type="phone" class="form-control" name="phone" value="{{ old('phone') }}" required>
+                                <input id="phone" type="phone" class="form-control" name="phone" value="{{ $quote->phone or old('phone') }}" required>
 
                                 @if ($errors->has('phone'))
                                     <span class="help-block">
@@ -60,7 +60,7 @@
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ $quote->email or old('email') }}" required>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -92,7 +92,7 @@
                             </div>
                         </div>
 
-                        <input type="hidden" name="booked" value="{{ isset($bookingId) ? $bookingId : 0 }}">
+                        <input type="hidden" name="quote" value="{{ isset($quote) ? $quote->id : 0 }}">
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">

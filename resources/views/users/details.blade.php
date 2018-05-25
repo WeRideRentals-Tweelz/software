@@ -42,7 +42,7 @@
 					</div>
 					@endif
 					
-					<form class="form" action="{{ isset($user) ? url('/user/update') : url('/users') }}" method="POST" enctype="multipart/form-data">
+					<form class="form" action="{{ isset($user) ? url('/profile/'.$user->id.'/update') : url('/users') }}" method="POST" enctype="multipart/form-data">
 
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<input id="userIdInput" type="hidden" name="user" value="{{ $user->id or old('user')}}">
@@ -268,7 +268,7 @@
 							<p>{{ Session::get('passwordSuccess') }}</p>
 						</div>
 						@endif
-						<form class="form" action="{{ url('/user/changePassword') }}" method='POST'>
+						<form class="form" action="{{ url('/profile/changePassword') }}" method='POST'>
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 							<div class="container-fluid">
 							<h3>Change Password</h3>
@@ -369,7 +369,7 @@
 					<h3>Make a new reservation</h3>
 				</div>
 				<div class="panel-body">
-					<form id="book" class="form" action="/booking/quote" method="POST">
+					<form id="book" class="form" action="/quote" method="POST">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div id="form-input-group">
 							<input type="hidden" name="userId" value="{{ $user->id }}">
@@ -527,8 +527,8 @@
 		    </form>
 		    <br>
 		    <br>
-		    @if(isset($user) && isset($bookingId))
-		    	<a href="/notSigned/{{$user->id}}/{{$bookingId}}" type="button" class="btn btn-danger btn-block">I don't want to sign this</a>
+		    @if(isset($user))
+		    	<a href="/notSigned/{{$user->id}}" type="button" class="btn btn-danger btn-block">I don't want to sign this</a>
 		    @else
 		    	<a href="/notSigned" type="button" class="btn btn-danger btn-block">I don't want to sign this</a>
 		    @endif

@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\User;
+use App\Quote;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -10,54 +11,49 @@ use Symfony\Component\HttpFoundation\Cookie;
 
 class CheckUser {
 	private $req;
-	private $bookingId;
+	private $quoteId;
 
-	public function __construct($req,$bookingId)	
+	public function __construct()	
 	{
-		$this->req = $req;
-		$this->bookingId = $bookingId;
+		//$this->req = $req;
+		//$this->quoteId = $quoteId;
 	}
 
-	public function check()
+	public function pathToRedirectIfUserExists($email,$quote)
 	{
-	        // The user needs to login or create an account
-	        $request = $this->req;
-	        $request->flash();
+		
+        if($this->isUserLoggedIn())
+        {
+            // The user is logged in
+            Session::flash('success','We well receive your demand ! For a faster check-in, please consider filling all your informations.');
+        	return redirect('/quote/'.$quote->id.'/confirmation');
+        }
+        if($this->isUserExists($email))
+    	{
+    		// Redirect to /login
+    		Session::flash('loginMessage','Please log in before booking');
+    		return $path = view('auth.login');
+    	}
+    	else
+    	{
+    		Session::flash('registerMessage','Please create an account before booking');
+    		// Redirect to /register
+    		return $path = view('auth.register');
+    	}
+	}
 
-	        $bookingId = $this->bookingId;
+	public function isUserLoggedIn(){
+		if(Auth::check()){
+			return true;
+		}
+		return false;
+	}
 
-	        if(Auth::check())
-	        {
-	            // The user is logged in
-	            // -> Send request to bookingcontroller@store
-	            Session::flash('success','We well receive your demand ! For a faster check-in, please consider filling all your informations.');
-	        	return app('App\Http\Controllers\BookingController')->storeBooking($request,$bookingId);
-	        }
-	        else
-	        {
-	        	// Create a first booking object without all information required.
-	        	// This booking object will be retrieve when user log in or register
-
-	        	// --> redirect to /login or /register and use email and name flashed data to ease user experience
-	            // /login and /register must use {{  old(inputname) }} to retrieve flashed data
-	            $user = User::where('email','=',$request->input('email'))->first();
-	            
-	        	if( count($user) >= 1 )
-	        	{
-	        		// Redirect to /login
-	        		Session::flash('loginMessage','Please log in before booking');
-	        		return $path = view('auth.login')->with(compact('bookingId'));
-	        	}
-	        	else
-	        	{
-	        		Session::flash('registerMessage','Please create an account before booking');
-	        		// Redirect to /register
-	        		return $path = view('auth.register')->with(compact('bookingId'));
-	        	}
-
-	            // The rest of the request will be used in a hidden form
-	            // If the data is detected when sending the form, the controller will be BookingController@store
-	            // Else it will login the user has it does normally
-	        }
+	public function isUserExists($email){
+		$user = User::where('email','=',$email)->first();
+		if( count($user) >= 1){
+			return true;
+		}
+		return false;
 	}
 } 

@@ -38,8 +38,9 @@ class BookingController extends Controller
      */
     public function index()
     {
-        $date = date('Y-m-d', strtotime('+ 10 days')); 
-        $bookings = Booking::where('bond_return','>=',$date)
+        $bookingService = new BookingServices(); 
+        $bookings = Booking::where('bond_return','>=',$bookingService->setTimeForAustralia('date'))
+        ->where('scooter_id', '!=',0)
         ->orWhere('drop_off_time','=',' ')
         ->orderBy('pick_up_date','ASC')->get();
         
@@ -51,11 +52,21 @@ class BookingController extends Controller
         if($request->input('date') === null){
             return view('bookings.pastbookings'); 
         }
+        
         $date = $request->input('date').'-01';
         $maxDate = $request->input('date').'-31';
         $bookings = Booking::where('confirmation','=',1)->where('pick_up_date','>=',$date)->where('pick_up_date','<=',$maxDate)->where('drop_off_date','<',date('Y-m-d'))->where('drop_off_time','!=',' ')->orderBy('pick_up_date','asc')->get();
         
         return view('bookings.pastbookings')->with(compact('bookings','date'));
+    }
+
+    public function pastUpdate(){
+        $bookingService = new BookingServices(); 
+        $bookings = Booking::where('bond_return','>=',$bookingService->setTimeForAustralia('date'))
+        ->orWhere('drop_off_time','=',' ')
+        ->orderBy('pick_up_date','ASC')->get();
+        
+        return view('bookings.index-past')->with(compact('bookings'));
     }
 
     /**
@@ -77,39 +88,26 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $scooterId = $request->input('scooter');
-        if($scooterId === null)
-        {
-            $scooterId = 0;
-        }
-
-        $userId = $request->input('user');
-        if($userId === null)
-        {
-            $userId = 0;
-        }
-
-        
-        $pickUp = $request->input('pick_up_time');
-        $dropOff = $request->input('drop_off_time');
-        if($pickUp == '' || $dropOff == ''){
-            $pickUp = '23:59:59';
-            $dropOff = '23:59:59';
-        }
+        $bookingServices = new BookingServices();
         
         $booking = Booking::create([
-            'pick_up_date'      =>      date('Y-m-d H:i:s',strtotime($request->input('pick_up_date')." ".$pickUp)),
+            'pick_up_date'      =>      $bookingServices->mixDateAndTimeData(
+                                            $request->input('pick_up_date'), 
+                                            $request->input('pick_up_time')
+                                        ),
             'pick_up_time'      =>      $request->input('pick_up_time'),
-            'drop_off_date'     =>      date('Y-m-d H:i:s', strtotime($request->input('drop_off_date').' '.$dropOff)),
+            'drop_off_date'     =>      $bookingServices->mixDateAndTimeData(
+                                            $request->input('drop_off_date'), 
+                                            $request->input('drop_off_time')
+                                        ),
             'drop_off_time'     =>      $request->input('drop_off_time'),
-            'scooter_id'        =>      $scooterId,
-            'user_id'           =>      $userId,
+            'scooter_id'        =>      $bookingServices->filterForNotNullData($request->input('scooter')),
+            'user_id'           =>      $bookingServices->filterForNotNullData($request->input('user')),
             'status'            =>      "Regular Booking",
             'confirmation'      =>      1,
         ]);
 
-        $booking->bond_return = date('Y-m-d',strtotime($booking->drop_off_date) + (24*3600*10));
-        $booking->save();
+        $bookingServices->setBookingBondReturnDate($booking);
 
         if(Auth::user()->role_id != 1){
             return redirect('/profile');
@@ -164,22 +162,25 @@ class BookingController extends Controller
         $bookingService->CopyBooking($booking);
         $bookingService->addPayment($booking->id,$request);
 
-        $pickUp = $request->input('pick_up_time');
-        $dropOff = $request->input('drop_off_time');
-        if($pickUp == ''){
-            $pickUp = '23:59:59';
-        }
-        if($dropOff == ''){ 
-            $dropOff = '23:59:59';
-        }
-
-        $booking->pick_up_date      = date('Y-m-d H:i:s',strtotime($request->input('pick_up_date')." ".$pickUp));
-        $booking->pick_up_time      = $request->input('pick_up_time');
-        $booking->drop_off_date     = date('Y-m-d H:i:s', strtotime($request->input('drop_off_date')." ".$dropOff));
-        $booking->drop_off_time     = $request->input('drop_off_time');
-        $booking->bond_return       = date('Y-m-d',strtotime($request->input('drop_off_date')) + (24*3600*10));
-        $booking->scooter_id        = $request->input('scooter');
-        $booking->user_id           = $request->input('user');
+        $booking->pick_up_date      =   $bookingService->mixDateAndTimeData(
+                                            $request->input('pick_up_date'), 
+                                            $request->input('pick_up_time')
+                                        );
+        $booking->pick_up_time      =   $request->input('pick_up_time');
+        $booking->drop_off_date     =   $bookingService->mixDateAndTimeData(
+                                            $request->input('drop_off_date'), 
+                                            $request->input('drop_off_time')
+                                        );
+        $booking->drop_off_time     =   $request->input('drop_off_time');
+        $booking->bond_return       =   $bookingService->getBondDateBasedOnDropOffDate(
+                                            $request->input('drop_off_date')
+                                        );
+        $booking->scooter_id        =   $bookingService->filterForNotNullData(
+                                            $request->input('scooter')
+                                        );
+        $booking->user_id           =   $bookingService->filterForNotNullData(
+                                            $request->input('user')
+                                        );
         $booking->save();
 
         $bookingService->CheckBookingModifications($booking);
@@ -207,10 +208,25 @@ class BookingController extends Controller
     */
     public function dashboard()
     {
-        $bookings = booking::where('confirmation','=',1)->get();
+        $bookings = booking::where('confirmation','=',1)->where('scooter_id','!=',0)->get();
         $bookingService = new BookingServices();
         $bonds = $bookingService->BondPaymentReminder($bookings);    
         return view('admin.index')->with(compact('bookings','bonds'));
+    }
+
+    public function onHold(){
+        $bookingService = new BookingServices(); 
+        $bookings = Booking::where('scooter_id', '=',0)
+        ->where('bond_return','>=',$bookingService->setTimeForAustralia('date'))
+        ->orderBy('pick_up_date','ASC')->get();
+        /*
+        ->where('bond_return','>=',$bookingService->setTimeForAustralia('date'))
+        ->orWhere('drop_off_time','=',' ')
+        ->orderBy('pick_up_date','ASC')->get();
+        */
+        $page = 'hold';
+        
+        return view('bookings.index')->with(compact('bookings','page'));        
     }
 
     public function payBond($bookingId){
@@ -231,176 +247,6 @@ class BookingController extends Controller
         return redirect('/home');
     }
 
-    /**
-    *   Create user then a prebooking
-    *     
-    *   @return \App\Http\Services\CheckUser
-    */
-    public function quote(QuoteRequest $request)
-    {
-            $name           =   $request->input('name');
-            $phone          =   $request->input('phone');
-            $email          =   $request->input('email');
-            $pickUp        =   date("Y-m-d",strtotime(str_replace('/','-',$request->input('pickUp'))));
-            $dropOff        =  date("Y-m-d",strtotime(str_replace('/','-',$request->input('dropOff'))));
-
-            // Check if dates are correct
-            $today = date("Y-m-d");
-            if($pickUp >= $dropOff ) // || Change that security to avoid people adding dates before today's date = > $pickUp < $today || $dropOff <= $today 
-            {
-                Session::flash("error","Please consider choosing dates after today's date");
-                return redirect()->back();
-            }
-
-            $booking = Booking::create([
-                "pick_up_date"      =>      $pickUp,
-                "drop_off_date"     =>      $dropOff
-            ]); 
-
-        // Then use a Service to check the status of the session (guest or existing user)
-        // and redirect him accordingly to conclude its booking
-
-        $checkUser = new CheckUser($request,$booking->id);
-        return $checkUser->check();
-    }
-
-    /**
-    *   After the user login or register, confirms its booking
-    *   Params Path =>   App\Http\Controllers\Auth\LoginController
-    *   || Params Path =>   App\Http\Controllers\Auth\RegisterController
-    *   @param  App\Booking  $booking->id
-    *   @param  App\User     $user->email
-    *   @return Illuminate\Http\Response
-    */
-    public function confirmBooking(Request $request)
-    {
-        $document = Documents::find($request->input('documentId'));
-
-        $user = User::find($request->input('userId')); 
-        $user->signed = 1;
-        $user->save();
-
-        // Prepare service for sending confirmation emails
-        $sendEmail = new EmailSender($user->email);
-        // Send email to admin with copy of entered name and signature of the document.
-        $sendEmail->sendDocument($document, $request);
-
-
-        if($request->input('bookingId') !== null){
-            $booking = Booking::find($request->input('bookingId'));
-            $booking->status = "Regular Booking";
-            $booking->confirmation = 1;
-            $booking->user_id = $user->id;
-            $booking->save();
-
-            $booking->bond_return = date('Y-m-d',strtotime($booking->drop_off_date) + (24*3600*10));
-            $booking->save();
-
-            
-            $sendEmail->confirmation($booking);
-
-            Session::flash('success','Thank you for booking with us ! For a faster check-in, consider filling your information in your profile.');
-            return redirect('/profile');
-        }
-        Session::flash('success','You well created your profile '.ucfirst($user->surname).' !');
-        if(Auth::user()->role_id == 1){
-            $lastBooking = Booking::where('user_id','=',$user->id)->where('acknowledged','=',0)->first();
-           return redirect('/bookings/'.$lastBooking->id.'/edit');
-        }
-        return redirect('/profile');
-    }
-
-    public function storeBooking(Request $request, $bookingId)
-    {
-        $user = User::find($request->input('userId')); 
-
-        $booking = Booking::find($bookingId);
-        $booking->status = "Regular Booking";
-        $booking->confirmation = 1;
-        $booking->user_id = $user->id;
-        $booking->save();
-
-        $booking->bond_return = date('Y-m-d',strtotime($booking->drop_off_date) + (24*3600*10));
-        $booking->save();
-
-        $sendEmail = new EmailSender($user->email);
-        $sendEmail->confirmation($booking);
-
-        Session::flash('success','Thank you for booking with us ! For a faster check-in, consider filling your information in your profile.');
-        return redirect('/profile');
-    }
-
-    public function confirmUser($email,$bookingId=null)
-    {
-        $document = Documents::where('name','WeRide Scooter Rentals by Tweelz, Terms and Conditions')->first();
-
-        $user = User::where('email','=',$email)->first();    
-        if($user->signed){
-            return redirect('/profile');
-        }
-        if($bookingId === null){
-            return view('users.details')->with(compact('user','document'));
-        }
-        $booking = Booking::find($bookingId);
-        $booking->user_id = $user->id;
-        $booking->confirmation = 1;
-        $booking->status = "Documents needs to be signed";
-        $booking->save();
-
-        return view('users.details')->with(compact('user','bookingId','document'));
-    }
-
-    public function refusedToSign($userId=null,$bookingId=null)
-    {   
-        if($userId !== null && $userId == Auth::user()->id){
-            $user = User::find($userId);
-            $user->signed = 2;
-            $user->save();
-        } else {
-            $user = Auth::user();
-        }
-
-        if($bookingId !== null){
-            $booking = Booking::find($bookingId);
-            $pickUp = date("Y-m-d", strtotime($booking->pick_up_date));
-            $dropOff = date("Y-m-d", strtotime($booking->drop_off_date));
-
-            if($booking->pick_up_time == '' || $booking->drop_off_time == ''){
-                $lastTime = "23:59:59";
-                $booking->pick_up_time = $lastTime;
-                $booking->drop_off_time = $lastTime;
-            }
-            $booking->pick_up_date = date('Y-m-d H:i:s',strtotime($pickUp." ".$booking->pick_up_time));
-            $booking->drop_off_date = date('Y-m-d H:i:s',strtotime($dropOff." ".$booking->drop_off_time));
-            $booking->bond_return = date('Y-m-d',strtotime($booking->drop_off_date) + (24*3600*10));
-            $booking->save();
-        }
-        
-        $bookings = Booking::where('user_id',$user->id)->get();
-        return view('users.details')->with(compact('user','bookings'));
-    }
-
-    public function acknowledge(Request $request)
-    {
-        $document = Documents::find($request->input('documentId'));
-
-        $booking = Booking::find($request->input('bookingId'));
-        $bookingService = new BookingServices();
-        $bookingService->CopyBooking($booking);
-        if($booking->pick_up_time == ''){
-            $booking->pick_up_time = date('H:i:s',strtotime('+10hours'));
-        }
-        $booking->acknowledged = 1;
-        $booking->save();
-
-        $bookingService->CheckBookingModifications($booking);
-
-        $emailService = new EmailSender($booking->user->email);
-        $emailService->sendDocument($document,$request);
-
-        return redirect('/bookings/'.$booking->id.'/edit');
-    }
-
     public function stopBooking($bookingId)
     {
         $booking = Booking::find($bookingId);
@@ -408,10 +254,11 @@ class BookingController extends Controller
         $bookingService->CopyBooking($booking);
 
         $booking->acknowledged = 2;
-        $booking->drop_off_time = date('H:i:s',strtotime('+10hours'));
+        $booking->drop_off_time = $bookingService->setTimeForAustralia('time');
         $booking->save();
 
         $bookingService->CheckBookingModifications($booking);
+        
         return redirect('/bookings/'.$booking->id.'/edit');
     }
 

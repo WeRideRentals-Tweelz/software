@@ -10,7 +10,7 @@
 	<p>
 		Meet us at this address : 
 		<ul>
-			<li>360 Botany Road</li>
+			<li>406 Botany Road</li>
 			<li>Beaconsfield 2015</li>
 			<li>NSW, Sydney</li>
 		</ul>

@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Booking');
     }
+
+    public function quotes()
+    {
+        return $this->hasMany('App\Quote');
+    }
 }

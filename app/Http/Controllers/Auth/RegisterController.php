@@ -73,6 +73,7 @@ class RegisterController extends Controller
             'phone'     => $data['phone'],
             'password'  => bcrypt($data['password']),
             'banned'    => 0,
+            'signed'    => 0,
         ]);
     }
 
@@ -91,11 +92,9 @@ class RegisterController extends Controller
     // If the user made a booking before registering, he will be redirected to confirm its booking
     protected function redirectUser(Request $request)
     {
-        // If the hidden input "booked" is different than 0 then the user is redirect to the next process
-        if($request->input('booked'))
-        {
-            return $this->redirectTo = "/signDocument/".$request->input('email')."/".$request->input('booked')."/";
-        }
-        return $this->redirectTo = '/signDocument/'.$request->input('email').'/';
+       if($request->input('quote') != '0'){
+            return $this->redirectTo = '/quote/'.$request->input('quote').'/confirmation';
+       }
+       return $this->redirectTo = '/profile';
     }
 }

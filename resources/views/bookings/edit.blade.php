@@ -176,11 +176,11 @@
 														<button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#userModal">Assign User</button>
 													@elseif(!$booking->user->signed)
 														<div class="col-sm-12">
-															<a href="{{ url('/profile/'.$booking->user_id) }}" class="btn btn-danger btn-block" style="margin-bottom: 20px">User needs to sign</a>
+															<a href="{{ url('/user/'.$booking->user_id) }}" class="btn btn-danger btn-block" style="margin-bottom: 20px">User needs to sign</a>
 														</div>
 													@elseif($booking->user_id != 0 && !$booking->user->driver->confirmed)
 														<div class="col-sm-12">
-															<a href="{{ url('/profile/'.$booking->user_id) }}" class="btn btn-warning btn-block" style="margin-bottom: 20px">Fill drivers details</a>
+															<a href="{{ url('/user/'.$booking->user_id) }}" class="btn btn-warning btn-block" style="margin-bottom: 20px">Fill drivers details</a>
 														</div>
 													@elseif($booking->scooter_id == 0)
 														<button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#scooterModal">Assign Scooter</button>
@@ -219,7 +219,7 @@
 
 									<div class="col-sm-12">
 										<div class="col-sm-6 col-sm-offset-3">	
-											<a href="{{ url('/profile/'.$booking->user_id) }}">
+											<a href="{{ url('/user/'.$booking->user_id) }}">
 												@if(file_exists('storage/'.$booking->user->name.'.jpg'))
 													<img class="portrait" src="{{ url('storage/'.$booking->user->name.'.jpg')}}" alt="{{ $booking->user->name.' portrait' }}" width="400">
 												@else
@@ -280,7 +280,7 @@
 										</div>
 									@if(!$booking->user->driver->confirmed)
 										<div class="col-sm-6 col-sm-offset-3">
-											<a href="{{ url('/profile/'.$booking->user_id) }}" class="btn btn-warning" style="margin-bottom: 20px">Fill drivers details</a>
+											<a href="{{ url('/user/'.$booking->user_id) }}" class="btn btn-warning" style="margin-bottom: 20px">Fill drivers details</a>
 										</div>
 									@endif
 								</div>

@@ -1,0 +1,473 @@
+/***
+* Generals
+***/
+body
+{
+    background-color: initial;
+    background-color: white;
+}
+h1,h2,h3,h4,h5,h6
+{
+    text-align: center;
+}
+p
+{
+    text-align: center;
+    font-size: 1.5em;
+}
+.italic-little
+{
+    font-style: italic; 
+    font-size: 0.8em;
+}
+.bold
+{
+    font-weight: bold;
+}
+.not-aligned h1,
+.not-aligned h2,
+.not-aligned h3,
+.not-aligned h4,
+.not-aligned h5,
+.not-aligned h6,
+.not-aligned p
+{
+    text-align: left;
+}
+.gold
+{
+    color: gold;
+}
+.oldGold
+{
+    color: goldenrod;
+}
+a:hover
+{
+    color: gold;
+    text-decoration: none;
+}
+.navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover
+{
+    color: gold;
+}
+.navbar-default .navbar-nav>li>a:hover
+{
+    color: gold;
+}
+.left
+{
+    left: 0;
+}
+.table tr th,
+.table tr td
+{
+    text-align: center;
+    vertical-align: center;
+}
+.portrait
+{
+    width: 100%; 
+    border: 2px solid #424242; 
+    border-radius: 10px;
+}
+/***
+* Header 
+***/
+h1
+{
+    border-bottom: 3px solid black;
+    padding-bottom: 20px;
+}
+#header
+{
+    height: 94vh;
+    margin-top: -70px;
+    position: relative;
+}
+#logo-large img
+{
+    height: 200px;
+}
+.navbar-brand img
+{
+    height: 35px;
+}
+#titles 
+{
+    text-align: center;
+    position: absolute;
+    left: 50px;
+    top: 120px;
+}
+#desktop-image 
+{
+    height: 100%;
+}
+#desktop-image img
+{
+    max-height: 1200px;
+    height:100%;
+    width: 100%;
+}
+#facebook-logo
+{
+    color:white;
+}
+.rent-it-mobile
+{
+    position: absolute;
+    bottom: 0px; 
+    left:0;
+    background-color: #424242; 
+    width: 100%;
+    padding: 30px 0px;
+    box-shadow: 0px -2px 20px 0px black;
+}
+.rent-it
+{
+    position: absolute;
+    bottom: 0px; 
+    left:0;
+    background-color: #424242; 
+    width: 100%;
+    padding: 30px 0px;
+    box-shadow: 0px -2px 20px 0px black;
+}
+#desktop-form
+{
+    position: absolute;
+    top: 150px;
+    background-color: rgba(50,50,50,0.5);
+    border-radius: 10px 10px 10px 10px;
+}
+#form-contact
+{
+    color: white;
+    padding: 10px;
+}
+#form-input-group
+{
+    padding: 40px 25px;
+}
+#form-input-group input,
+#form-input-group select
+{
+    height: 50px;
+}
+#form-input-group placeholder
+{
+    line-height: 50px;
+}
+#form-button-container
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+@media screen and (max-width: 767px)
+{
+    .navbar-brand img
+    {
+        height: 25px;
+    }
+    #logo-large img
+    {
+        height: 80px;
+    }
+    #titles
+    {
+        left: initial;
+        top: 35px;
+    }
+    #titles h2
+    {
+        font-size: 16px;
+        color: white;
+    }
+    #desktop-form
+    {
+        top: 270px;
+    }
+    .rent-scooter
+    {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .second-screen
+    {
+        margin-top: 200px;
+    }
+}
+/***
+* End Header
+***/
+
+/***
+* Home Page
+***/
+.section
+{
+    border-bottom: 1px silver solid; 
+    padding: 50px 0px;
+}
+.cta-container
+{
+    padding: 50px 0;
+}
+#marketing-figures
+{
+    margin-bottom: 100px;
+}
+#marketing-figures h2
+{
+    margin-bottom: 50px;
+}
+#marketing-figures p
+{
+    font-size: 2em;
+}
+.earnings
+{
+    color: gold; 
+    font-weight: bold;
+}
+.benefits img
+{
+    width: 100%;
+    height: 220px;
+}
+.prices
+{
+    border-bottom: 1px silver solid;
+}
+.bubble
+{
+    text-align:center;
+    border-radius: 50px;
+    width: 68px;
+    padding: 20px;
+    margin-left: 40%;
+}
+ .second-screen 
+ {
+    background-color: white;
+ }
+ .navbar-default
+ {
+    border-color: initial;
+ }
+ .navbar-brand
+ {
+    color: white;
+ }
+ #beta-version
+ {
+    background-color: rgba(40,40,40,.9);
+    color: white;
+    transform: rotate(-38deg);
+    position: absolute;
+    top: 35px;
+    left: -85px;
+    padding: 5px 90px;
+ }
+ .google-maps
+ {
+    width: 400px;
+    height: 450px;
+    border:0;
+ }
+ footer a
+ {
+    color: white;
+ }
+ footer h5
+ {
+    font-size: 1.2em;
+ }
+ .scooter-img
+ {
+    width: 550px;
+    height: 400px;
+ }
+ .scooter-show
+ {
+    height: 645px;
+ }
+ .next,
+ .previous
+ {
+    top: 300px;
+ }
+ 
+@-webkit-keyframes shaker {
+    0%  { -webkit-transform: translate(0,0); transform: scale(1);}
+    50% { -webkit-transform: translate(0,0px); transform: scale(1);}
+    52% { -webkit-transform: translate(0,2px); transform: scale(0.9);}
+    54% { -webkit-transform: translate(0,-2px); transform: scale(1.1);}
+    56% { -webkit-transform: translate(0, 0); transform: scale(1);}
+    100%{ -webkit-transform: translate(0, 0); transform: scale(1);}
+}
+
+.button-bounce {
+    animation-name: shaker;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    transform-origin:50% 50%;
+    animation-timing-function: linear;
+}
+
+#facebook-buttons
+{
+    position: absolute;
+    top: 50px;
+    background-color: #424242;
+    right: 0px;
+    padding: 20px;
+    border-radius: 0px 0px 0px 10px;
+}
+#facebook-logo
+{
+    margin-right: 20px;
+}
+#like-share
+{
+    top: -5px;
+}
+
+/*
+*
+*   Scooters
+*
+*/
+#arrows
+{
+    font-size: 4vw;
+}
+#arrows > a 
+{
+    color: #424242;
+}
+.table > tbody > tr > td
+{
+    vertical-align: middle;
+}
+
+/*
+*
+*   Bookings
+*
+*/
+#scooterInfo h3,
+#driverInfo h3
+{
+    font-weight: bold;
+    font-size: 16px;
+}
+#scooterInfo p,
+#driverInfo p
+{
+    font-size: 14px;
+}
+.scooterName
+{
+    width: 200px;
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-left: 15px;
+}
+.colorPanel
+{
+    margin-left: 10px; 
+    padding: 0px 8px;
+    border: 2px solid black;
+    border-radius: 2px;
+}
+.userName
+{
+    width: 500px;
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-left: 15px;
+}
+/*
+*
+*   Media Queries
+*
+*/
+  @media screen and (max-width:767px)
+ {
+    /***
+    * Generals
+    ***/
+    p
+    {
+        font-size: 1em;
+    }
+    /***
+    * Mobile Header
+    ***/
+    #desktop-image img
+    {
+        width: 100%;
+        height: 60%;
+    }
+    #desktop-form
+    {
+        background-color: rgba(50,50,50,1);
+    }
+    #facebook-logo
+    {
+        margin-right: 10px;
+    }
+    #like-share
+    {
+        right: -6px;
+    }
+    .input-container-right
+    {
+        padding-right: 0;
+    }
+    .input-container-left
+    {
+        padding-left: 0;
+    }
+    .input-container
+    {
+        padding: 0;
+    }
+    .input-container label
+    {
+        color: white;
+    }
+    .date-input
+    {
+        margin-top: 10px;
+    }
+    /***
+    *  End Mobile Header
+    ***/
+    .cta-container a
+    {
+        font-size: 0.8em;
+    }
+    .scooter-img
+    {
+        width: 290px;
+        height: 180px;
+    }
+    .scooter-show
+    {
+        height: initial;
+    }
+     .next,
+     .previous
+     {
+        top: 80px;
+     }
+
+     .fb-like
+     {
+        right: -368px;
+     }
+ }
+

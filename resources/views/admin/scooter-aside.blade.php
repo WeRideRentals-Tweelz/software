@@ -107,7 +107,7 @@
 					@foreach($bookings as $booking)
 					<tr>
 						<td>{{ $booking->id }}</td>
-						<td><a href="{{ url('/profile/'.$booking->user_id) }}">{{ $booking->user->name }}</a></td>
+						<td><a href="{{ url('/user/'.$booking->user_id) }}">{{ $booking->user->name }}</a></td>
 						<td>{{ date_format(date_create($booking->pick_up_date), 'd M Y') }}</td>
 						<td>{{ date_format(date_create($booking->drop_off_date), 'd M Y') }}</td>
 						<td>{{ date_create($booking->drop_off_date)->diff(date_create($booking->pick_up_date))->d }}</td>

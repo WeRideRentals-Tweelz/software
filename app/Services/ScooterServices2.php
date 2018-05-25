@@ -6,6 +6,8 @@ use App\Booking;
 use App\Scooter;
 use App\Repairs;
 use App\ScooterParts;
+use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 class ScooterServices2{
 
@@ -174,6 +176,29 @@ class ScooterServices2{
 		return $availableScooters;
 	} 
 
+	public function getAvailableScootersFromBookingCollection($bookings){
+		$scooters = Scooter::all();
+		$available= [];
+		if(count($bookings) >= 1)
+        {
+            foreach ($bookings as $booking) 
+            {
+                foreach ($scooters as $scooter) 
+                {
+                    if($scooter->id != $booking->scooter_id && $scooter->plate != $booking->plate)
+                    {
+                        $available[] = DB::table('scooters')->find($scooter->id);
+                    }
+                }
+            }
+            return $available;
+        }
+        else
+        {
+           return $scooters;
+        }
+	}
+
 	public function scooterStatus(Scooter $scooter)
 	{
 		if($this->needsCheck($scooter)){
@@ -285,5 +310,18 @@ class ScooterServices2{
 	{
 		$repair = Repairs::find($repairId);
 		$repair->delete();
+	}
+
+
+	public function storeScooterImage(Request $request){
+		if($request->hasFile('scooterPicture')){
+            if($request->file('scooterPicture')->isValid()){
+                if(Storage::disk('local')->exists($request->plate.'-'.$request->model.'-'.$request->color.'.jpg'))
+                {
+                    Storage::delete($request->plate.'-'.$request->model.'-'.$request->color.'.jpg');
+                }
+                $file = $request->scooterPicture->storeAs('public',$request->plate.'-'.$request->model.'-'.$request->color.'.jpg');
+            }
+        }
 	}
 }

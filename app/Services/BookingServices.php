@@ -10,6 +10,7 @@ use App\BookingHistory;
 class BookingServices {
 	
 	private $booking;
+	private $AustraliaTime = '+11 hour';
 	/*
 	*
 	*	Return an array with the bonds due date depending on their booking numbers
@@ -165,5 +166,53 @@ class BookingServices {
 					break;
 			}
 		}
+	}
+
+	public function filterForNotNullData($not_nullable_data){
+		if($not_nullable_data === null){
+			return 0;
+		}
+		return $not_nullable_data;
+	}
+
+	public function filterForNotNullTime($time=null){
+		if($time == ''){
+			return '23:59:59';
+		}
+		return $time;
+	}
+
+	public function mixDateAndTimeData($date,$time=null){
+		return date('Y-m-d H:i:s', strtotime($date.' '.$this->filterForNotNullTime($time)));
+	}
+
+	// Return a date x days after the given date
+	public function getBondDateBasedOnDropOffDate($drop_off_date){
+		$days_between_check_out_and_bond_return = 10;
+		return date('Y-m-d',strtotime($drop_off_date) + (24*3600*$days_between_check_out_and_bond_return));
+	}
+
+	public function setBookingBondReturnDate(Booking $booking){
+		$booking->bond_return = $this->getBondDateBasedOnDropOffDate($booking->drop_off_date);
+		$booking->save();
+	}
+
+	public function setTimeForAustralia($data_type=null,$date = null){
+		switch ($data_type) {
+			case 'date':
+				$data = 'Y-m-d';
+				break;
+			case 'time':
+				$data = 'H:i:s';
+				break;
+			case 'time-date':
+				$data = 'Y-m-d H:i:s';
+				break;
+			
+			default:
+				$data = 'Y-m-d H:i:s';
+				break;
+		}
+		return date($data,strtotime($date.$this->AustraliaTime));
 	}
 }

@@ -6,6 +6,8 @@ use App\Booking;
 use App\Scooter;
 use App\Repairs;
 use App\ScooterParts;
+use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 
 class ScooterServices{
 

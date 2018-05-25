@@ -1,0 +1,116 @@
+Controller for each features :
+
+Admin Features
+	
+	Booking 
+
+		//Index of bookings
+		//Show Booking
+		//Create Booking -> creation form
+		//Store Booking -> Create a new booking based on the creation form
+		//Edit Booking -> edit form
+		//Update Booking -> update Booking based on the edit form
+		//Delete -> delete or archive a specific Booking
+
+	Dashboard 
+
+		//Index of bookings in a calendar
+		Need Bookings, Scooters, Drivers informations
+
+	Scooters
+
+		//Index of scooters 
+		Use all scooters and AI on available scooters
+
+		//Show Scooter
+		Show scooter information 
+		Show scooter Repairs history -> service
+			Add a repair -> Repair Controller 
+		Show Bookings History
+
+		//Create Scooter
+		//Store Scooter
+		//Edit Scooter
+		//Update Scooter
+		//Delete Scooter
+
+	Users
+
+		//Index of users
+		//Show user
+		Show user information
+		Show user booking history
+		//Create User
+		//Store User
+		//Edit User
+		//Update User
+		//Delete User --> archive
+
+	Tolls
+
+		//Index Tolls
+		//Show toll
+		//Create Toll
+		//Store Toll
+		//Edit Toll
+		//Update Toll
+		//Delete Toll
+		//Import Tolls
+
+	Documents
+
+		//Index document 
+		//Show Document
+		//Create Document
+		//Store Document
+		//Edit document
+		//Update Document
+		//Delete Document
+
+
+User Feature
+
+	Profile
+		//Show Profile
+		//Edit Profile
+		//Update Profile
+		//Store Profile
+		//Delete Profile
+
+	Quote
+		//Create a quote
+		//Store a quote
+		//Transform a quote --> create a booking thanks to quote informations and assign user_id
+
+	Sign Document
+		//Show Document
+		//Sign Document
+
+	Login
+	Register
+
+
+
+New User Navigation 
+	1. Create a quote --> QuoteController
+	2. Check if an account already exists 
+		2.1 Login --> Login Controller
+		2.2 Register --> Register Controller
+	3. Sign Document --> SignDocument Controller
+	4. Fill Profile --> ProfileController
+
+Quote Process 
+	
+	Creation quote -> dates, user informations
+		1. Creer Quote avec checkin et checkout.
+		-> Parse quote_id
+		
+		2. On login or register, TransformQuote -> use quote id and user_id to create new booking; 
+		--> CHALLENGE : 
+			-> use the login and register form by changing some informations
+				-> the template needs to know either it is a login or register because of a quote. 
+				-> to know that, if isset quote, then navigation needs to redirect to quoteController
+				->otherwise, redirect to profile.
+
+		3. Document Checker --> Service 
+			ProfileController calls this service in order to know if the user already signed is document, or refused to signed it. 

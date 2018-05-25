@@ -28,7 +28,7 @@
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ $quote->email or old('email') }}" required autofocus>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -62,7 +62,7 @@
                             </div>
                         </div>
 
-                        <input type="hidden" name="booked" value="{{ isset($bookingId) ? $bookingId : 0 }}">
+                        <input type="hidden" name="quote" value="{{ isset($quote) ? $quote->id : 0 }}">
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">

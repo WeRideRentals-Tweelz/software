@@ -13,7 +13,7 @@
 
 		<div id="rent-it"> 
 			<div id="desktop-form" class="col-xs-12 col-sm-4 col-sm-offset-2">
-				<form class="form" action="/booking/quote" method="POST">
+				<form class="form" action="/quote" method="POST">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 					<div id="form-input-group">
 						<input type="text" name="firstname" placeholder="Name" class="form-control" required>

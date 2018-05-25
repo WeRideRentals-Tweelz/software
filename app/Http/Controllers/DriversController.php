@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Drivers;
-use App\Booking;
+use App\Services\DriverService;
 
 class DriversController extends Controller
 {
@@ -25,19 +25,11 @@ class DriversController extends Controller
 
     public function show($driver_id)
     {
-    	$driver = Drivers::find($driver_id);
-    	$bookings = DB::table('bookings')
-    					->join('scooters','scooters.id','=','bookings.scooter_id')
-    					->where('driver_id','=',$driver_id)
-    					->get();
-
-    	$favorite_scooter = DB::table('bookings')
-    					->select('scooters.model',DB::raw('count(scooters.model) as favorite_scooter'))
-    					->join('scooters','scooters.id','=','bookings.scooter_id')
-    					->where('driver_id','=',$driver_id)
-    					->groupBy('scooters.model')
-    					->orderBy('favorite_scooter')
-    					->first();				
+        $driverService = new DriverService();
+    	
+        $driver = Drivers::find($driver_id);
+    	$bookings = $driverService->getDriverBookings($driver_id);
+    	$favorite_scooter = $driverService->getDriverFavoriteScooter($driver_id);
 
     	return view('dashboard.driver-details')->with(compact('driver','bookings','favorite_scooter'));
     }

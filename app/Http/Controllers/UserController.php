@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session; 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Response;
+use Illuminate\Contracts\Routing\ResponseFactory;
 
 class UserController extends Controller
 {
@@ -32,14 +34,42 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('banned','=',0)->get();
-        return view('users.index')->with(compact('users'));
+        $userServices = new UserServices();
+        $users = User::where('banned','=',0)->orderBy('name','ASC')->paginate(10);
+        return view('users.index')->with(compact('users','userServices'));
     }
 
     public function indexBanned()
     {
         $users = User::where('banned','=',1)->get();
         return view('users.index')->with(compact('users'));
+    }
+
+    public function export()
+    {
+        $headers = [
+                'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0'
+            ,   'Content-type'        => 'text/csv'
+            ,   'Content-Disposition' => 'attachment; filename=WeRide-Users.csv'
+            ,   'Expires'             => '0'
+            ,   'Pragma'              => 'public'
+        ];
+
+        $list = User::all()->toArray();
+
+        # add headers for each column in the CSV download
+        array_unshift($list, array_keys($list[0]));
+
+       $callback = function() use ($list) 
+        {
+            $FH = fopen('php://output', 'w');
+            foreach ($list as $row) { 
+                fputcsv($FH, $row);
+            }
+            fclose($FH);
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 
     /**
@@ -76,19 +106,7 @@ class UserController extends Controller
             'banned'    => 0
         ]);
 
-
-        $driver = Drivers::create([
-            'user_id'           => $user->id,
-            'date_of_birth'     => $userService->checkDate($request->input('date_of_birth')),
-            'address'           => $request->input('address'),
-            'city'              => $request->input('city'),
-            'state'             => $request->input('state'),
-            'postcode'          => $request->input('postcode'),
-            'drivers_licence'   => $request->input('drivers_licence'),
-            'licence_state'     => $request->input('licence_state'),
-            'expiry_date'       => $userService->checkDate($request->input('expiry_date')),
-            'confirmed'         => 0
-        ]); 
+        $userService->createDriverFromUser($request ,$user->id);
 
         if(null !== $request->input('booking')){
             $booking = Booking::find($request->input('booking'));
@@ -98,7 +116,7 @@ class UserController extends Controller
             return redirect('/bookings/'.$booking->id.'/edit');
         }
 
-        return redirect('/profile/'.$user->id);
+        return redirect('/user/'.$user->id);
     }
 
     /**
@@ -172,7 +190,7 @@ class UserController extends Controller
         $user->save();
 
         Session::flash('success','Your informations has been updated.');
-        return redirect('/profile/'.$user->id);
+        return redirect('/user/'.$user->id);
     }
 
     /**
@@ -207,16 +225,14 @@ class UserController extends Controller
      */
     public function confirmUser($userId)
     {
+        $userServices = new UserServices();
+
         $user = User::find($userId);
         $driver = $user->driver;
         $driver->confirmed = 1;
         $driver->save();
 
-        $bookings = $user->bookings;
-        foreach ($bookings as $booking) {
-            $booking->status = "Fast Check in";
-            $booking->save();
-        }
+        $userServices->updateUserBookingStatus($user,"Fast Check in");
 
         return redirect()->back();
     }

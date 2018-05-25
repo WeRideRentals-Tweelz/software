@@ -15,5 +15,6 @@ require('laravel-elixir-vue-2');
 
 elixir(mix => {
     mix.sass('app.scss')
+       .css('app.css','font-awesome.min.css','fullcalendar.min.css')
        .webpack('app.js');
 });

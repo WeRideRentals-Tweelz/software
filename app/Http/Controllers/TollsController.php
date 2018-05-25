@@ -51,66 +51,43 @@ class TollsController extends Controller
      */
     public function store(Request $request)
     {
-        $tolls = Tolls::all();
-        if($request->hasFile('csv')){
-            $csvServices = new CSVServices($request->file('csv'));
+        //To be tested
+        $this->checkCsvUploaded($request);
 
-            $csv = $csvServices->getCSVFile();
-            $csvSize = $csvServices->getCSVFileSize();
-            $lastLine = $csvServices->getCSVLastLine();
-            $count = 0;
+        $csvServices = new CSVServices($request->file('csv'));
+
+        $csv = $csvServices->getCSVFile();
+        $lastLine = $csvServices->getCSVLastLine();
+        $count = 0;
                 
-                foreach ($csv as $header => $row) {
-                    if($count != 0 && $count < $lastLine){
-                        $date = date_format(DateTime::createFromFormat("d/m/Y", $row[0]), 'Y-m-d');
-                        if(count($tolls) > 0){
-                            $toll = Tolls::where('Date','=',$date)
-                            ->where('Time','=',$row[1])
-                            ->where('LicencePlate','=',$row[2])
-                            ->where('Tag','=',$row[3])
-                            ->where('TagName','=',$row[4])
-                            ->where('Group','=',$row[5])
-                            ->where('On','=',$row[6])
-                            ->where('Lane','=',$row[7])
-                            ->where('VehicleType','=',$row[8])
-                            ->where('Amount',"=",$row[9])
-                            ->first();
-
-                            if($toll === null)
-                            {
-                               Tolls::create([
-                                    'Date'          =>  $date,
-                                    'Time'          =>  $row[1],
-                                    'LicencePlate' =>  $row[2],
-                                    'Tag'           =>  $row[3],
-                                    'TagName'      =>  $row[4],
-                                    'Group'         =>  $row[5],
-                                    'On'            =>  $row[6],
-                                    'Lane'          =>  $row[7],
-                                    'VehicleType'  =>  $row[8],
-                                    'Amount'        =>  $row[9],
-                                ]); 
-                            }
-
-                        } else {
-                            Tolls::create([
-                                'Date'          =>  $date,
-                                'Time'          =>  $row[1],
-                                'LicencePlate' =>  $row[2],
-                                'Tag'           =>  $row[3],
-                                'TagName'      =>  $row[4],
-                                'Group'         =>  $row[5],
-                                'On'            =>  $row[6],
-                                'Lane'          =>  $row[7],
-                                'VehicleType'  =>  $row[8],
-                                'Amount'        =>  $row[9],
-                            ]);
-                        }
-                    }
-                    $count++;
+        foreach ($csv as $header => $row) {
+            if($count != 0 && $count < $lastLine){
+                if(!$csvServices->isTollExist($row[0],$row[1],$row[2])){
+                    Tolls::create([
+                        'Date'          =>  $csvServices->dateToDatabaseFormat($row[0]),
+                        'Time'          =>  $row[1],
+                        'LicencePlate' =>  $row[2],
+                        'Tag'           =>  $row[3],
+                        'TagName'      =>  $row[4],
+                        'Group'         =>  $row[5],
+                        'On'            =>  $row[6],
+                        'Lane'          =>  $row[7],
+                        'VehicleType'  =>  $row[8],
+                        'Amount'        =>  $row[9],
+                    ]); 
                 }
             }
+
+        $count++;
+        }
         return redirect('/tolls');
+    }
+
+    public function checkCsvUploaded(Request $request){
+        if($request->file('csv') === null){
+            // Add flash session here
+            return redirect('/tolls');
+        }
     }
 
     /**

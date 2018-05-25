@@ -16,9 +16,9 @@ class Scooter extends Model
     	'id' => 'integer'
     ];
 
-    public function booking()
+    public function bookings()
     {
-    	return $this->belongsTo('App\Booking');
+    	return $this->hasMany('App\Booking');
     }
 
     public function accessories()

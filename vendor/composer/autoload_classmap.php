@@ -37,6 +37,8 @@ return array(
     'CreateDriversTable' => $baseDir . '/database/migrations/2017_01_25_014052_create_drivers_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePaymentsTable' => $baseDir . '/database/migrations/2017_08_19_024906_create_payments_table.php',
+    'CreateProfilesTable' => $baseDir . '/database/migrations/2017_12_09_035704_create_profiles_table.php',
+    'CreateQuotesTable' => $baseDir . '/database/migrations/2017_12_08_033921_create_quotes_table.php',
     'CreateRepairsTable' => $baseDir . '/database/migrations/2017_07_19_232036_create_repairs_table.php',
     'CreateRolesTable' => $baseDir . '/database/migrations/2017_01_25_022114_create_roles_table.php',
     'CreateScooterPartsTable' => $baseDir . '/database/migrations/2017_07_22_065329_create_scooter_parts_table.php',

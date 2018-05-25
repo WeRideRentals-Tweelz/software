@@ -1,9 +1,27 @@
 @extends('layouts.main')
 @section('content')
 <div class="container">
+	
 	<div class="panel panel-default">
 		<div class="panel-heading">
+			<p class="panel-title">This is an updated version, to see the older version click here:
+				<a href="{{ url('/past-update/bookings') }}" class="btn btn-warning">old version</a>
+			</p>
+		</div>
+	</div>
+
+	@if(!isset($page))
+	<a href="{{ url('/on-hold') }}" class="btn btn-info">On Hold Bookings</a>
+	@else
+	<a href="{{ url('/bookings') }}" class="btn btn-success">Bookings</a>
+	@endif
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			@if(isset($page))
+			<h1>On Hold Bookings</h1>
+			@else
 			<h1>Bookings</h1>
+			@endif
 		</div>
 		<div class="panel-body">
 			<table class="table table-stripped">
@@ -49,9 +67,9 @@
 							<td>{{ date_create($booking->drop_off_date)->diff(date_create($booking->pick_up_date))->d }}</td>
 							
 							@if($booking->user_id != 0 && $booking->user->driver->confirmed)
-								<td><a href="{{ url('/profile/'.$booking->user_id) }}">{{ $booking->user->surname }} {{ $booking->user->name }}</td>
+								<td><a href="{{ url('/user/'.$booking->user_id) }}">{{ $booking->user->surname }} {{ $booking->user->name }}</td>
 							@elseif($booking->user_id !=0 && $booking->user->driver->confirmed == 0)
-								<td class="alert alert-warning"><a href="{{ url('/profile/'.$booking->user_id) }}">{{ $booking->user->surname }} {{ $booking->user->name }}</a> <br>Profile's not complete</td>
+								<td class="alert alert-warning"><a href="{{ url('/user/'.$booking->user_id) }}">{{ $booking->user->surname }} {{ $booking->user->name }}</a> <br>Profile's not complete</td>
 							@else
 								<td class="alert alert-danger">No User</td>
 							@endif

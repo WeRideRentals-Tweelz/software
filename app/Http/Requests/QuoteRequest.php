@@ -31,8 +31,8 @@ class QuoteRequest extends FormRequest
             ],
             'phone'     =>      'required|digits:10',
             'email'     =>      'required',
-            'pickUp'   =>      'required',
-            'dropOff'   =>  'required'
+            'pickUp'    =>      'required',
+            'dropOff'   =>      'required'
         ];
     }
 }
