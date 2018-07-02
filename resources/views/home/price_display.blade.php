@@ -3,26 +3,34 @@
 
 		<div style="padding: 0;" class="panel panel-default col-md-4">
 			<div style="background-color: #424242;color:#fff;" class="panel-heading">
-				<h3>From 1 to 6 days rent</h3>
+				<h3>Day rental 24 hours</h3>
 			</div>
 			<div class="panel-body">
-				<p>$30 per day</p>
+				<p>$80</p>
 			</div>
 		</div>
 		<div style="padding: 0;" class="panel panel-default col-md-4">
 			<div style="background-color: #424242;color:#fff;" class="panel-heading">
-				<h3>From 7 to 19 days rent</h3>
+				<h3>3 days rental</h3>
 			</div>
 			<div class="panel-body">
-				<p>$25 per day</p>
+				<p>$120</p>
 			</div>
 		</div>
 		<div style="padding: 0;" class="panel panel-default col-md-4">
 			<div style="background-color: #424242;color:#fff;" class="panel-heading">
-				<h3>From 20 days rent</h3>
+				<h3>Week rental / 7 days</h3>
 			</div>
 			<div class="panel-body">
-				<p>$20 per day</p>
+				<p>$200</p>
+			</div>
+		</div>
+		<div style="padding: 0;" class="panel panel-default col-md-4">
+			<div style="background-color: #424242;color:#fff;" class="panel-heading">
+				<h3>Long term / over 21 days</h3>
+			</div>
+			<div class="panel-body">
+				<p>$160 per week</p>
 			</div>
 		</div>
 
