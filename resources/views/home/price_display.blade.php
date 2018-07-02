@@ -3,7 +3,7 @@
 
 		<div style="padding: 0;" class="panel panel-default col-md-4">
 			<div style="background-color: #424242;color:#fff;" class="panel-heading">
-				<h3>Day rental 24 hours</h3>
+				<h3>Day rental / 24 hours</h3>
 			</div>
 			<div class="panel-body">
 				<p>$80</p>
